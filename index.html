@@ -7,7 +7,7 @@
 body { font-family: var(--font-sans, system-ui, sans-serif); background: transparent; color: var(--color-text-primary); font-size: 15px; }
 :root {
   --green: #639922; --green-light: #EAF3DE; --green-dark: #27500A;
-  --teal: #1D9E75; --teal-light: #E1F5EE; --teal-dark: #085041;
+  --teal-light: #E1F5EE; --teal-dark: #085041;
   --amber: #BA7517; --amber-light: #FAEEDA; --amber-dark: #412402;
   --red: #E24B4A; --red-light: #FCEBEB; --red-dark: #7a1f1f;
   --gray-mid: #888780;
@@ -39,14 +39,15 @@ input:focus, select:focus { outline: 2px solid var(--green); border-color: trans
 .station-icon { font-size: 20px; margin-bottom: 4px; }
 .station-name { font-size: 13px; font-weight: 500; }
 .station-status { font-size: 11px; margin-top: 2px; }
-.slot-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; max-height: 260px; overflow-y: auto; padding-right: 2px; }
+.slot-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 6px; max-height: 260px; overflow-y: auto; padding-right: 2px; }
 .slot-grid::-webkit-scrollbar { width: 3px; }
 .slot-grid::-webkit-scrollbar-thumb { background: var(--color-border-secondary); border-radius: 2px; }
 .time-slot { padding: 8px 4px; border-radius: 8px; border: 1.5px solid var(--color-border-tertiary); background: var(--color-background-primary); font-size: 12px; cursor: pointer; transition: all 0.12s; text-align: center; color: var(--color-text-primary); }
 .time-slot.taken { background: var(--red-light); color: var(--red-dark); cursor: not-allowed; text-decoration: line-through; border-color: #f09595; }
+.time-slot.past { background: var(--color-background-secondary); color: var(--color-text-secondary); cursor: not-allowed; opacity: 0.5; border-color: var(--color-border-tertiary); }
 .time-slot.grace-slot { background: var(--amber-light); color: var(--amber-dark); cursor: not-allowed; border-color: var(--amber); }
 .time-slot.selected { border-color: var(--green); background: var(--green-light); color: var(--green-dark); font-weight: 500; }
-.time-slot:not(.taken):not(.selected):not(.grace-slot):hover { border-color: var(--green); }
+.time-slot:not(.taken):not(.selected):not(.grace-slot):not(.past):hover { border-color: var(--green); }
 .charge-bar-wrap { background: var(--color-background-secondary); border-radius: 8px; height: 10px; margin: 8px 0 4px; overflow: hidden; }
 .charge-bar { height: 100%; border-radius: 8px; transition: width 0.3s; }
 .charge-labels { display: flex; justify-content: space-between; font-size: 11px; color: var(--color-text-secondary); margin-bottom: 10px; }
@@ -74,7 +75,7 @@ input:focus, select:focus { outline: 2px solid var(--green); border-color: trans
 .legend { display: flex; gap: 10px; flex-wrap: wrap; font-size: 11px; color: var(--color-text-secondary); margin-top: 8px; }
 .legend-dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; margin-right: 3px; }
 .usage-bar-wrap { flex: 1; background: var(--color-background-secondary); border-radius: 6px; height: 8px; overflow: hidden; }
-.usage-bar { height: 100%; border-radius: 6px; background: var(--green); transition: width 0.4s; }
+.usage-bar { height: 100%; border-radius: 6px; background: var(--green); }
 .usage-bar.warn { background: var(--amber); }
 .usage-bar.full { background: var(--red); }
 .badge { display: inline-block; padding: 2px 8px; border-radius: 20px; font-size: 11px; font-weight: 500; }
@@ -84,7 +85,7 @@ input:focus, select:focus { outline: 2px solid var(--green); border-color: trans
 .badge-active { background: #E6F1FB; color: #0C447C; }
 .tab-bar { display: flex; border-bottom: 0.5px solid var(--color-border-tertiary); margin-bottom: 16px; overflow-x: auto; }
 .tab-bar::-webkit-scrollbar { display: none; }
-.tab { flex: 0 0 auto; padding: 10px 12px; text-align: center; font-size: 13px; color: var(--color-text-secondary); cursor: pointer; border-bottom: 2px solid transparent; margin-bottom: -1px; white-space: nowrap; }
+.tab { flex: 0 0 auto; padding: 10px 12px; font-size: 13px; color: var(--color-text-secondary); cursor: pointer; border-bottom: 2px solid transparent; margin-bottom: -1px; white-space: nowrap; }
 .tab.active { color: var(--green-dark); border-bottom-color: var(--green); font-weight: 500; }
 .admin-panel { display: none; }
 .admin-panel.active { display: block; }
@@ -103,19 +104,26 @@ input:focus, select:focus { outline: 2px solid var(--green); border-color: trans
 .stat-num { font-size: 24px; font-weight: 500; }
 .stat-label { font-size: 11px; color: var(--color-text-secondary); margin-top: 2px; }
 
-/* Timeline styles */
-.timeline-wrap { overflow-x: auto; padding-bottom: 4px; }
-.timeline-wrap::-webkit-scrollbar { height: 3px; }
-.timeline-wrap::-webkit-scrollbar-thumb { background: var(--color-border-secondary); border-radius: 2px; }
-.timeline-inner { min-width: 520px; }
-.tl-hour-labels { display: flex; margin-bottom: 4px; margin-left: 52px; }
-.tl-hour-label { flex: 1; font-size: 9px; color: var(--color-text-secondary); text-align: left; }
-.tl-row { display: flex; align-items: center; margin-bottom: 6px; }
-.tl-station-name { width: 48px; font-size: 11px; color: var(--color-text-secondary); flex-shrink: 0; padding-right: 4px; }
-.tl-bar-wrap { flex: 1; background: var(--color-background-secondary); border-radius: 4px; height: 22px; position: relative; overflow: hidden; }
-.tl-segment { position: absolute; height: 100%; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 500; color: white; overflow: hidden; white-space: nowrap; border-radius: 3px; }
-.tl-now-line { position: absolute; width: 2px; height: 100%; background: var(--red); opacity: 0.8; top: 0; border-radius: 1px; }
-.tl-time-tooltip { position: absolute; bottom: 100%; font-size: 9px; background: var(--red); color: white; padding: 1px 4px; border-radius: 3px; transform: translateX(-50%); white-space: nowrap; margin-bottom: 2px; }
+/* Timeline */
+.timeline-outer { overflow-x: auto; padding-bottom: 4px; cursor: grab; }
+.timeline-outer::-webkit-scrollbar { height: 4px; }
+.timeline-outer::-webkit-scrollbar-thumb { background: var(--color-border-secondary); border-radius: 2px; }
+.timeline-inner { position: relative; }
+.tl-grid-area { position: relative; margin-left: 44px; }
+.tl-hour-row { display: flex; border-bottom: 0.5px solid var(--color-border-tertiary); margin-bottom: 0; }
+.tl-hour-cell { flex: 0 0 38px; text-align: left; font-size: 9px; color: var(--color-text-secondary); padding: 0 0 3px 2px; border-left: 0.5px solid var(--color-border-tertiary); }
+.tl-station-rows { position: relative; }
+.tl-row { display: flex; align-items: center; border-bottom: 0.5px solid var(--color-border-tertiary); }
+.tl-row:last-child { border-bottom: none; }
+.tl-station-label { width: 44px; flex-shrink: 0; font-size: 11px; font-weight: 500; color: var(--color-text-secondary); padding: 6px 4px 6px 0; text-align: right; }
+.tl-cells { display: flex; position: relative; flex: 1; }
+.tl-cell { flex: 0 0 38px; height: 28px; border-left: 0.5px solid var(--color-border-tertiary); position: relative; }
+.tl-cell.alt { background: rgba(0,0,0,0.015); }
+.tl-booking { position: absolute; top: 3px; bottom: 3px; background: #378ADD; border-radius: 3px; display: flex; align-items: center; justify-content: center; font-size: 9px; font-weight: 500; color: white; overflow: hidden; white-space: nowrap; z-index: 2; }
+.tl-grace { position: absolute; top: 3px; bottom: 3px; background: var(--amber); border-radius: 3px; z-index: 2; opacity: 0.85; }
+.tl-past-overlay { position: absolute; top: 0; bottom: 0; left: 0; background: rgba(0,0,0,0.04); z-index: 1; pointer-events: none; }
+.tl-now-line { position: absolute; top: 0; bottom: 0; width: 2px; background: var(--red); z-index: 10; pointer-events: none; }
+.tl-now-label { position: absolute; top: -18px; font-size: 9px; background: var(--red); color: white; padding: 1px 4px; border-radius: 3px; transform: translateX(-50%); white-space: nowrap; z-index: 11; }
 </style>
 </head>
 <body>
@@ -242,8 +250,9 @@ input:focus, select:focus { outline: 2px solid var(--green); border-color: trans
       </div>
       <div class="slot-grid" id="slot-grid"></div>
       <div class="legend">
+        <span><span class="legend-dot" style="background:var(--color-background-secondary);border:1px solid var(--color-border-secondary)"></span>Past</span>
         <span><span class="legend-dot" style="background:var(--red-light);border:1px solid #f09595"></span>Unavailable</span>
-        <span><span class="legend-dot" style="background:var(--amber-light);border:1px solid var(--amber)"></span>Grace buffer</span>
+        <span><span class="legend-dot" style="background:var(--amber-light);border:1px solid var(--amber)"></span>Grace</span>
         <span><span class="legend-dot" style="background:var(--green-light);border:1px solid var(--green)"></span>Selected</span>
       </div>
     </div>
@@ -343,37 +352,36 @@ input:focus, select:focus { outline: 2px solid var(--green); border-color: trans
       <div class="tab" onclick="setTab('settings')" id="tab-settings">Settings</div>
     </div>
 
-    <!-- DASHBOARD -->
     <div class="admin-panel active" id="panel-dashboard">
       <div class="clock-display" id="admin-clock">--:-- --</div>
       <div class="clock-date" id="admin-date">Loading...</div>
       <div class="stat-grid">
         <div class="stat-card"><div class="stat-num" id="dash-active">0</div><div class="stat-label">Active now</div></div>
         <div class="stat-card"><div class="stat-num" id="dash-today">0</div><div class="stat-label">Booked today</div></div>
-        <div class="stat-card"><div class="stat-num" id="dash-avail">4</div><div class="stat-label">Stations available</div></div>
+        <div class="stat-card"><div class="stat-num" id="dash-avail">4</div><div class="stat-label">Available now</div></div>
         <div class="stat-card"><div class="stat-num" id="dash-total">0</div><div class="stat-label">Total bookings</div></div>
       </div>
       <div class="card" style="margin-bottom:12px">
         <div class="section-label">Station status now</div>
         <div id="dash-station-status"></div>
       </div>
-      <div class="card">
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+      <div class="card" style="padding:14px 12px">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
           <div class="section-label" style="margin:0">Today's timeline</div>
-          <span style="font-size:11px;color:var(--color-text-secondary)">scroll →</span>
+          <span style="font-size:11px;color:var(--color-text-secondary)">← scroll →</span>
         </div>
-        <div class="timeline-wrap">
+        <div class="timeline-outer" id="timeline-outer">
           <div class="timeline-inner" id="dash-timeline"></div>
         </div>
         <div class="legend" style="margin-top:10px">
+          <span><span class="legend-dot" style="background:rgba(0,0,0,0.04)"></span>Past</span>
           <span><span class="legend-dot" style="background:#378ADD"></span>Booked</span>
           <span><span class="legend-dot" style="background:var(--amber)"></span>Grace</span>
-          <span><span class="legend-dot" style="background:var(--red);opacity:0.8"></span>Now</span>
+          <span><span class="legend-dot" style="background:var(--red)"></span>Now</span>
         </div>
       </div>
     </div>
 
-    <!-- BOOKINGS -->
     <div class="admin-panel" id="panel-bookings">
       <div class="card">
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
@@ -384,7 +392,6 @@ input:focus, select:focus { outline: 2px solid var(--green); border-color: trans
       </div>
     </div>
 
-    <!-- FLAGS -->
     <div class="admin-panel" id="panel-flags">
       <div class="alert alert-info" style="margin-bottom:12px;font-size:13px">Flags only trigger when another resident had a booking queued for that station. Low-demand overruns are logged but not flagged.</div>
       <div class="card">
@@ -398,7 +405,6 @@ input:focus, select:focus { outline: 2px solid var(--green); border-color: trans
       <button class="primary-btn" style="margin-top:0" onclick="alert('No flagged residents to notify.')">Notify flagged residents</button>
     </div>
 
-    <!-- USAGE -->
     <div class="admin-panel" id="panel-usage">
       <div class="card">
         <div class="section-label">Weekly hours used by unit (cap: 12 hrs)</div>
@@ -410,7 +416,6 @@ input:focus, select:focus { outline: 2px solid var(--green); border-color: trans
       </div>
     </div>
 
-    <!-- SETTINGS -->
     <div class="admin-panel" id="panel-settings">
       <div class="card">
         <div class="section-label">Booking limits</div>
@@ -445,7 +450,7 @@ input:focus, select:focus { outline: 2px solid var(--green); border-color: trans
           <span style="font-size:14px;font-weight:500" id="strikes-out">3</span>
         </div>
         <input type="range" min="1" max="5" step="1" value="3" oninput="document.getElementById('strikes-out').textContent=this.value" style="width:100%">
-        <p class="method-hint" style="margin-top:8px;margin-bottom:0">Only demand-triggered flags count toward this threshold.</p>
+        <p class="method-hint" style="margin-top:8px;margin-bottom:0">Only demand-triggered flags count.</p>
       </div>
       <button class="primary-btn" style="margin-top:0" onclick="alert('Settings saved!')">Save settings</button>
     </div>
@@ -468,8 +473,8 @@ const STATION_DEFS=[
 
 const ALL_HOURS=[];
 for(let h=0;h<24;h++){
-  const ampm=h<12?'AM':'PM', hr=h===0?12:h>12?h-12:h;
-  ALL_HOURS.push(hr+':00 '+ampm);
+  const ap=h<12?'AM':'PM', hr=h===0?12:h>12?h-12:h;
+  ALL_HOURS.push(hr+':00 '+ap);
 }
 
 let bookings=[];
@@ -477,11 +482,13 @@ let userType='resident', residentMethod='phone', guestMethod='phone';
 let selectedStation=null, selectedSlot=null, selectedDur=1, selectedDurLabel='1 hr';
 let chargeTarget=80, currentUnit='', slotHasDemand=false;
 
-function getBookedHours(stId,dateVal){ const r=new Set(); bookings.filter(b=>b.station===stId&&b.date===dateVal).forEach(b=>{ const idx=ALL_HOURS.indexOf(b.slot); for(let i=0;i<b.dur&&idx+i<24;i++) r.add(ALL_HOURS[idx+i]); }); return r; }
-function getGraceHours(stId,dateVal){ const r=new Set(); bookings.filter(b=>b.station===stId&&b.date===dateVal).forEach(b=>{ const idx=ALL_HOURS.indexOf(b.slot), end=idx+b.dur; if(end<24) r.add(ALL_HOURS[end]); }); return r; }
-function getStationStatus(stId,dateVal){ const now=new Date(), todayVal=toDateVal(now); if(dateVal!==todayVal) return 'available'; const curSlot=ALL_HOURS[now.getHours()]; const booked=getBookedHours(stId,dateVal); if(booked.has(curSlot)) return 'busy'; if(getGraceHours(stId,dateVal).has(curSlot)) return 'grace'; return 'available'; }
-function slotIsFollowed(stId,dateVal,slot){ const idx=ALL_HOURS.indexOf(slot); if(idx<0||idx+selectedDur>=24) return false; return bookings.some(b=>b.station===stId&&b.date===dateVal&&b.slot===ALL_HOURS[idx+selectedDur]); }
+function getBookedHours(stId,dv){ const r=new Set(); bookings.filter(b=>b.station===stId&&b.date===dv).forEach(b=>{ const i=ALL_HOURS.indexOf(b.slot); for(let j=0;j<b.dur&&i+j<24;j++) r.add(ALL_HOURS[i+j]); }); return r; }
+function getGraceHours(stId,dv){ const r=new Set(); bookings.filter(b=>b.station===stId&&b.date===dv).forEach(b=>{ const e=ALL_HOURS.indexOf(b.slot)+b.dur; if(e<24) r.add(ALL_HOURS[e]); }); return r; }
+function getStationStatus(stId,dv){ const now=new Date(), td=toDateVal(now); if(dv!==td) return 'available'; const cs=ALL_HOURS[now.getHours()]; if(getBookedHours(stId,dv).has(cs)) return 'busy'; if(getGraceHours(stId,dv).has(cs)) return 'grace'; return 'available'; }
+function slotIsFollowed(stId,dv,slot){ const i=ALL_HOURS.indexOf(slot); if(i<0||i+selectedDur>=24) return false; return bookings.some(b=>b.station===stId&&b.date===dv&&b.slot===ALL_HOURS[i+selectedDur]); }
 function toDateVal(d){ return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); }
+function isToday(dv){ return dv===toDateVal(new Date()); }
+function isPastHour(h, dv){ return isToday(dv) && h <= new Date().getHours(); }
 
 function setType(t){ userType=t; ['resident','guest'].forEach(x=>document.getElementById('btn-'+x).className='flex-btn lg'+(t===x?' active':'')); document.getElementById('resident-fields').style.display=t==='resident'?'':'none'; document.getElementById('guest-fields').style.display=t==='guest'?'':'none'; hideErr('home-err'); }
 function setResidentMethod(m){ residentMethod=m; ['phone','email'].forEach(x=>document.getElementById('rbtn-'+x).className='flex-btn'+(m===x?' active':'')); document.getElementById('r-phone-field').style.display=m==='phone'?'':'none'; document.getElementById('r-email-field').style.display=m==='email'?'':'none'; }
@@ -519,11 +526,11 @@ function verifyOTP(){ const code=[0,1,2,3].map(i=>document.getElementById('p'+i)
 
 function buildStations(){
   const grid=document.getElementById('station-grid'); grid.innerHTML='';
-  const dateVal=document.getElementById('date-pick').value;
+  const dv=document.getElementById('date-pick').value;
   selectedSlot=null; slotHasDemand=false;
   ['slot-card','charge-card','dur-card'].forEach(id=>document.getElementById(id).style.display='none');
   STATION_DEFS.forEach(s=>{
-    const status=dateVal?getStationStatus(s.id,dateVal):'available';
+    const status=dv?getStationStatus(s.id,dv):'available';
     const div=document.createElement('div');
     div.className='station-card '+status; div.dataset.id=s.id; div.dataset.status=status;
     const color=status==='grace'?'var(--amber)':status==='busy'?'var(--gray-mid)':'var(--green)';
@@ -540,32 +547,40 @@ function selectStation(id){
   document.getElementById('slot-card').style.display=''; document.getElementById('charge-card').style.display='none'; document.getElementById('dur-card').style.display='none';
   buildSlots(id);
   const fp=Math.round(40+Math.random()*35); document.getElementById('current-pct').textContent=fp+'%'; document.getElementById('current-bar').style.width=fp+'%';
-  const dateVal=document.getElementById('date-pick').value;
-  const takenCount=getBookedHours(id,dateVal).size;
+  const dv=document.getElementById('date-pick').value;
+  const takenCount=getBookedHours(id,dv).size;
   const pill=document.getElementById('demand-pill-slot');
   pill.textContent=takenCount>=6?'High demand':'Low demand'; pill.className='demand-pill '+(takenCount>=6?'demand-high':'demand-low');
 }
 
 function buildSlots(stId){
   const grid=document.getElementById('slot-grid'); grid.innerHTML='';
-  const dateVal=document.getElementById('date-pick').value;
-  const taken=getBookedHours(stId,dateVal), grace=getGraceHours(stId,dateVal);
-  ALL_HOURS.forEach(h=>{
+  const dv=document.getElementById('date-pick').value;
+  const taken=getBookedHours(stId,dv), grace=getGraceHours(stId,dv);
+  ALL_HOURS.forEach((h,idx)=>{
     const div=document.createElement('div');
-    if(grace.has(h)){ div.className='time-slot grace-slot'; div.textContent=h; }
-    else if(taken.has(h)){ div.className='time-slot taken'; div.textContent=h; }
-    else{ div.className='time-slot'+(selectedSlot===h?' selected':''); div.textContent=h; div.onclick=()=>selectSlot(h,stId); }
+    const past=isPastHour(idx, dv);
+    if(past && !taken.has(h) && !grace.has(h)){
+      div.className='time-slot past'; div.textContent=h;
+    } else if(grace.has(h)){
+      div.className='time-slot grace-slot'; div.textContent=h;
+    } else if(taken.has(h)){
+      div.className='time-slot taken'; div.textContent=h;
+    } else {
+      div.className='time-slot'+(selectedSlot===h?' selected':''); div.textContent=h;
+      div.onclick=()=>selectSlot(h,stId);
+    }
     grid.appendChild(div);
   });
 }
 
 function selectSlot(slot,stId){
   selectedSlot=slot;
-  document.querySelectorAll('.time-slot:not(.taken):not(.grace-slot)').forEach(el=>{ el.className='time-slot'+(el.textContent===slot?' selected':''); });
-  const dateVal=document.getElementById('date-pick').value;
-  slotHasDemand=slotIsFollowed(stId||selectedStation,dateVal,slot);
+  document.querySelectorAll('.time-slot:not(.taken):not(.grace-slot):not(.past)').forEach(el=>{ el.className='time-slot'+(el.textContent===slot?' selected':''); });
+  const dv=document.getElementById('date-pick').value;
+  slotHasDemand=slotIsFollowed(stId||selectedStation,dv,slot);
   document.getElementById('charge-card').style.display=''; document.getElementById('dur-card').style.display='';
-  const msg=slotHasDemand?'The next slot on this station is booked. You\'ll have 30 min after your charge target is reached to unplug. Staying beyond that will be flagged.':'No bookings follow your slot right now. You won\'t be flagged if you take a bit longer — but please unplug when done.';
+  const msg=slotHasDemand?'The next slot on this station is booked. You\'ll have 30 min to unplug after your charge target is reached. Staying beyond that will be flagged.':'No bookings follow your slot right now. You won\'t be flagged if you take a bit longer — but please unplug when done.';
   const el=document.getElementById('grace-info-msg'); el.textContent=msg; el.className='alert '+(slotHasDemand?'alert-warn':'alert-ok'); el.style.marginBottom='0'; el.style.fontSize='12px';
   hideErr('pick-err');
 }
@@ -574,17 +589,17 @@ function setDur(hrs,label){
   selectedDur=hrs; selectedDurLabel=label;
   ['d1','d2','d4','d8'].forEach(id=>document.getElementById(id).className='flex-btn');
   document.getElementById('d'+hrs).className='flex-btn active';
-  if(selectedSlot&&selectedStation){ const dateVal=document.getElementById('date-pick').value; slotHasDemand=slotIsFollowed(selectedStation,dateVal,selectedSlot); buildSlots(selectedStation); document.querySelectorAll('.time-slot:not(.taken):not(.grace-slot)').forEach(el=>{ if(el.textContent===selectedSlot) el.className='time-slot selected'; }); }
+  if(selectedSlot&&selectedStation){ const dv=document.getElementById('date-pick').value; slotHasDemand=slotIsFollowed(selectedStation,dv,selectedSlot); buildSlots(selectedStation); document.querySelectorAll('.time-slot:not(.taken):not(.grace-slot):not(.past)').forEach(el=>{ if(el.textContent===selectedSlot) el.className='time-slot selected'; }); }
 }
 
 function goConfirm(){
   if(!selectedStation){ showErr('pick-err','Please select a station.'); return; }
   if(!selectedSlot){ showErr('pick-err','Please select a start time.'); return; }
-  const dateVal=document.getElementById('date-pick').value;
-  if(!dateVal){ showErr('pick-err','Please select a date.'); return; }
+  const dv=document.getElementById('date-pick').value;
+  if(!dv){ showErr('pick-err','Please select a date.'); return; }
   if(currentUnit!=='guest'){ const res=RESIDENTS[currentUnit]; if(res.activeBookings>=MAX_BOOKINGS){ showErr('pick-err','You\'ve reached your limit of '+MAX_BOOKINGS+' active bookings.'); return; } if(res.hoursUsed>=WEEKLY_CAP){ showErr('pick-err','You\'ve reached your '+WEEKLY_CAP+'-hour weekly cap. Resets next Monday.'); return; } }
   hideErr('pick-err');
-  const dateStr=new Date(dateVal+'T12:00:00').toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'});
+  const dateStr=new Date(dv+'T12:00:00').toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'});
   const stName=STATION_DEFS.find(s=>s.id===selectedStation).label;
   const idx=ALL_HOURS.indexOf(selectedSlot), endSlot=idx+selectedDur<24?ALL_HOURS[idx+selectedDur]:'12:00 AM';
   document.getElementById('c-station').textContent=stName;
@@ -600,10 +615,9 @@ function goConfirm(){
 function confirmBooking(){
   const btn=document.getElementById('confirm-btn'); btn.disabled=true; btn.innerHTML='<span class="spinner"></span> Confirming…';
   setTimeout(()=>{
-    const dateVal=document.getElementById('date-pick').value;
-    bookings.push({ station:selectedStation, date:dateVal, slot:selectedSlot, dur:selectedDur, durLabel:selectedDurLabel, unit:currentUnit, target:chargeTarget, status:'confirmed', ts:Date.now() });
+    const dv=document.getElementById('date-pick').value;
+    bookings.push({ station:selectedStation, date:dv, slot:selectedSlot, dur:selectedDur, durLabel:selectedDurLabel, unit:currentUnit, target:chargeTarget, status:'confirmed', ts:Date.now() });
     if(currentUnit!=='guest'){ RESIDENTS[currentUnit].activeBookings++; RESIDENTS[currentUnit].hoursUsed+=selectedDur; }
-    const idx=ALL_HOURS.indexOf(selectedSlot), endSlot=idx+selectedDur<24?ALL_HOURS[idx+selectedDur]:'12:00 AM';
     document.getElementById('success-msg').textContent=document.getElementById('pick-sub').textContent+' · '+STATION_DEFS.find(s=>s.id===selectedStation).label+' · '+selectedSlot;
     document.getElementById('s-grace-detail').textContent=slotHasDemand?'30 min to unplug after charge complete':'No time pressure — station free after you';
     document.getElementById('s-overdue-detail').textContent=slotHasDemand?'Flagged & admin notified':'Logged only, no flag issued';
@@ -613,80 +627,113 @@ function confirmBooking(){
   },1400);
 }
 
+const CELL_W=38; // px per hour cell
+
 function buildDashboard(){
   const now=new Date();
   const h=now.getHours(), m=now.getMinutes();
-  const ampm=h<12?'AM':'PM', hr=h===0?12:h>12?h-12:h;
-  document.getElementById('admin-clock').textContent=hr+':'+(m<10?'0':'')+m+' '+ampm;
+  const ap=h<12?'AM':'PM', hr=h===0?12:h>12?h-12:h;
+  document.getElementById('admin-clock').textContent=hr+':'+(m<10?'0':'')+m+' '+ap;
   document.getElementById('admin-date').textContent=now.toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric',year:'numeric'});
-  const todayVal=toDateVal(now), todayBookings=bookings.filter(b=>b.date===todayVal);
-  const curSlot=ALL_HOURS[h];
+
+  const td=toDateVal(now), todayBk=bookings.filter(b=>b.date===td);
+  const cs=ALL_HOURS[h];
   let activeNow=0;
-  STATION_DEFS.forEach(s=>{ if(getBookedHours(s.id,todayVal).has(curSlot)) activeNow++; });
+  STATION_DEFS.forEach(s=>{ if(getBookedHours(s.id,td).has(cs)) activeNow++; });
   document.getElementById('dash-active').textContent=activeNow;
-  document.getElementById('dash-today').textContent=todayBookings.length;
-  document.getElementById('dash-avail').textContent=STATION_DEFS.filter(s=>getStationStatus(s.id,todayVal)==='available').length;
+  document.getElementById('dash-today').textContent=todayBk.length;
+  document.getElementById('dash-avail').textContent=STATION_DEFS.filter(s=>getStationStatus(s.id,td)==='available').length;
   document.getElementById('dash-total').textContent=bookings.length;
 
   const ss=document.getElementById('dash-station-status'); ss.innerHTML='';
   STATION_DEFS.forEach(s=>{
-    const status=getStationStatus(s.id,todayVal);
+    const status=getStationStatus(s.id,td);
     const color=status==='grace'?'var(--amber)':status==='busy'?'var(--red)':'var(--green)';
     const label=status==='grace'?'Grace period':status==='busy'?'In use':'Available';
     ss.innerHTML+='<div style="display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:0.5px solid var(--color-border-tertiary)"><span style="font-size:13px;font-weight:500">'+s.label+'</span><span style="font-size:12px;color:'+color+';font-weight:500">● '+label+'</span></div>';
   });
 
   const tl=document.getElementById('dash-timeline'); tl.innerHTML='';
+  const totalW=CELL_W*24;
 
-  // Hour labels — show every 3 hours
-  const labelRow=document.createElement('div'); labelRow.className='tl-hour-labels';
+  // Hour label row
+  const labelRow=document.createElement('div');
+  labelRow.style.cssText='display:flex;margin-left:44px;width:'+totalW+'px;';
   for(let i=0;i<24;i++){
-    const lbl=document.createElement('div'); lbl.className='tl-hour-label';
-    if(i%3===0){
-      const ap=i<12?'AM':'PM', hr2=i===0?12:i>12?i-12:i;
-      lbl.textContent=hr2+(i%12===0?ap:'');
-    }
+    const lbl=document.createElement('div');
+    lbl.style.cssText='flex:0 0 '+CELL_W+'px;font-size:9px;color:var(--color-text-secondary);border-left:0.5px solid var(--color-border-tertiary);padding:0 0 3px 2px;';
+    const ap2=i<12?'AM':'PM', hr2=i===0?12:i>12?i-12:i;
+    lbl.textContent=hr2+(i===0||i===12?ap2:'');
     labelRow.appendChild(lbl);
   }
   tl.appendChild(labelRow);
 
-  const nowPct=(h+m/60)/24*100;
+  // Station rows
+  const nowPx=(h+m/60)*CELL_W;
+  const pastPx=h*CELL_W;
 
   STATION_DEFS.forEach(s=>{
-    const row=document.createElement('div'); row.className='tl-row';
-    const nameEl=document.createElement('div'); nameEl.className='tl-station-name'; nameEl.textContent=s.id;
-    const wrap=document.createElement('div'); wrap.className='tl-bar-wrap';
+    const row=document.createElement('div');
+    row.style.cssText='display:flex;align-items:center;border-bottom:0.5px solid var(--color-border-tertiary);';
 
-    const stBookings=bookings.filter(b=>b.station===s.id&&b.date===todayVal);
-    stBookings.forEach(b=>{
-      const startIdx=ALL_HOURS.indexOf(b.slot);
-      const startPct=(startIdx/24*100).toFixed(2), widthPct=(b.dur/24*100).toFixed(2);
-      const seg=document.createElement('div'); seg.className='tl-segment';
-      seg.style.cssText='left:'+startPct+'%;width:'+widthPct+'%;background:#378ADD;';
+    const nameEl=document.createElement('div');
+    nameEl.style.cssText='width:44px;flex-shrink:0;font-size:11px;font-weight:500;color:var(--color-text-secondary);text-align:right;padding-right:4px;';
+    nameEl.textContent=s.id;
+
+    const cellsWrap=document.createElement('div');
+    cellsWrap.style.cssText='position:relative;display:flex;width:'+totalW+'px;height:28px;';
+
+    // Hour cells with gridlines
+    for(let i=0;i<24;i++){
+      const cell=document.createElement('div');
+      cell.style.cssText='flex:0 0 '+CELL_W+'px;height:100%;border-left:0.5px solid var(--color-border-tertiary);'+(i%2===1?'background:rgba(0,0,0,0.015)':'');
+      cellsWrap.appendChild(cell);
+    }
+
+    // Past overlay
+    if(pastPx>0){
+      const pastOv=document.createElement('div');
+      pastOv.style.cssText='position:absolute;top:0;bottom:0;left:0;width:'+pastPx+'px;background:rgba(0,0,0,0.05);z-index:1;pointer-events:none;';
+      cellsWrap.appendChild(pastOv);
+    }
+
+    // Booking segments
+    bookings.filter(b=>b.station===s.id&&b.date===td).forEach(b=>{
+      const si=ALL_HOURS.indexOf(b.slot);
+      const seg=document.createElement('div');
+      seg.style.cssText='position:absolute;top:3px;bottom:3px;left:'+(si*CELL_W+1)+'px;width:'+(b.dur*CELL_W-2)+'px;background:#378ADD;border-radius:3px;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:500;color:white;overflow:hidden;white-space:nowrap;z-index:3;';
       const lbl=b.unit==='guest'?'Guest':'U'+b.unit;
-      const startLabel=ALL_HOURS[startIdx], endLabel=startIdx+b.dur<24?ALL_HOURS[startIdx+b.dur]:'12AM';
-      seg.title=lbl+' · '+startLabel+' → '+endLabel;
-      seg.textContent=lbl;
-      wrap.appendChild(seg);
+      const endLabel=si+b.dur<24?ALL_HOURS[si+b.dur]:'12AM';
+      seg.textContent=ALL_HOURS[si]+' – '+endLabel+' · '+lbl;
+      seg.title=lbl+' · '+ALL_HOURS[si]+' → '+endLabel;
+      cellsWrap.appendChild(seg);
 
-      if(startIdx+b.dur<24){
-        const gStart=((startIdx+b.dur)/24*100).toFixed(2);
-        const gseg=document.createElement('div'); gseg.className='tl-segment';
-        gseg.style.cssText='left:'+gStart+'%;width:'+(0.5/24*100).toFixed(2)+'%;background:'+( 'var(--amber)')+';';
-        wrap.appendChild(gseg);
+      // Grace segment
+      if(si+b.dur<24){
+        const gs=document.createElement('div');
+        gs.style.cssText='position:absolute;top:3px;bottom:3px;left:'+((si+b.dur)*CELL_W+1)+'px;width:'+(CELL_W/2-2)+'px;background:var(--amber);border-radius:3px;z-index:3;opacity:0.85;';
+        gs.title='Grace period';
+        cellsWrap.appendChild(gs);
       }
     });
 
-    const nowLine=document.createElement('div'); nowLine.className='tl-now-line';
-    nowLine.style.left=nowPct.toFixed(2)+'%';
-    const nowTip=document.createElement('div'); nowTip.className='tl-time-tooltip';
-    nowTip.style.left=nowPct.toFixed(2)+'%';
-    nowTip.textContent=(hr)+':'+(m<10?'0':'')+m+' '+ampm;
-    wrap.appendChild(nowLine); wrap.appendChild(nowTip);
+    // Now line + label
+    const nowLine=document.createElement('div');
+    nowLine.style.cssText='position:absolute;top:0;bottom:0;left:'+nowPx+'px;width:2px;background:var(--red);z-index:10;pointer-events:none;';
+    const nowLbl=document.createElement('div');
+    nowLbl.style.cssText='position:absolute;top:-16px;left:'+nowPx+'px;transform:translateX(-50%);font-size:9px;background:var(--red);color:white;padding:1px 4px;border-radius:3px;white-space:nowrap;z-index:11;';
+    nowLbl.textContent=hr+':'+(m<10?'0':'')+m+' '+ap;
+    cellsWrap.appendChild(nowLine); cellsWrap.appendChild(nowLbl);
 
-    row.appendChild(nameEl); row.appendChild(wrap);
+    row.appendChild(nameEl); row.appendChild(cellsWrap);
     tl.appendChild(row);
   });
+
+  // Scroll to show current time centered
+  setTimeout(()=>{
+    const outer=document.getElementById('timeline-outer');
+    if(outer) outer.scrollLeft=Math.max(0,nowPx-outer.clientWidth/2);
+  },50);
 }
 
 function buildBookingsList(){
