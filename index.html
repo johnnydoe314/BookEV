@@ -113,7 +113,7 @@ input:focus, select:focus { outline: 2px solid var(--green); border-color: trans
       </div>
       <div id="resident-fields">
         <label>Unit number</label>
-        <input id="unit" type="text" placeholder="e.g. 204" maxlength="6">
+        <input id="unit" type="text" placeholder="e.g. 101" maxlength="6">
         <div class="section-label" style="margin-bottom:6px">Verify with</div>
         <div class="row-btns">
           <button class="flex-btn active" onclick="setResidentMethod('phone')" id="rbtn-phone">Phone</button>
@@ -121,18 +121,18 @@ input:focus, select:focus { outline: 2px solid var(--green); border-color: trans
         </div>
         <div id="r-phone-field">
           <label>Phone number on file</label>
-          <input id="phone" type="tel" placeholder="(512) 555-0100" maxlength="14" oninput="formatPhone(this)">
+          <input id="phone" type="tel" placeholder="(512) 555-0101" maxlength="14" oninput="formatPhone(this)">
         </div>
         <div id="r-email-field" style="display:none">
           <label>Email address on file</label>
-          <input id="email" type="email" placeholder="you@email.com">
+          <input id="email" type="email" placeholder="res101@bookev.com">
         </div>
       </div>
       <div id="guest-fields" style="display:none">
         <label>Your name</label>
         <input id="guest-name" type="text" placeholder="Full name">
         <label>Host unit number</label>
-        <input id="host-unit" type="text" placeholder="e.g. 204" maxlength="6">
+        <input id="host-unit" type="text" placeholder="e.g. 101" maxlength="6">
         <div class="section-label" style="margin-bottom:6px">Your contact</div>
         <div class="row-btns">
           <button class="flex-btn active" onclick="setGuestMethod('phone')" id="gbtn-phone">Phone</button>
@@ -187,15 +187,15 @@ input:focus, select:focus { outline: 2px solid var(--green); border-color: trans
       <div class="section-label">Your weekly usage</div>
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px">
         <span style="font-size:13px;color:var(--color-text-secondary)">Hours used this week</span>
-        <span style="font-size:13px;font-weight:500" id="quota-label">3 of 12 hrs</span>
+        <span style="font-size:13px;font-weight:500" id="quota-label">0 of 12 hrs</span>
       </div>
       <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
-        <div class="usage-bar-wrap"><div class="usage-bar" id="quota-bar" style="width:25%"></div></div>
-        <span style="font-size:12px;color:var(--color-text-secondary);white-space:nowrap" id="quota-remain">9 hrs left</span>
+        <div class="usage-bar-wrap"><div class="usage-bar" id="quota-bar" style="width:0%"></div></div>
+        <span style="font-size:12px;color:var(--color-text-secondary);white-space:nowrap" id="quota-remain">12 hrs left</span>
       </div>
       <div style="display:flex;justify-content:space-between;align-items:center">
         <span style="font-size:13px;color:var(--color-text-secondary)">Active bookings</span>
-        <span class="badge badge-ok" id="booking-badge">1 of 2 max</span>
+        <span class="badge badge-ok" id="booking-badge">0 of 2 max</span>
       </div>
     </div>
     <div class="card">
@@ -232,7 +232,7 @@ input:focus, select:focus { outline: 2px solid var(--green); border-color: trans
         <span style="font-size:13px;color:var(--color-text-secondary)">Stop charging at</span>
         <span style="font-size:14px;font-weight:500;color:var(--green)" id="target-out">80%</span>
       </div>
-      <input type="range" min="50" max="100" step="5" value="80" id="target-slider" oninput="updateTarget(this.value)" style="width:100%;margin:4px 0 2px">
+      <input type="range" min="50" max="100" step="5" value="80" oninput="updateTarget(this.value)" style="width:100%;margin:4px 0 2px">
       <div class="charge-labels"><span>50%</span><span>80% recommended</span><span>100%</span></div>
       <div class="alert alert-info" style="margin-bottom:0;font-size:12px" id="grace-info-msg"></div>
     </div>
@@ -319,40 +319,14 @@ input:focus, select:focus { outline: 2px solid var(--green); border-color: trans
         Flags only trigger when another resident had a booking queued for that station. Low-demand overruns are logged but not flagged.
       </div>
       <div class="card">
-        <div class="section-label">Active flags — demand-triggered</div>
-        <div class="flag-row">
-          <div>
-            <div style="font-weight:500;font-size:13px">Unit 204 — Station A1</div>
-            <div style="font-size:12px;color:var(--color-text-secondary)">Today · 10:00 AM · 47 min overdue · next booking was queued</div>
-          </div>
-          <span class="badge badge-err">Flagged</span>
-        </div>
-        <div class="flag-row">
-          <div>
-            <div style="font-weight:500;font-size:13px">Unit 102 — Station B1</div>
-            <div style="font-size:12px;color:var(--color-text-secondary)">Yesterday · 2:00 PM · 31 min overdue · next booking was queued</div>
-          </div>
-          <span class="badge badge-warn">Resolved</span>
-        </div>
+        <div class="section-label">Active flags</div>
+        <p style="font-size:13px;color:var(--color-text-secondary);padding:8px 0">No active flags.</p>
       </div>
       <div class="card">
         <div class="section-label">No-demand overruns (logged only)</div>
-        <div class="flag-row">
-          <div>
-            <div style="font-weight:500;font-size:13px">Unit 301 — Station B2</div>
-            <div style="font-size:12px;color:var(--color-text-secondary)">Mon · 11:00 PM · 2 hrs overrun · no next booking — not flagged</div>
-          </div>
-          <span class="badge badge-ok">No flag</span>
-        </div>
-        <div class="flag-row">
-          <div>
-            <div style="font-weight:500;font-size:13px">Unit 203 — Station A2</div>
-            <div style="font-size:12px;color:var(--color-text-secondary)">Sat · 1:00 AM · 90 min overrun · no next booking — not flagged</div>
-          </div>
-          <span class="badge badge-ok">No flag</span>
-        </div>
+        <p style="font-size:13px;color:var(--color-text-secondary);padding:8px 0">No overruns logged.</p>
       </div>
-      <button class="primary-btn" style="margin-top:0" onclick="alert('In production: sends warning to flagged units only.')">Notify flagged residents</button>
+      <button class="primary-btn" style="margin-top:0" onclick="alert('No flagged residents to notify.')">Notify flagged residents</button>
     </div>
     <div class="admin-panel" id="panel-usage">
       <div class="card">
@@ -407,27 +381,18 @@ input:focus, select:focus { outline: 2px solid var(--green); border-color: trans
 
 <script>
 const RESIDENTS={
-  '101':{ phone:'5125550101', email:'res101@oakwood.com', hoursUsed:1,  activeBookings:0, flags:0 },
-  '102':{ phone:'5125550102', email:'res102@oakwood.com', hoursUsed:5,  activeBookings:1, flags:1 },
-  '103':{ phone:'5125550103', email:'res103@oakwood.com', hoursUsed:0,  activeBookings:0, flags:0 },
-  '201':{ phone:'5125550201', email:'res201@oakwood.com', hoursUsed:10, activeBookings:2, flags:0 },
-  '202':{ phone:'5125550202', email:'res202@oakwood.com', hoursUsed:2,  activeBookings:0, flags:0 },
-  '203':{ phone:'5125550203', email:'res203@oakwood.com', hoursUsed:4,  activeBookings:1, flags:0 },
-  '204':{ phone:'5125550204', email:'res204@oakwood.com', hoursUsed:9,  activeBookings:2, flags:3 },
-  '301':{ phone:'5125550301', email:'res301@oakwood.com', hoursUsed:0,  activeBookings:0, flags:0 },
-  '302':{ phone:'5125550302', email:'res302@oakwood.com', hoursUsed:7,  activeBookings:1, flags:0 },
-  '303':{ phone:'5125550303', email:'res303@oakwood.com', hoursUsed:12, activeBookings:2, flags:0 },
+  '101':{ phone:'5125550101', email:'res101@bookev.com', hoursUsed:0, activeBookings:0, flags:0 },
+  '202':{ phone:'5125550202', email:'res202@bookev.com', hoursUsed:0, activeBookings:0, flags:0 },
+  '303':{ phone:'5125550303', email:'res303@bookev.com', hoursUsed:0, activeBookings:0, flags:0 },
 };
 const MAX_BOOKINGS=2, WEEKLY_CAP=12;
 const STATIONS=[
   { id:'A1', label:'Station A1', level:'Level 2 · 7.2 kW', status:'available' },
-  { id:'A2', label:'Station A2', level:'Level 2 · 7.2 kW', status:'grace' },
-  { id:'B1', label:'Station B1', level:'DC Fast · 50 kW',  status:'busy' },
+  { id:'A2', label:'Station A2', level:'Level 2 · 7.2 kW', status:'available' },
+  { id:'B1', label:'Station B1', level:'DC Fast · 50 kW',  status:'available' },
   { id:'B2', label:'Station B2', level:'DC Fast · 50 kW',  status:'available' },
 ];
-const TAKEN_SLOTS ={ 'A1':['9:00 AM','11:00 AM'], 'B1':['10:00 AM','12:00 PM','2:00 PM'], 'A2':['8:00 AM'] };
-const GRACE_SLOTS ={ 'A2':['9:00 AM'] };
-const DEMAND_SLOTS={ 'A1':['9:00 AM','10:00 AM','11:00 AM','12:00 PM','1:00 PM'], 'B1':['10:00 AM','11:00 AM','12:00 PM','1:00 PM','2:00 PM','3:00 PM'] };
+const TAKEN_SLOTS={}, GRACE_SLOTS={}, DEMAND_SLOTS={};
 
 let userType='resident', residentMethod='phone', guestMethod='phone';
 let selectedStation=null, selectedSlot=null, selectedDur=1, selectedDurLabel='1 hr';
@@ -436,7 +401,7 @@ let chargeTarget=80, confirmedContact='', currentUnit='', slotHasDemand=false;
 function setType(t){ userType=t; ['resident','guest'].forEach(x=>document.getElementById('btn-'+x).className='flex-btn lg'+(t===x?' active':'')); document.getElementById('resident-fields').style.display=t==='resident'?'':'none'; document.getElementById('guest-fields').style.display=t==='guest'?'':'none'; hideErr('home-err'); }
 function setResidentMethod(m){ residentMethod=m; ['phone','email'].forEach(x=>document.getElementById('rbtn-'+x).className='flex-btn'+(m===x?' active':'')); document.getElementById('r-phone-field').style.display=m==='phone'?'':'none'; document.getElementById('r-email-field').style.display=m==='email'?'':'none'; }
 function setGuestMethod(m){ guestMethod=m; ['phone','email'].forEach(x=>document.getElementById('gbtn-'+x).className='flex-btn'+(m===x?' active':'')); document.getElementById('g-phone-field').style.display=m==='phone'?'':'none'; document.getElementById('g-email-field').style.display=m==='email'?'':'none'; }
-function formatPhone(input){ let v=input.value.replace(/\D/g,'').slice(0,10); if(v.length>6) v='('+v.slice(0,3)+') '+v.slice(3,6)+'-'+v.slice(6); else if(v.length>3) v='('+v.slice(0,3)+') '+v.slice(3); else if(v.length>0) v='('+v; input.value=v; }
+function formatPhone(i){ let v=i.value.replace(/\D/g,'').slice(0,10); if(v.length>6) v='('+v.slice(0,3)+') '+v.slice(3,6)+'-'+v.slice(6); else if(v.length>3) v='('+v.slice(0,3)+') '+v.slice(3); else if(v.length>0) v='('+v; i.value=v; }
 function getDigits(s){ return s.replace(/\D/g,''); }
 function showErr(id,msg){ const el=document.getElementById(id); el.textContent=msg; el.style.display=''; }
 function hideErr(id){ document.getElementById(id).style.display='none'; }
@@ -450,16 +415,16 @@ function validateIdentity(){
     if(!unit){ showErr('home-err','Please enter your unit number.'); return; }
     const res=RESIDENTS[unit];
     if(!res){ showErr('home-err','Unit '+unit+' not found.'); return; }
-    if(res.flags>=3){ showErr('home-err','Booking access for unit '+unit+' is suspended due to repeated violations. Please contact management.'); return; }
+    if(res.flags>=3){ showErr('home-err','Booking access for unit '+unit+' is suspended. Please contact management.'); return; }
     if(residentMethod==='phone'){ const ph=getDigits(document.getElementById('phone').value); if(ph.length!==10){ showErr('home-err','Please enter a valid 10-digit phone number.'); return; } if(res.phone!==ph){ showErr('home-err','Phone number does not match records for unit '+unit+'.'); return; } confirmedContact=maskPhone(ph); }
-    else { const em=document.getElementById('email').value.trim().toLowerCase(); if(!em.includes('@')){ showErr('home-err','Please enter a valid email address.'); return; } if(res.email!==em){ showErr('home-err','Email does not match records for unit '+unit+'.'); return; } confirmedContact=maskEmail(em); }
+    else{ const em=document.getElementById('email').value.trim().toLowerCase(); if(!em.includes('@')){ showErr('home-err','Please enter a valid email address.'); return; } if(res.email!==em){ showErr('home-err','Email does not match records for unit '+unit+'.'); return; } confirmedContact=maskEmail(em); }
     currentUnit=unit; document.getElementById('pick-sub').textContent='Unit '+unit+' · Resident'; loadQuota(unit); goTo('screen-pick');
   } else {
     const name=document.getElementById('guest-name').value.trim(), hostUnit=document.getElementById('host-unit').value.trim();
     if(!name){ showErr('home-err','Please enter your name.'); return; }
     if(!RESIDENTS[hostUnit]){ showErr('home-err','Host unit '+hostUnit+' not found.'); return; }
     if(guestMethod==='phone'){ const p=getDigits(document.getElementById('guest-phone').value); if(p.length!==10){ showErr('home-err','Please enter a valid phone number.'); return; } confirmedContact=maskPhone(p); document.getElementById('otp-desc').textContent='A 4-digit code has been texted to the host at unit '+hostUnit+'. Ask them to share it.'; }
-    else { const e=document.getElementById('guest-email').value.trim(); if(!e.includes('@')){ showErr('home-err','Please enter a valid email.'); return; } confirmedContact=maskEmail(e); document.getElementById('otp-desc').textContent='A 4-digit code has been emailed to the host at unit '+hostUnit+'. Ask them to share it.'; }
+    else{ const e=document.getElementById('guest-email').value.trim(); if(!e.includes('@')){ showErr('home-err','Please enter a valid email.'); return; } confirmedContact=maskEmail(e); document.getElementById('otp-desc').textContent='A 4-digit code has been emailed to the host at unit '+hostUnit+'. Ask them to share it.'; }
     document.getElementById('otp-header-sub').textContent='Host: unit '+hostUnit; document.getElementById('pick-sub').textContent=name+' · Guest of unit '+hostUnit; currentUnit='guest'; goTo('screen-otp');
   }
 }
@@ -468,7 +433,7 @@ function pinNext(el,i){ el.value=el.value.slice(-1); if(el.value&&i<3) document.
 function verifyOTP(){ const code=[0,1,2,3].map(i=>document.getElementById('p'+i).value).join(''); if(code.length<4){ showErr('otp-err','Please enter all 4 digits.'); return; } if(code!=='4729'){ showErr('otp-err','Incorrect code.'); return; } goTo('screen-pick'); }
 function buildStations(){ const grid=document.getElementById('station-grid'); grid.innerHTML=''; STATIONS.forEach(s=>{ const div=document.createElement('div'); div.className='station-card '+s.status; div.dataset.id=s.id; div.dataset.status=s.status; const color=s.status==='grace'?'var(--amber)':s.status==='busy'?'var(--gray-mid)':'var(--green)'; const txt=s.status==='grace'?'⏱ Grace period':s.status==='busy'?'● Occupied':'● Available'; div.innerHTML='<div class="station-icon">⚡</div><div class="station-name">'+s.label+'</div><div class="station-status" style="color:'+color+'">'+s.level+'</div><div class="station-status" style="color:'+color+'">'+txt+'</div>'; if(s.status==='available') div.onclick=()=>selectStation(s.id); grid.appendChild(div); }); }
 function selectStation(id){ selectedStation=id; selectedSlot=null; slotHasDemand=false; document.querySelectorAll('.station-card').forEach(c=>{ if(c.dataset.status==='available') c.className='station-card '+(c.dataset.id===id?'selected':'available'); }); document.getElementById('slot-card').style.display=''; document.getElementById('charge-card').style.display='none'; document.getElementById('dur-card').style.display='none'; buildSlots(id); const fp=Math.round(40+Math.random()*35); document.getElementById('current-pct').textContent=fp+'%'; document.getElementById('current-bar').style.width=fp+'%'; const ds=DEMAND_SLOTS[id]||[], hd=ds.length>=4, pill=document.getElementById('demand-pill-slot'); pill.textContent=hd?'High demand':'Low demand'; pill.className='demand-pill '+(hd?'demand-high':'demand-low'); }
-function buildSlots(stId){ const scroll=document.getElementById('slot-scroll'); scroll.innerHTML=''; const hours=['8:00 AM','9:00 AM','10:00 AM','11:00 AM','12:00 PM','1:00 PM','2:00 PM','3:00 PM','4:00 PM','5:00 PM','6:00 PM','7:00 PM','8:00 PM']; const taken=TAKEN_SLOTS[stId]||[], grace=GRACE_SLOTS[stId]||[]; hours.forEach(h=>{ const div=document.createElement('div'); if(grace.includes(h)){ div.className='time-slot grace-slot'; div.textContent=h+' (grace)'; } else if(taken.includes(h)){ div.className='time-slot taken'; div.textContent=h; } else { div.className='time-slot'+(selectedSlot===h?' selected':''); div.textContent=h; div.onclick=()=>selectSlot(h,stId); } scroll.appendChild(div); }); }
+function buildSlots(stId){ const scroll=document.getElementById('slot-scroll'); scroll.innerHTML=''; const hours=['8:00 AM','9:00 AM','10:00 AM','11:00 AM','12:00 PM','1:00 PM','2:00 PM','3:00 PM','4:00 PM','5:00 PM','6:00 PM','7:00 PM','8:00 PM']; const taken=TAKEN_SLOTS[stId]||[], grace=GRACE_SLOTS[stId]||[]; hours.forEach(h=>{ const div=document.createElement('div'); if(grace.includes(h)){ div.className='time-slot grace-slot'; div.textContent=h+' (grace)'; } else if(taken.includes(h)){ div.className='time-slot taken'; div.textContent=h; } else{ div.className='time-slot'+(selectedSlot===h?' selected':''); div.textContent=h; div.onclick=()=>selectSlot(h,stId); } scroll.appendChild(div); }); }
 function selectSlot(slot,stId){ selectedSlot=slot; document.querySelectorAll('.time-slot:not(.taken):not(.grace-slot)').forEach(el=>{ el.className='time-slot'+(el.textContent===slot?' selected':''); }); const ds=DEMAND_SLOTS[stId||selectedStation]||[]; slotHasDemand=ds.includes(slot); document.getElementById('charge-card').style.display=''; document.getElementById('dur-card').style.display=''; const msg=slotHasDemand?'The next slot on this station is booked. You\'ll have 30 min after your charge target is reached to unplug. Staying beyond that will be flagged.':'No bookings follow your slot on this station right now. You won\'t be flagged if you take a bit longer — but please unplug when you\'re done.'; const el=document.getElementById('grace-info-msg'); el.textContent=msg; el.className='alert '+(slotHasDemand?'alert-warn':'alert-ok'); el.style.marginBottom='0'; el.style.fontSize='12px'; hideErr('pick-err'); }
 function updateTarget(v){ chargeTarget=parseInt(v); document.getElementById('target-out').textContent=v+'%'; }
 function setDur(hrs,label){ selectedDur=hrs; selectedDurLabel=label; ['d1','d2','d4','d8'].forEach(id=>document.getElementById(id).className='flex-btn'); document.getElementById('d'+hrs).className='flex-btn active'; }
@@ -476,7 +441,7 @@ function updateSlots(){ if(selectedStation) buildSlots(selectedStation); selecte
 function goConfirm(){ if(!selectedStation){ showErr('pick-err','Please select a station.'); return; } if(!selectedSlot){ showErr('pick-err','Please select a start time.'); return; } if(!document.getElementById('date-pick').value){ showErr('pick-err','Please select a date.'); return; } if(currentUnit!=='guest'){ const res=RESIDENTS[currentUnit]; if(res.activeBookings>=MAX_BOOKINGS){ showErr('pick-err','You\'ve reached your limit of '+MAX_BOOKINGS+' active bookings. Cancel an existing one first.'); return; } if(res.hoursUsed>=WEEKLY_CAP){ showErr('pick-err','You\'ve reached your '+WEEKLY_CAP+'-hour weekly cap. Your limit resets next Monday.'); return; } } hideErr('pick-err'); const dateStr=new Date(document.getElementById('date-pick').value+'T12:00:00').toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'}), stName=STATIONS.find(s=>s.id===selectedStation).label; document.getElementById('c-station').textContent=stName; document.getElementById('c-date').textContent=dateStr; document.getElementById('c-time').textContent=selectedSlot; document.getElementById('c-target').textContent=chargeTarget+'% (via vehicle sync)'; document.getElementById('c-dur').textContent=selectedDurLabel+' fallback cap'; document.getElementById('c-grace').textContent=slotHasDemand?'30 min — next slot is booked':'No strict limit — no bookings follow'; const wb=document.getElementById('confirm-warn-block'); wb.innerHTML=slotHasDemand?'<div class="alert alert-warn">The slot after yours is booked. You\'ll have 30 minutes to unplug after your charge target is reached. Failing to do so will be flagged and reported to management.</div>':'<div class="alert alert-ok">No one is booked after you on this station, so there\'s no strict move-by time. We\'ll still remind you to unplug when done.</div>'; goTo('screen-confirm'); }
 function confirmBooking(){ const btn=document.getElementById('confirm-btn'); btn.disabled=true; btn.innerHTML='<span class="spinner"></span> Confirming…'; setTimeout(()=>{ document.getElementById('success-msg').textContent=document.getElementById('pick-sub').textContent+' · '+document.getElementById('c-date').textContent+' at '+selectedSlot; document.getElementById('s-grace-detail').textContent=slotHasDemand?'30 min to unplug after charge complete':'No time pressure — station is free after you'; document.getElementById('s-overdue-detail').textContent=slotHasDemand?'Flagged & admin notified':'Logged only, no flag issued'; document.getElementById('s-overdue-detail').style.color=slotHasDemand?'var(--red)':'var(--color-text-primary)'; btn.disabled=false; btn.innerHTML='Confirm Booking'; goTo('screen-success'); },1400); }
 function setTab(t){ ['flags','usage','settings'].forEach(x=>{ document.getElementById('tab-'+x).className='tab'+(t===x?' active':''); document.getElementById('panel-'+x).className='admin-panel'+(t===x?' active':''); }); if(t==='usage') buildUsage(); }
-function buildUsage(){ const ul=document.getElementById('usage-list'); ul.innerHTML=''; Object.entries(RESIDENTS).forEach(([unit,r])=>{ const pct=Math.min(100,Math.round(r.hoursUsed/WEEKLY_CAP*100)); ul.innerHTML+='<div style="margin-bottom:10px"><div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:3px"><span style="color:var(--color-text-secondary)">Unit '+unit+'</span><span style="font-weight:500">'+r.hoursUsed+'/'+WEEKLY_CAP+' hrs</span></div><div class="usage-bar-wrap"><div class="usage-bar'+(pct>=100?' full':pct>=75?' warn':'')+'" style="width:'+pct+'%"></div></div></div>'; }); const sl=document.getElementById('station-usage-list'); sl.innerHTML=''; [{name:'Station A1',pct:72},{name:'Station A2',pct:45},{name:'Station B1',pct:91},{name:'Station B2',pct:30}].forEach(s=>{ sl.innerHTML+='<div style="margin-bottom:10px"><div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:3px"><span style="color:var(--color-text-secondary)">'+s.name+'</span><span style="font-weight:500">'+s.pct+'%</span></div><div class="usage-bar-wrap"><div class="usage-bar'+(s.pct>=90?' full':s.pct>=70?' warn':'')+'" style="width:'+s.pct+'%"></div></div></div>'; }); }
+function buildUsage(){ const ul=document.getElementById('usage-list'); ul.innerHTML=''; Object.entries(RESIDENTS).forEach(([unit,r])=>{ const pct=Math.min(100,Math.round(r.hoursUsed/WEEKLY_CAP*100)); ul.innerHTML+='<div style="margin-bottom:10px"><div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:3px"><span style="color:var(--color-text-secondary)">Unit '+unit+'</span><span style="font-weight:500">'+r.hoursUsed+'/'+WEEKLY_CAP+' hrs</span></div><div class="usage-bar-wrap"><div class="usage-bar'+(pct>=100?' full':pct>=75?' warn':'')+'" style="width:'+Math.max(pct,2)+'%"></div></div></div>'; }); const sl=document.getElementById('station-usage-list'); sl.innerHTML=''; [{name:'Station A1',pct:0},{name:'Station A2',pct:0},{name:'Station B1',pct:0},{name:'Station B2',pct:0}].forEach(s=>{ sl.innerHTML+='<div style="margin-bottom:10px"><div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:3px"><span style="color:var(--color-text-secondary)">'+s.name+'</span><span style="font-weight:500">'+s.pct+'%</span></div><div class="usage-bar-wrap"><div class="usage-bar" style="width:2%"></div></div></div>'; }); }
 function goTo(id){ document.querySelectorAll('.screen').forEach(s=>s.className='screen'); document.getElementById(id).className='screen active'; window.scrollTo(0,0); }
 function goHome(){ selectedStation=null; selectedSlot=null; selectedDur=1; selectedDurLabel='1 hr'; chargeTarget=80; confirmedContact=''; currentUnit=''; slotHasDemand=false; ['unit','phone','email','guest-name','host-unit','guest-phone','guest-email'].forEach(id=>{ const el=document.getElementById(id); if(el) el.value=''; }); [0,1,2,3].forEach(i=>document.getElementById('p'+i).value=''); setType('resident'); setResidentMethod('phone'); setGuestMethod('phone'); goTo('screen-home'); }
 const obs=new MutationObserver(()=>{ if(document.getElementById('screen-pick').classList.contains('active')){ const t=new Date(),y=t.getFullYear(),m=String(t.getMonth()+1).padStart(2,'0'),d=String(t.getDate()).padStart(2,'0'); document.getElementById('date-pick').value=y+'-'+m+'-'+d; document.getElementById('date-pick').min=y+'-'+m+'-'+d; buildStations(); ['slot-card','charge-card','dur-card'].forEach(id=>document.getElementById(id).style.display='none'); hideErr('pick-err'); } });
