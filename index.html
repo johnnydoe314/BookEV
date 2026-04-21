@@ -39,10 +39,10 @@ input:focus, select:focus { outline: 2px solid var(--green); border-color: trans
 .station-icon { font-size: 20px; margin-bottom: 4px; }
 .station-name { font-size: 13px; font-weight: 500; }
 .station-status { font-size: 11px; margin-top: 2px; }
-.slot-scroll { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 4px; }
-.slot-scroll::-webkit-scrollbar { height: 3px; }
-.slot-scroll::-webkit-scrollbar-thumb { background: var(--color-border-secondary); border-radius: 2px; }
-.time-slot { flex: 0 0 auto; padding: 8px 12px; border-radius: 8px; border: 1.5px solid var(--color-border-tertiary); background: var(--color-background-primary); font-size: 13px; cursor: pointer; transition: all 0.12s; white-space: nowrap; color: var(--color-text-primary); }
+.slot-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; max-height: 260px; overflow-y: auto; padding-right: 2px; }
+.slot-grid::-webkit-scrollbar { width: 3px; }
+.slot-grid::-webkit-scrollbar-thumb { background: var(--color-border-secondary); border-radius: 2px; }
+.time-slot { padding: 8px 4px; border-radius: 8px; border: 1.5px solid var(--color-border-tertiary); background: var(--color-background-primary); font-size: 12px; cursor: pointer; transition: all 0.12s; text-align: center; color: var(--color-text-primary); }
 .time-slot.taken { background: var(--color-background-secondary); color: var(--color-text-secondary); cursor: not-allowed; text-decoration: line-through; }
 .time-slot.grace-slot { background: var(--amber-light); color: var(--amber-dark); cursor: not-allowed; border-color: var(--amber); font-size: 11px; }
 .time-slot.selected { border-color: var(--green); background: var(--green-light); color: var(--green-dark); font-weight: 500; }
@@ -71,20 +71,20 @@ input:focus, select:focus { outline: 2px solid var(--green); border-color: trans
 .pin-input:focus { outline: 2px solid var(--green); border-color: transparent; }
 .spinner { display: inline-block; width: 18px; height: 18px; border: 2px solid rgba(255,255,255,0.4); border-top-color: white; border-radius: 50%; animation: spin 0.7s linear infinite; vertical-align: middle; }
 @keyframes spin { to { transform: rotate(360deg); } }
-.legend { display: flex; gap: 10px; flex-wrap: wrap; font-size: 11px; color: var(--color-text-secondary); margin-top: 6px; }
+.legend { display: flex; gap: 10px; flex-wrap: wrap; font-size: 11px; color: var(--color-text-secondary); margin-top: 8px; }
 .legend-dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; margin-right: 3px; }
 .usage-bar-wrap { flex: 1; background: var(--color-background-secondary); border-radius: 6px; height: 8px; overflow: hidden; }
 .usage-bar { height: 100%; border-radius: 6px; background: var(--green); transition: width 0.4s; }
 .usage-bar.warn { background: var(--amber); }
 .usage-bar.full { background: var(--red); }
-.flag-row { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 0.5px solid var(--color-border-tertiary); font-size: 13px; }
-.flag-row:last-child { border-bottom: none; }
 .badge { display: inline-block; padding: 2px 8px; border-radius: 20px; font-size: 11px; font-weight: 500; }
 .badge-ok { background: var(--green-light); color: var(--green-dark); }
 .badge-err { background: var(--red-light); color: var(--red-dark); }
 .badge-warn { background: var(--amber-light); color: var(--amber-dark); }
-.tab-bar { display: flex; border-bottom: 0.5px solid var(--color-border-tertiary); margin-bottom: 16px; }
-.tab { flex: 1; padding: 10px 4px; text-align: center; font-size: 13px; color: var(--color-text-secondary); cursor: pointer; border-bottom: 2px solid transparent; margin-bottom: -1px; }
+.badge-active { background: #E6F1FB; color: #0C447C; }
+.tab-bar { display: flex; border-bottom: 0.5px solid var(--color-border-tertiary); margin-bottom: 16px; overflow-x: auto; }
+.tab-bar::-webkit-scrollbar { display: none; }
+.tab { flex: 0 0 auto; padding: 10px 12px; text-align: center; font-size: 13px; color: var(--color-text-secondary); cursor: pointer; border-bottom: 2px solid transparent; margin-bottom: -1px; white-space: nowrap; }
 .tab.active { color: var(--green-dark); border-bottom-color: var(--green); font-weight: 500; }
 .admin-panel { display: none; }
 .admin-panel.active { display: block; }
@@ -92,6 +92,20 @@ input:focus, select:focus { outline: 2px solid var(--green); border-color: trans
 .demand-pill { display: inline-flex; align-items: center; gap: 4px; padding: 3px 8px; border-radius: 20px; font-size: 11px; font-weight: 500; }
 .demand-high { background: var(--amber-light); color: var(--amber-dark); }
 .demand-low { background: var(--green-light); color: var(--green-dark); }
+.booking-row { padding: 10px 0; border-bottom: 0.5px solid var(--color-border-tertiary); }
+.booking-row:last-child { border-bottom: none; }
+.booking-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px; }
+.booking-meta { font-size: 12px; color: var(--color-text-secondary); }
+.clock-display { font-size: 28px; font-weight: 500; text-align: center; padding: 16px 0 4px; letter-spacing: 0.02em; }
+.clock-date { font-size: 13px; color: var(--color-text-secondary); text-align: center; margin-bottom: 16px; }
+.stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 12px; }
+.stat-card { background: var(--color-background-secondary); border-radius: 8px; padding: 12px; text-align: center; }
+.stat-num { font-size: 24px; font-weight: 500; }
+.stat-label { font-size: 11px; color: var(--color-text-secondary); margin-top: 2px; }
+.station-timeline { margin-bottom: 8px; }
+.timeline-label { font-size: 12px; font-weight: 500; margin-bottom: 4px; display: flex; justify-content: space-between; align-items: center; }
+.timeline-bar-wrap { background: var(--color-background-secondary); border-radius: 6px; height: 20px; overflow: hidden; position: relative; }
+.timeline-segment { position: absolute; height: 100%; border-radius: 4px; display: flex; align-items: center; justify-content: center; font-size: 10px; color: white; overflow: hidden; white-space: nowrap; }
 </style>
 </head>
 <body>
@@ -216,9 +230,10 @@ input:focus, select:focus { outline: 2px solid var(--green); border-color: trans
         <span class="section-label" style="margin:0">Start time</span>
         <span id="demand-pill-slot" class="demand-pill demand-low">Low demand</span>
       </div>
-      <div class="slot-scroll" id="slot-scroll"></div>
-      <div class="legend" style="margin-top:8px">
-        <span><span class="legend-dot" style="background:var(--amber)"></span>Grace buffer (next booking queued)</span>
+      <div class="slot-grid" id="slot-grid"></div>
+      <div class="legend">
+        <span><span class="legend-dot" style="background:var(--amber)"></span>Grace buffer</span>
+        <span><span class="legend-dot" style="background:var(--color-background-secondary)"></span>Taken</span>
       </div>
     </div>
     <div class="card" id="charge-card" style="display:none">
@@ -234,7 +249,7 @@ input:focus, select:focus { outline: 2px solid var(--green); border-color: trans
       </div>
       <input type="range" min="50" max="100" step="5" value="80" oninput="updateTarget(this.value)" style="width:100%;margin:4px 0 2px">
       <div class="charge-labels"><span>50%</span><span>80% recommended</span><span>100%</span></div>
-      <div class="alert alert-ok" style="margin-bottom:0;font-size:12px" id="grace-info-msg">No bookings follow your slot on this station. You won't be flagged if you take a bit longer — but please unplug when you're done.</div>
+      <div class="alert alert-ok" style="margin-bottom:0;font-size:12px" id="grace-info-msg"></div>
     </div>
     <div class="card" id="dur-card" style="display:none">
       <div class="section-label">Max duration (fallback cap)</div>
@@ -242,7 +257,7 @@ input:focus, select:focus { outline: 2px solid var(--green); border-color: trans
         <button class="flex-btn active" onclick="setDur(1,'1 hr')" id="d1">1 hr</button>
         <button class="flex-btn" onclick="setDur(2,'2 hrs')" id="d2">2 hrs</button>
         <button class="flex-btn" onclick="setDur(4,'4 hrs')" id="d4">4 hrs</button>
-        <button class="flex-btn" onclick="setDur(8,'Overnight')" id="d8">Overnight</button>
+        <button class="flex-btn" onclick="setDur(8,'8 hrs')" id="d8">8 hrs</button>
       </div>
       <p class="method-hint" style="margin:0">If charge target can't be read, the session ends at this duration.</p>
     </div>
@@ -310,11 +325,50 @@ input:focus, select:focus { outline: 2px solid var(--green); border-color: trans
   </div>
   <div class="body">
     <div class="tab-bar">
-      <div class="tab active" onclick="setTab('flags')" id="tab-flags">Flags</div>
+      <div class="tab active" onclick="setTab('dashboard')" id="tab-dashboard">Dashboard</div>
+      <div class="tab" onclick="setTab('bookings')" id="tab-bookings">Bookings</div>
+      <div class="tab" onclick="setTab('flags')" id="tab-flags">Flags</div>
       <div class="tab" onclick="setTab('usage')" id="tab-usage">Usage</div>
       <div class="tab" onclick="setTab('settings')" id="tab-settings">Settings</div>
     </div>
-    <div class="admin-panel active" id="panel-flags">
+
+    <!-- DASHBOARD -->
+    <div class="admin-panel active" id="panel-dashboard">
+      <div class="clock-display" id="admin-clock">--:-- --</div>
+      <div class="clock-date" id="admin-date">Loading...</div>
+      <div class="stat-grid">
+        <div class="stat-card"><div class="stat-num" id="dash-active">0</div><div class="stat-label">Active now</div></div>
+        <div class="stat-card"><div class="stat-num" id="dash-today">0</div><div class="stat-label">Booked today</div></div>
+        <div class="stat-card"><div class="stat-num" id="dash-avail">4</div><div class="stat-label">Stations available</div></div>
+        <div class="stat-card"><div class="stat-num" id="dash-total">0</div><div class="stat-label">Total bookings</div></div>
+      </div>
+      <div class="card" style="margin-bottom:12px">
+        <div class="section-label">Station status now</div>
+        <div id="dash-station-status"></div>
+      </div>
+      <div class="card">
+        <div class="section-label">Today's timeline</div>
+        <div id="dash-timeline"></div>
+        <div class="legend" style="margin-top:8px">
+          <span><span class="legend-dot" style="background:#378ADD"></span>Booked</span>
+          <span><span class="legend-dot" style="background:var(--amber)"></span>Grace</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- BOOKINGS -->
+    <div class="admin-panel" id="panel-bookings">
+      <div class="card">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+          <div class="section-label" style="margin:0">All bookings</div>
+          <span class="badge badge-ok" id="bookings-count">0 total</span>
+        </div>
+        <div id="bookings-list"><p style="font-size:13px;color:var(--color-text-secondary);padding:8px 0">No bookings yet.</p></div>
+      </div>
+    </div>
+
+    <!-- FLAGS -->
+    <div class="admin-panel" id="panel-flags">
       <div class="alert alert-info" style="margin-bottom:12px;font-size:13px">Flags only trigger when another resident had a booking queued for that station. Low-demand overruns are logged but not flagged.</div>
       <div class="card">
         <div class="section-label">Active flags</div>
@@ -326,16 +380,20 @@ input:focus, select:focus { outline: 2px solid var(--green); border-color: trans
       </div>
       <button class="primary-btn" style="margin-top:0" onclick="alert('No flagged residents to notify.')">Notify flagged residents</button>
     </div>
+
+    <!-- USAGE -->
     <div class="admin-panel" id="panel-usage">
       <div class="card">
         <div class="section-label">Weekly hours used by unit (cap: 12 hrs)</div>
         <div id="usage-list"></div>
       </div>
       <div class="card">
-        <div class="section-label">Station utilization today</div>
+        <div class="section-label">Station bookings this session</div>
         <div id="station-usage-list"></div>
       </div>
     </div>
+
+    <!-- SETTINGS -->
     <div class="admin-panel" id="panel-settings">
       <div class="card">
         <div class="section-label">Booking limits</div>
@@ -361,7 +419,7 @@ input:focus, select:focus { outline: 2px solid var(--green); border-color: trans
           <span style="font-size:14px;font-weight:500" id="grace-out">30 min</span>
         </div>
         <input type="range" min="10" max="60" step="5" value="30" oninput="document.getElementById('grace-out').textContent=this.value+' min'" style="width:100%">
-        <p class="method-hint" style="margin-top:8px;margin-bottom:0">Grace period and flags only apply when the next slot on that station is booked.</p>
+        <p class="method-hint" style="margin-top:8px;margin-bottom:0">Only applies when the next slot is booked.</p>
       </div>
       <div class="card">
         <div class="section-label">Violation policy</div>
@@ -384,7 +442,6 @@ const RESIDENTS={
   '303':{ phone:'5125550303', email:'res303@bookev.com', hoursUsed:0, activeBookings:0, flags:0 },
 };
 const MAX_BOOKINGS=2, WEEKLY_CAP=12;
-
 const STATION_DEFS=[
   { id:'A1', label:'Station A1', level:'Level 2 · 7.2 kW' },
   { id:'A2', label:'Station A2', level:'Level 2 · 7.2 kW' },
@@ -392,29 +449,51 @@ const STATION_DEFS=[
   { id:'B2', label:'Station B2', level:'DC Fast · 50 kW' },
 ];
 
-let bookings=[];
+const ALL_HOURS=[];
+for(let h=0;h<24;h++){
+  const ampm=h<12?'AM':'PM', hr=h===0?12:h>12?h-12:h;
+  ALL_HOURS.push(hr+':00 '+ampm);
+}
 
+let bookings=[];
 let userType='resident', residentMethod='phone', guestMethod='phone';
 let selectedStation=null, selectedSlot=null, selectedDur=1, selectedDurLabel='1 hr';
 let chargeTarget=80, currentUnit='', slotHasDemand=false;
 
+function getBookedHours(stId, dateVal){
+  const result=new Set();
+  bookings.filter(b=>b.station===stId&&b.date===dateVal).forEach(b=>{
+    const idx=ALL_HOURS.indexOf(b.slot);
+    for(let i=0;i<b.dur&&idx+i<24;i++) result.add(ALL_HOURS[idx+i]);
+  });
+  return result;
+}
+function getGraceHours(stId, dateVal){
+  const result=new Set();
+  bookings.filter(b=>b.station===stId&&b.date===dateVal).forEach(b=>{
+    const idx=ALL_HOURS.indexOf(b.slot);
+    const endIdx=idx+b.dur;
+    if(endIdx<24) result.add(ALL_HOURS[endIdx]);
+  });
+  return result;
+}
 function getStationStatus(stId, dateVal){
-  const b=bookings.filter(b=>b.station===stId && b.date===dateVal);
-  if(b.some(b=>b.status==='active')) return 'busy';
-  if(b.some(b=>b.status==='grace')) return 'grace';
+  const now=new Date(), todayVal=toDateVal(now);
+  if(dateVal!==todayVal) return 'available';
+  const curHr=now.getHours(), curSlot=ALL_HOURS[curHr];
+  const booked=getBookedHours(stId,dateVal);
+  if(booked.has(curSlot)) return 'busy';
+  const grace=getGraceHours(stId,dateVal);
+  if(grace.has(curSlot)) return 'grace';
   return 'available';
 }
-function getTakenSlots(stId, dateVal){
-  return bookings.filter(b=>b.station===stId && b.date===dateVal).map(b=>b.slot);
-}
-function getGraceSlots(stId, dateVal){
-  return bookings.filter(b=>b.station===stId && b.date===dateVal && b.status==='grace').map(b=>{ const hrs=['8:00 AM','9:00 AM','10:00 AM','11:00 AM','12:00 PM','1:00 PM','2:00 PM','3:00 PM','4:00 PM','5:00 PM','6:00 PM','7:00 PM','8:00 PM']; const idx=hrs.indexOf(b.slot); return idx>=0&&idx+1<hrs.length?hrs[idx+1]:null; }).filter(Boolean); }
 function slotIsFollowed(stId, dateVal, slot){
-  const hrs=['8:00 AM','9:00 AM','10:00 AM','11:00 AM','12:00 PM','1:00 PM','2:00 PM','3:00 PM','4:00 PM','5:00 PM','6:00 PM','7:00 PM','8:00 PM'];
-  const idx=hrs.indexOf(slot);
-  if(idx<0||idx+1>=hrs.length) return false;
-  return bookings.some(b=>b.station===stId && b.date===dateVal && b.slot===hrs[idx+1]);
+  const idx=ALL_HOURS.indexOf(slot);
+  if(idx<0||idx+selectedDur>=24) return false;
+  const nextSlot=ALL_HOURS[idx+selectedDur];
+  return bookings.some(b=>b.station===stId&&b.date===dateVal&&b.slot===nextSlot);
 }
+function toDateVal(d){ return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); }
 
 function setType(t){ userType=t; ['resident','guest'].forEach(x=>document.getElementById('btn-'+x).className='flex-btn lg'+(t===x?' active':'')); document.getElementById('resident-fields').style.display=t==='resident'?'':'none'; document.getElementById('guest-fields').style.display=t==='guest'?'':'none'; hideErr('home-err'); }
 function setResidentMethod(m){ residentMethod=m; ['phone','email'].forEach(x=>document.getElementById('rbtn-'+x).className='flex-btn'+(m===x?' active':'')); document.getElementById('r-phone-field').style.display=m==='phone'?'':'none'; document.getElementById('r-email-field').style.display=m==='email'?'':'none'; }
@@ -454,9 +533,7 @@ function buildStations(){
   const grid=document.getElementById('station-grid'); grid.innerHTML='';
   const dateVal=document.getElementById('date-pick').value;
   selectedSlot=null; slotHasDemand=false;
-  document.getElementById('slot-card').style.display='none';
-  document.getElementById('charge-card').style.display='none';
-  document.getElementById('dur-card').style.display='none';
+  ['slot-card','charge-card','dur-card'].forEach(id=>document.getElementById(id).style.display='none');
   STATION_DEFS.forEach(s=>{
     const status=dateVal?getStationStatus(s.id,dateVal):'available';
     const div=document.createElement('div');
@@ -472,28 +549,25 @@ function buildStations(){
 function selectStation(id){
   selectedStation=id; selectedSlot=null; slotHasDemand=false;
   document.querySelectorAll('.station-card').forEach(c=>{ if(c.dataset.status==='available') c.className='station-card '+(c.dataset.id===id?'selected':'available'); });
-  document.getElementById('slot-card').style.display='';
-  document.getElementById('charge-card').style.display='none';
-  document.getElementById('dur-card').style.display='none';
+  document.getElementById('slot-card').style.display=''; document.getElementById('charge-card').style.display='none'; document.getElementById('dur-card').style.display='none';
   buildSlots(id);
   const fp=Math.round(40+Math.random()*35); document.getElementById('current-pct').textContent=fp+'%'; document.getElementById('current-bar').style.width=fp+'%';
   const dateVal=document.getElementById('date-pick').value;
-  const takenCount=getTakenSlots(id,dateVal).length;
+  const takenCount=getBookedHours(id,dateVal).size;
   const pill=document.getElementById('demand-pill-slot');
-  pill.textContent=takenCount>=4?'High demand':'Low demand'; pill.className='demand-pill '+(takenCount>=4?'demand-high':'demand-low');
+  pill.textContent=takenCount>=6?'High demand':'Low demand'; pill.className='demand-pill '+(takenCount>=6?'demand-high':'demand-low');
 }
 
 function buildSlots(stId){
-  const scroll=document.getElementById('slot-scroll'); scroll.innerHTML='';
+  const grid=document.getElementById('slot-grid'); grid.innerHTML='';
   const dateVal=document.getElementById('date-pick').value;
-  const hours=['8:00 AM','9:00 AM','10:00 AM','11:00 AM','12:00 PM','1:00 PM','2:00 PM','3:00 PM','4:00 PM','5:00 PM','6:00 PM','7:00 PM','8:00 PM'];
-  const taken=getTakenSlots(stId,dateVal), grace=getGraceSlots(stId,dateVal);
-  hours.forEach(h=>{
+  const taken=getBookedHours(stId,dateVal), grace=getGraceHours(stId,dateVal);
+  ALL_HOURS.forEach(h=>{
     const div=document.createElement('div');
-    if(grace.includes(h)){ div.className='time-slot grace-slot'; div.textContent=h+' (grace)'; }
-    else if(taken.includes(h)){ div.className='time-slot taken'; div.textContent=h; }
+    if(grace.has(h)){ div.className='time-slot grace-slot'; div.textContent=h; }
+    else if(taken.has(h)){ div.className='time-slot taken'; div.textContent=h; }
     else{ div.className='time-slot'+(selectedSlot===h?' selected':''); div.textContent=h; div.onclick=()=>selectSlot(h,stId); }
-    scroll.appendChild(div);
+    grid.appendChild(div);
   });
 }
 
@@ -503,12 +577,17 @@ function selectSlot(slot,stId){
   const dateVal=document.getElementById('date-pick').value;
   slotHasDemand=slotIsFollowed(stId||selectedStation,dateVal,slot);
   document.getElementById('charge-card').style.display=''; document.getElementById('dur-card').style.display='';
-  const msg=slotHasDemand?'The next slot on this station is booked. You\'ll have 30 min after your charge target is reached to unplug. Staying beyond that will be flagged.':'No bookings follow your slot on this station. You won\'t be flagged if you take a bit longer — but please unplug when you\'re done.';
+  const msg=slotHasDemand?'The next slot on this station is booked. You\'ll have 30 min after your charge target is reached to unplug. Staying beyond that will be flagged.':'No bookings follow your slot right now. You won\'t be flagged if you take a bit longer — but please unplug when done.';
   const el=document.getElementById('grace-info-msg'); el.textContent=msg; el.className='alert '+(slotHasDemand?'alert-warn':'alert-ok'); el.style.marginBottom='0'; el.style.fontSize='12px';
   hideErr('pick-err');
 }
 function updateTarget(v){ chargeTarget=parseInt(v); document.getElementById('target-out').textContent=v+'%'; }
-function setDur(hrs,label){ selectedDur=hrs; selectedDurLabel=label; ['d1','d2','d4','d8'].forEach(id=>document.getElementById(id).className='flex-btn'); document.getElementById('d'+hrs).className='flex-btn active'; }
+function setDur(hrs,label){
+  selectedDur=hrs; selectedDurLabel=label;
+  ['d1','d2','d4','d8'].forEach(id=>document.getElementById(id).className='flex-btn');
+  document.getElementById('d'+hrs).className='flex-btn active';
+  if(selectedSlot&&selectedStation){ const dateVal=document.getElementById('date-pick').value; slotHasDemand=slotIsFollowed(selectedStation,dateVal,selectedSlot); buildSlots(selectedStation); document.querySelectorAll('.time-slot:not(.taken):not(.grace-slot)').forEach(el=>{ if(el.textContent===selectedSlot) el.className='time-slot selected'; }); }
+}
 
 function goConfirm(){
   if(!selectedStation){ showErr('pick-err','Please select a station.'); return; }
@@ -519,8 +598,14 @@ function goConfirm(){
   hideErr('pick-err');
   const dateStr=new Date(dateVal+'T12:00:00').toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'});
   const stName=STATION_DEFS.find(s=>s.id===selectedStation).label;
-  document.getElementById('c-station').textContent=stName; document.getElementById('c-date').textContent=dateStr; document.getElementById('c-time').textContent=selectedSlot; document.getElementById('c-target').textContent=chargeTarget+'% (via vehicle sync)'; document.getElementById('c-dur').textContent=selectedDurLabel+' fallback cap'; document.getElementById('c-grace').textContent=slotHasDemand?'30 min — next slot is booked':'No strict limit — no bookings follow';
-  document.getElementById('confirm-warn-block').innerHTML=slotHasDemand?'<div class="alert alert-warn">The slot after yours is booked. You\'ll have 30 minutes to unplug after your charge target is reached.</div>':'<div class="alert alert-ok">No one is booked after you — no strict move-by time. We\'ll still remind you to unplug when done.</div>';
+  const idx=ALL_HOURS.indexOf(selectedSlot), endSlot=idx+selectedDur<24?ALL_HOURS[idx+selectedDur]:'midnight';
+  document.getElementById('c-station').textContent=stName;
+  document.getElementById('c-date').textContent=dateStr;
+  document.getElementById('c-time').textContent=selectedSlot+' → '+endSlot;
+  document.getElementById('c-target').textContent=chargeTarget+'% (via vehicle sync)';
+  document.getElementById('c-dur').textContent=selectedDurLabel+' fallback cap';
+  document.getElementById('c-grace').textContent=slotHasDemand?'30 min — next slot is booked':'No strict limit — no bookings follow';
+  document.getElementById('confirm-warn-block').innerHTML=slotHasDemand?'<div class="alert alert-warn">The slot after yours is booked. You\'ll have 30 minutes to unplug after your charge target is reached.</div>':'<div class="alert alert-ok">No one is booked after you — no strict move-by time. We\'ll remind you to unplug when done.</div>';
   goTo('screen-confirm');
 }
 
@@ -528,9 +613,10 @@ function confirmBooking(){
   const btn=document.getElementById('confirm-btn'); btn.disabled=true; btn.innerHTML='<span class="spinner"></span> Confirming…';
   setTimeout(()=>{
     const dateVal=document.getElementById('date-pick').value;
-    bookings.push({ station:selectedStation, date:dateVal, slot:selectedSlot, unit:currentUnit, status:'confirmed' });
+    bookings.push({ station:selectedStation, date:dateVal, slot:selectedSlot, dur:selectedDur, durLabel:selectedDurLabel, unit:currentUnit, target:chargeTarget, status:'confirmed', ts:Date.now() });
     if(currentUnit!=='guest'){ RESIDENTS[currentUnit].activeBookings++; RESIDENTS[currentUnit].hoursUsed+=selectedDur; }
-    document.getElementById('success-msg').textContent=document.getElementById('pick-sub').textContent+' · '+document.getElementById('c-date').textContent+' at '+selectedSlot;
+    const idx=ALL_HOURS.indexOf(selectedSlot), endSlot=idx+selectedDur<24?ALL_HOURS[idx+selectedDur]:'midnight';
+    document.getElementById('success-msg').textContent=document.getElementById('pick-sub').textContent+' · '+STATION_DEFS.find(s=>s.id===selectedStation).label+' · '+selectedSlot;
     document.getElementById('s-grace-detail').textContent=slotHasDemand?'30 min to unplug after charge complete':'No time pressure — station free after you';
     document.getElementById('s-overdue-detail').textContent=slotHasDemand?'Flagged & admin notified':'Logged only, no flag issued';
     document.getElementById('s-overdue-detail').style.color=slotHasDemand?'var(--red)':'var(--color-text-primary)';
@@ -539,17 +625,90 @@ function confirmBooking(){
   },1400);
 }
 
-function setTab(t){ ['flags','usage','settings'].forEach(x=>{ document.getElementById('tab-'+x).className='tab'+(t===x?' active':''); document.getElementById('panel-'+x).className='admin-panel'+(t===x?' active':''); }); if(t==='usage') buildUsage(); }
-function buildUsage(){ const ul=document.getElementById('usage-list'); ul.innerHTML=''; Object.entries(RESIDENTS).forEach(([unit,r])=>{ const pct=Math.min(100,Math.round(r.hoursUsed/WEEKLY_CAP*100)); ul.innerHTML+='<div style="margin-bottom:10px"><div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:3px"><span style="color:var(--color-text-secondary)">Unit '+unit+'</span><span style="font-weight:500">'+r.hoursUsed+'/'+WEEKLY_CAP+' hrs</span></div><div class="usage-bar-wrap"><div class="usage-bar'+(pct>=100?' full':pct>=75?' warn':'')+'" style="width:'+Math.max(pct,1)+'%"></div></div></div>'; }); const sl=document.getElementById('station-usage-list'); sl.innerHTML=''; STATION_DEFS.forEach(s=>{ const count=bookings.filter(b=>b.station===s.id).length; const pct=Math.min(100,Math.round(count/13*100)); sl.innerHTML+='<div style="margin-bottom:10px"><div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:3px"><span style="color:var(--color-text-secondary)">'+s.label+'</span><span style="font-weight:500">'+count+' bookings</span></div><div class="usage-bar-wrap"><div class="usage-bar'+(pct>=90?' full':pct>=70?' warn':'')+'" style="width:'+Math.max(pct,1)+'%"></div></div></div>'; }); }
+function buildDashboard(){
+  const now=new Date();
+  const h=now.getHours(), m=now.getMinutes();
+  const ampm=h<12?'AM':'PM', hr=h===0?12:h>12?h-12:h;
+  document.getElementById('admin-clock').textContent=hr+':'+(m<10?'0':'')+m+' '+ampm;
+  document.getElementById('admin-date').textContent=now.toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric',year:'numeric'});
+  const todayVal=toDateVal(now), todayBookings=bookings.filter(b=>b.date===todayVal);
+  const curSlot=ALL_HOURS[h];
+  let activeNow=0;
+  STATION_DEFS.forEach(s=>{ if(getBookedHours(s.id,todayVal).has(curSlot)) activeNow++; });
+  document.getElementById('dash-active').textContent=activeNow;
+  document.getElementById('dash-today').textContent=todayBookings.length;
+  document.getElementById('dash-avail').textContent=STATION_DEFS.filter(s=>getStationStatus(s.id,todayVal)==='available').length;
+  document.getElementById('dash-total').textContent=bookings.length;
+  const ss=document.getElementById('dash-station-status'); ss.innerHTML='';
+  STATION_DEFS.forEach(s=>{
+    const status=getStationStatus(s.id,todayVal);
+    const color=status==='grace'?'var(--amber)':status==='busy'?'var(--red)':'var(--green)';
+    const label=status==='grace'?'Grace period':status==='busy'?'In use':'Available';
+    ss.innerHTML+='<div style="display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:0.5px solid var(--color-border-tertiary)"><span style="font-size:13px;font-weight:500">'+s.label+'</span><span style="font-size:12px;color:'+color+';font-weight:500">● '+label+'</span></div>';
+  });
+  const tl=document.getElementById('dash-timeline'); tl.innerHTML='';
+  STATION_DEFS.forEach(s=>{
+    const row=document.createElement('div'); row.className='station-timeline';
+    row.innerHTML='<div class="timeline-label"><span>'+s.label+'</span></div>';
+    const wrap=document.createElement('div'); wrap.className='timeline-bar-wrap';
+    const booked=bookings.filter(b=>b.station===s.id&&b.date===todayVal);
+    booked.forEach(b=>{
+      const startIdx=ALL_HOURS.indexOf(b.slot), pctStart=Math.round(startIdx/24*100), pctW=Math.round(b.dur/24*100);
+      const seg=document.createElement('div'); seg.className='timeline-segment';
+      seg.style.cssText='left:'+pctStart+'%;width:'+pctW+'%;background:#378ADD;';
+      const lbl=b.unit==='guest'?'Guest':'U'+b.unit; seg.textContent=lbl;
+      wrap.appendChild(seg);
+      if(startIdx+b.dur<24){
+        const gseg=document.createElement('div'); gseg.className='timeline-segment';
+        gseg.style.cssText='left:'+Math.round((startIdx+b.dur)/24*100)+'%;width:'+Math.round(0.5/24*100)+'%;background:var(--amber);';
+        wrap.appendChild(gseg);
+      }
+    });
+    const nowLine=document.createElement('div');
+    nowLine.style.cssText='position:absolute;left:'+Math.round(h/24*100)+'%;width:2px;height:100%;background:var(--red);opacity:0.7;';
+    wrap.appendChild(nowLine);
+    row.appendChild(wrap);
+    tl.appendChild(row);
+  });
+}
 
-function goTo(id){ document.querySelectorAll('.screen').forEach(s=>s.className='screen'); document.getElementById(id).className='screen active'; window.scrollTo(0,0); }
+function buildBookingsList(){
+  const list=document.getElementById('bookings-list'), count=document.getElementById('bookings-count');
+  count.textContent=bookings.length+' total';
+  if(!bookings.length){ list.innerHTML='<p style="font-size:13px;color:var(--color-text-secondary);padding:8px 0">No bookings yet.</p>'; return; }
+  list.innerHTML='';
+  [...bookings].reverse().forEach(b=>{
+    const stName=STATION_DEFS.find(s=>s.id===b.station).label;
+    const dateStr=new Date(b.date+'T12:00:00').toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'});
+    const idx=ALL_HOURS.indexOf(b.slot), endSlot=idx+b.dur<24?ALL_HOURS[idx+b.dur]:'midnight';
+    const unitLabel=b.unit==='guest'?'Guest':('Unit '+b.unit);
+    list.innerHTML+='<div class="booking-row"><div class="booking-header"><span style="font-size:13px;font-weight:500">'+stName+' · '+unitLabel+'</span><span class="badge badge-active">Confirmed</span></div><div class="booking-meta">'+dateStr+' · '+b.slot+' → '+endSlot+' · '+b.durLabel+' · Target: '+b.target+'%</div></div>';
+  });
+}
+
+function setTab(t){
+  ['dashboard','bookings','flags','usage','settings'].forEach(x=>{ document.getElementById('tab-'+x).className='tab'+(t===x?' active':''); document.getElementById('panel-'+x).className='admin-panel'+(t===x?' active':''); });
+  if(t==='dashboard') buildDashboard();
+  if(t==='bookings') buildBookingsList();
+  if(t==='usage') buildUsage();
+}
+
+function buildUsage(){
+  const ul=document.getElementById('usage-list'); ul.innerHTML='';
+  Object.entries(RESIDENTS).forEach(([unit,r])=>{ const pct=Math.min(100,Math.round(r.hoursUsed/WEEKLY_CAP*100)); ul.innerHTML+='<div style="margin-bottom:10px"><div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:3px"><span style="color:var(--color-text-secondary)">Unit '+unit+'</span><span style="font-weight:500">'+r.hoursUsed+'/'+WEEKLY_CAP+' hrs</span></div><div class="usage-bar-wrap"><div class="usage-bar'+(pct>=100?' full':pct>=75?' warn':'')+'" style="width:'+Math.max(pct,1)+'%"></div></div></div>'; });
+  const sl=document.getElementById('station-usage-list'); sl.innerHTML='';
+  STATION_DEFS.forEach(s=>{ const count=bookings.filter(b=>b.station===s.id).length; const pct=Math.min(100,Math.round(count/10*100)); sl.innerHTML+='<div style="margin-bottom:10px"><div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:3px"><span style="color:var(--color-text-secondary)">'+s.label+'</span><span style="font-weight:500">'+count+' booking'+(count!==1?'s':'')+'</span></div><div class="usage-bar-wrap"><div class="usage-bar'+(pct>=90?' full':pct>=70?' warn':'')+'" style="width:'+Math.max(pct,1)+'%"></div></div></div>'; });
+}
+
+function goTo(id){ document.querySelectorAll('.screen').forEach(s=>s.className='screen'); document.getElementById(id).className='screen active'; window.scrollTo(0,0); if(id==='screen-admin') buildDashboard(); }
 function goHome(){ selectedStation=null; selectedSlot=null; selectedDur=1; selectedDurLabel='1 hr'; chargeTarget=80; currentUnit=''; slotHasDemand=false; ['unit','phone','email','guest-name','host-unit','guest-phone','guest-email'].forEach(id=>{ const el=document.getElementById(id); if(el) el.value=''; }); [0,1,2,3].forEach(i=>document.getElementById('p'+i).value=''); setType('resident'); setResidentMethod('phone'); setGuestMethod('phone'); goTo('screen-home'); }
+
+setInterval(()=>{ if(document.getElementById('screen-admin').classList.contains('active')&&document.getElementById('panel-dashboard').classList.contains('active')) buildDashboard(); },30000);
 
 const obs=new MutationObserver(()=>{
   if(document.getElementById('screen-pick').classList.contains('active')){
-    const t=new Date(),y=t.getFullYear(),m=String(t.getMonth()+1).padStart(2,'0'),d=String(t.getDate()).padStart(2,'0');
-    const dp=document.getElementById('date-pick');
-    dp.value=y+'-'+m+'-'+d; dp.min=y+'-'+m+'-'+d;
+    const t=new Date(), y=t.getFullYear(), m=String(t.getMonth()+1).padStart(2,'0'), d=String(t.getDate()).padStart(2,'0');
+    const dp=document.getElementById('date-pick'); dp.value=y+'-'+m+'-'+d; dp.min=y+'-'+m+'-'+d;
     buildStations();
   }
 });
