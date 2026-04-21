@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: var(--font-sans, system-ui, sans-serif); background: transparent; color: var(--color-text-primary); font-size: 15px; }
+:root {
+  --green: #639922; --green-light: #EAF3DE; --green-dark: #27500A;
+  --teal: #1D9E75; --teal-light: #E1F5EE; --teal-dark: #085041;
+  --amber: #BA7517; --amber-light: #FAEEDA; --amber-dark: #412402;
+  --red: #E24B4A; --red-light: #FCEBEB; --red-dark: #7a1f1f;
+  --gray-mid: #888780;
+}
+.screen { display: none; }
+.screen.active { display: block; }
+.header { background: var(--green); color: white; padding: 18px 20px 14px; position: relative; }
+.header-logo { font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; opacity: 0.75; margin-bottom: 2px; }
+.header-title { font-size: 20px; font-weight: 500; }
+.header-sub { font-size: 13px; opacity: 0.8; margin-top: 2px; }
+.back-btn { position: absolute; top: 16px; left: 16px; background: rgba(255,255,255,0.2); border: none; color: white; border-radius: 50%; width: 32px; height: 32px; font-size: 16px; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+.admin-btn { position: absolute; top: 16px; right: 16px; background: rgba(255,255,255,0.2); border: none; color: white; border-radius: 20px; padding: 5px 12px; font-size: 12px; cursor: pointer; font-family: inherit; }
+.body { padding: 16px; }
+.card { background: var(--color-background-primary); border: 0.5px solid var(--color-border-tertiary); border-radius: 12px; padding: 14px 16px; margin-bottom: 12px; }
+.section-label { font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-text-secondary); margin-bottom: 10px; font-weight: 500; }
+label { font-size: 13px; color: var(--color-text-secondary); display: block; margin-bottom: 4px; }
+input, select { width: 100%; padding: 9px 12px; border-radius: 8px; border: 0.5px solid var(--color-border-secondary); background: var(--color-background-secondary); color: var(--color-text-primary); font-size: 14px; margin-bottom: 12px; }
+input:focus, select:focus { outline: 2px solid var(--green); border-color: transparent; }
+.flex-btn { flex: 1; padding: 9px 4px; border-radius: 8px; border: 1.5px solid var(--color-border-secondary); background: var(--color-background-secondary); color: var(--color-text-secondary); font-size: 13px; cursor: pointer; text-align: center; font-family: inherit; transition: all 0.12s; }
+.flex-btn.active { border-color: var(--green); background: var(--green-light); color: var(--green-dark); font-weight: 500; }
+.flex-btn.lg { font-size: 14px; padding: 10px 4px; }
+.row-btns { display: flex; gap: 8px; margin-bottom: 12px; }
+.station-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 4px; }
+.station-card { border: 1.5px solid var(--color-border-tertiary); border-radius: 10px; padding: 12px 10px; cursor: pointer; text-align: center; transition: all 0.15s; background: var(--color-background-primary); }
+.station-card.available:hover { border-color: var(--green); background: var(--green-light); }
+.station-card.selected { border-color: var(--green); background: var(--green-light); }
+.station-card.busy { opacity: 0.5; cursor: not-allowed; background: var(--color-background-secondary); }
+.station-card.grace { border-color: var(--amber); background: var(--amber-light); cursor: not-allowed; }
+.station-icon { font-size: 20px; margin-bottom: 4px; }
+.station-name { font-size: 13px; font-weight: 500; }
+.station-status { font-size: 11px; margin-top: 2px; }
+.slot-scroll { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 4px; }
+.slot-scroll::-webkit-scrollbar { height: 3px; }
+.slot-scroll::-webkit-scrollbar-thumb { background: var(--color-border-secondary); border-radius: 2px; }
+.time-slot { flex: 0 0 auto; padding: 8px 12px; border-radius: 8px; border: 1.5px solid var(--color-border-tertiary); background: var(--color-background-primary); font-size: 13px; cursor: pointer; transition: all 0.12s; white-space: nowrap; color: var(--color-text-primary); }
+.time-slot.taken { background: var(--color-background-secondary); color: var(--color-text-secondary); cursor: not-allowed; text-decoration: line-through; }
+.time-slot.grace-slot { background: var(--amber-light); color: var(--amber-dark); cursor: not-allowed; border-color: var(--amber); font-size: 11px; }
+.time-slot.selected { border-color: var(--green); background: var(--green-light); color: var(--green-dark); font-weight: 500; }
+.time-slot:not(.taken):not(.selected):not(.grace-slot):hover { border-color: var(--green); }
+.charge-bar-wrap { background: var(--color-background-secondary); border-radius: 8px; height: 10px; margin: 8px 0 4px; overflow: hidden; }
+.charge-bar { height: 100%; border-radius: 8px; transition: width 0.3s; }
+.charge-labels { display: flex; justify-content: space-between; font-size: 11px; color: var(--color-text-secondary); margin-bottom: 10px; }
+.primary-btn { width: 100%; padding: 13px; border-radius: 10px; background: var(--green); color: white; border: none; font-size: 15px; font-weight: 500; cursor: pointer; margin-top: 8px; font-family: inherit; transition: opacity 0.15s; }
+.primary-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+.primary-btn:not(:disabled):hover { opacity: 0.88; }
+.secondary-btn { width: 100%; padding: 11px; border-radius: 10px; background: transparent; color: var(--green); border: 1.5px solid var(--green); font-size: 14px; cursor: pointer; margin-top: 8px; font-family: inherit; }
+.secondary-btn:hover { background: var(--green-light); }
+.alert { padding: 10px 12px; border-radius: 8px; font-size: 13px; margin-bottom: 12px; line-height: 1.5; }
+.alert-err { background: var(--red-light); color: var(--red-dark); border: 0.5px solid #f09595; }
+.alert-ok { background: var(--teal-light); color: var(--teal-dark); border: 0.5px solid #5DCAA5; }
+.alert-warn { background: var(--amber-light); color: var(--amber-dark); border: 0.5px solid #FAC775; }
+.alert-info { background: var(--color-background-info); color: var(--color-text-info); border: 0.5px solid var(--color-border-info); }
+.confirm-row { display: flex; justify-content: space-between; padding: 7px 0; border-bottom: 0.5px solid var(--color-border-tertiary); font-size: 14px; }
+.confirm-row:last-child { border-bottom: none; }
+.confirm-label { color: var(--color-text-secondary); }
+.confirm-val { font-weight: 500; text-align: right; max-width: 58%; }
+.success-circle { width: 64px; height: 64px; border-radius: 50%; background: var(--green-light); display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; font-size: 28px; }
+.text-center { text-align: center; }
+.pin-inputs { display: flex; gap: 8px; justify-content: center; margin: 16px 0; }
+.pin-input { width: 44px; height: 52px; border-radius: 8px; text-align: center; font-size: 22px; font-weight: 500; border: 1.5px solid var(--color-border-secondary); background: var(--color-background-secondary); color: var(--color-text-primary); }
+.pin-input:focus { outline: 2px solid var(--green); border-color: transparent; }
+.spinner { display: inline-block; width: 18px; height: 18px; border: 2px solid rgba(255,255,255,0.4); border-top-color: white; border-radius: 50%; animation: spin 0.7s linear infinite; vertical-align: middle; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.legend { display: flex; gap: 10px; flex-wrap: wrap; font-size: 11px; color: var(--color-text-secondary); margin-top: 6px; }
+.legend-dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; margin-right: 3px; }
+.usage-bar-wrap { flex: 1; background: var(--color-background-secondary); border-radius: 6px; height: 8px; overflow: hidden; }
+.usage-bar { height: 100%; border-radius: 6px; background: var(--green); transition: width 0.4s; }
+.usage-bar.warn { background: var(--amber); }
+.usage-bar.full { background: var(--red); }
+.flag-row { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 0.5px solid var(--color-border-tertiary); font-size: 13px; }
+.flag-row:last-child { border-bottom: none; }
+.badge { display: inline-block; padding: 2px 8px; border-radius: 20px; font-size: 11px; font-weight: 500; }
+.badge-warn { background: var(--amber-light); color: var(--amber-dark); }
+.badge-ok { background: var(--green-light); color: var(--green-dark); }
+.badge-err { background: var(--red-light); color: var(--red-dark); }
+.tab-bar { display: flex; border-bottom: 0.5px solid var(--color-border-tertiary); margin-bottom: 16px; }
+.tab { flex: 1; padding: 10px 4px; text-align: center; font-size: 13px; color: var(--color-text-secondary); cursor: pointer; border-bottom: 2px solid transparent; margin-bottom: -1px; }
+.tab.active { color: var(--green-dark); border-bottom-color: var(--green); font-weight: 500; }
+.admin-panel { display: none; }
+.admin-panel.active { display: block; }
+.method-hint { font-size: 12px; color: var(--color-text-secondary); margin: -8px 0 12px; }
+.demand-pill { display: inline-flex; align-items: center; gap: 4px; padding: 3px 8px; border-radius: 20px; font-size: 11px; font-weight: 500; }
+.demand-high { background: var(--amber-light); color: var(--amber-dark); }
+.demand-low { background: var(--green-light); color: var(--green-dark); }
+</style>
+</head>
+<body>
+
+<!-- HOME -->
+<div class="screen active" id="screen-home">
+  <div class="header">
+    <div class="header-logo">BookEV</div>
+    <div class="header-title">EV Charging Scheduler</div>
+    <div class="header-sub">Oakwood Residences</div>
+    <button class="admin-btn" onclick="goTo('screen-admin')">Admin ›</button>
+  </div>
+  <div class="body">
+    <div class="card">
+      <div class="section-label">Who's charging?</div>
+      <div class="row-btns">
+        <button class="flex-btn lg active" onclick="setType('resident')" id="btn-resident">Resident</button>
+        <button class="flex-btn lg" onclick="setType('guest')" id="btn-guest">Guest</button>
+      </div>
+      <div id="resident-fields">
+        <label>Unit number</label>
+        <input id="unit" type="text" placeholder="e.g. 204" maxlength="6">
+        <div class="section-label" style="margin-bottom:6px">Verify with</div>
+        <div class="row-btns">
+          <button class="flex-btn active" onclick="setResidentMethod('phone')" id="rbtn-phone">Phone</button>
+          <button class="flex-btn" onclick="setResidentMethod('email')" id="rbtn-email">Email</button>
+        </div>
+        <div id="r-phone-field">
+          <label>Phone number on file</label>
+          <input id="phone" type="tel" placeholder="(512) 555-0100" maxlength="14" oninput="formatPhone(this)">
+        </div>
+        <div id="r-email-field" style="display:none">
+          <label>Email address on file</label>
+          <input id="email" type="email" placeholder="you@email.com">
+        </div>
+      </div>
+      <div id="guest-fields" style="display:none">
+        <label>Your name</label>
+        <input id="guest-name" type="text" placeholder="Full name">
+        <label>Host unit number</label>
+        <input id="host-unit" type="text" placeholder="e.g. 204" maxlength="6">
+        <div class="section-label" style="margin-bottom:6px">Your contact</div>
+        <div class="row-btns">
+          <button class="flex-btn active" onclick="setGuestMethod('phone')" id="gbtn-phone">Phone</button>
+          <button class="flex-btn" onclick="setGuestMethod('email')" id="gbtn-email">Email</button>
+        </div>
+        <div id="g-phone-field"><label>Your phone</label><input id="guest-phone" type="tel" placeholder="(512) 555-0199" maxlength="14" oninput="formatPhone(this)"></div>
+        <div id="g-email-field" style="display:none"><label>Your email</label><input id="guest-email" type="email" placeholder="you@email.com"></div>
+        <div class="alert alert-warn" style="margin-top:4px;margin-bottom:0">Host will confirm your access via text or email.</div>
+      </div>
+      <div id="home-err" class="alert alert-err" style="display:none;margin-top:8px;margin-bottom:0"></div>
+    </div>
+    <button class="primary-btn" onclick="validateIdentity()">Continue</button>
+  </div>
+</div>
+
+<!-- OTP -->
+<div class="screen" id="screen-otp">
+  <div class="header">
+    <button class="back-btn" onclick="goTo('screen-home')">←</button>
+    <div class="header-logo">BookEV</div>
+    <div class="header-title">Verify Access</div>
+    <div class="header-sub" id="otp-header-sub">Guest verification</div>
+  </div>
+  <div class="body">
+    <div class="card">
+      <p style="font-size:14px;color:var(--color-text-secondary);margin-bottom:12px;" id="otp-desc"></p>
+      <div class="section-label">Enter confirmation code</div>
+      <div class="pin-inputs">
+        <input class="pin-input" maxlength="1" type="tel" id="p0" oninput="pinNext(this,0)">
+        <input class="pin-input" maxlength="1" type="tel" id="p1" oninput="pinNext(this,1)">
+        <input class="pin-input" maxlength="1" type="tel" id="p2" oninput="pinNext(this,2)">
+        <input class="pin-input" maxlength="1" type="tel" id="p3" oninput="pinNext(this,3)">
+      </div>
+      <div id="otp-err" class="alert alert-err" style="display:none"></div>
+      <p style="font-size:12px;color:var(--color-text-secondary);text-align:center;margin-top:4px;">Demo code: <strong>4729</strong></p>
+    </div>
+    <button class="primary-btn" onclick="verifyOTP()">Verify Code</button>
+    <button class="secondary-btn" onclick="goTo('screen-home')">Back</button>
+  </div>
+</div>
+
+<!-- PICK -->
+<div class="screen" id="screen-pick">
+  <div class="header">
+    <button class="back-btn" onclick="goHome()">←</button>
+    <div class="header-logo">BookEV</div>
+    <div class="header-title">Book a Station</div>
+    <div class="header-sub" id="pick-sub"></div>
+  </div>
+  <div class="body">
+    <div class="card" id="quota-card">
+      <div class="section-label">Your weekly usage</div>
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px">
+        <span style="font-size:13px;color:var(--color-text-secondary)">Hours used this week</span>
+        <span style="font-size:13px;font-weight:500" id="quota-label">3 of 12 hrs</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
+        <div class="usage-bar-wrap"><div class="usage-bar" id="quota-bar" style="width:25%"></div></div>
+        <span style="font-size:12px;color:var(--color-text-secondary);white-space:nowrap" id="quota-remain">9 hrs left</span>
+      </div>
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <span style="font-size:13px;color:var(--color-text-secondary)">Active bookings</span>
+        <span class="badge badge-ok" id="booking-badge">1 of 2 max</span>
+      </div>
+    </div>
+    <div class="card">
+      <div class="section-label">Date</div>
+      <input type="date" id="date-pick" onchange="updateSlots()">
+    </div>
+    <div class="card">
+      <div class="section-label">Charging station</div>
+      <div class="station-grid" id="station-grid"></div>
+      <div class="legend">
+        <span><span class="legend-dot" style="background:var(--green)"></span>Available</span>
+        <span><span class="legend-dot" style="background:var(--amber)"></span>Grace period</span>
+        <span><span class="legend-dot" style="background:#ccc"></span>Occupied</span>
+      </div>
+    </div>
+    <div class="card" id="slot-card" style="display:none">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+        <span class="section-label" style="margin:0">Start time</span>
+        <span id="demand-pill-slot" class="demand-pill demand-low">Low demand</span>
+      </div>
+      <div class="slot-scroll" id="slot-scroll"></div>
+      <div class="legend" style="margin-top:8px">
+        <span><span class="legend-dot" style="background:var(--amber)"></span>Grace buffer (next booking queued)</span>
+      </div>
+    </div>
+    <div class="card" id="charge-card" style="display:none">
+      <div class="section-label">Charge target</div>
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px">
+        <span style="font-size:13px;color:var(--color-text-secondary)">Current charge</span>
+        <span style="font-size:13px;font-weight:500;color:var(--green)" id="current-pct">64%</span>
+      </div>
+      <div class="charge-bar-wrap"><div class="charge-bar" id="current-bar" style="width:64%;background:var(--green)"></div></div>
+      <div style="margin-top:14px;margin-bottom:4px;display:flex;justify-content:space-between;align-items:center">
+        <span style="font-size:13px;color:var(--color-text-secondary)">Stop charging at</span>
+        <span style="font-size:14px;font-weight:500;color:var(--green)" id="target-out">80%</span>
+      </div>
+      <input type="range" min="50" max="100" step="5" value="80" id="target-slider" oninput="updateTarget(this.value)" style="width:100%;margin:4px 0 2px">
+      <div class="charge-labels"><span>50%</span><span>80% recommended</span><span>100%</span></div>
+      <div class="alert alert-info" style="margin-bottom:0;font-size:12px" id="grace-info-msg"></div>
+    </div>
+    <div class="card" id="dur-card" style="display:none">
+      <div class="section-label">Max duration (fallback cap)</div>
+      <div class="row-btns">
+        <button class="flex-btn active" onclick="setDur(1,'1 hr')" id="d1">1 hr</button>
+        <button class="flex-btn" onclick="setDur(2,'2 hrs')" id="d2">2 hrs</button>
+        <button class="flex-btn" onclick="setDur(4,'4 hrs')" id="d4">4 hrs</button>
+        <button class="flex-btn" onclick="setDur(8,'Overnight')" id="d8">Overnight</button>
+      </div>
+      <p class="method-hint" style="margin:0">If charge target can't be read, the session ends at this duration.</p>
+    </div>
+    <div id="pick-err" class="alert alert-err" style="display:none"></div>
+    <button class="primary-btn" onclick="goConfirm()">Review Booking</button>
+  </div>
+</div>
+
+<!-- CONFIRM -->
+<div class="screen" id="screen-confirm">
+  <div class="header">
+    <button class="back-btn" onclick="goTo('screen-pick')">←</button>
+    <div class="header-logo">BookEV</div>
+    <div class="header-title">Confirm Booking</div>
+    <div class="header-sub">Review before confirming</div>
+  </div>
+  <div class="body">
+    <div class="card">
+      <div class="section-label">Booking summary</div>
+      <div class="confirm-row"><span class="confirm-label">Station</span><span class="confirm-val" id="c-station"></span></div>
+      <div class="confirm-row"><span class="confirm-label">Date</span><span class="confirm-val" id="c-date"></span></div>
+      <div class="confirm-row"><span class="confirm-label">Start time</span><span class="confirm-val" id="c-time"></span></div>
+      <div class="confirm-row"><span class="confirm-label">Charge target</span><span class="confirm-val" id="c-target"></span></div>
+      <div class="confirm-row"><span class="confirm-label">Max duration</span><span class="confirm-val" id="c-dur"></span></div>
+      <div class="confirm-row"><span class="confirm-label">Grace period</span><span class="confirm-val" id="c-grace"></span></div>
+    </div>
+    <div id="confirm-warn-block"></div>
+    <button class="primary-btn" onclick="confirmBooking()" id="confirm-btn">Confirm Booking</button>
+    <button class="secondary-btn" onclick="goTo('screen-pick')">Edit</button>
+  </div>
+</div>
+
+<!-- SUCCESS -->
+<div class="screen" id="screen-success">
+  <div class="header">
+    <div class="header-logo">BookEV</div>
+    <div class="header-title">You're all set!</div>
+    <div class="header-sub">Booking confirmed</div>
+  </div>
+  <div class="body">
+    <div class="card text-center" style="padding:24px 16px">
+      <div class="success-circle">⚡</div>
+      <p style="font-size:17px;font-weight:500;margin-bottom:6px">Booking Confirmed</p>
+      <p style="font-size:13px;color:var(--color-text-secondary)" id="success-msg"></p>
+    </div>
+    <div class="card">
+      <div class="section-label">What happens next</div>
+      <div class="confirm-row"><span class="confirm-label">During session</span><span class="confirm-val">Live charge % synced from vehicle</span></div>
+      <div class="confirm-row"><span class="confirm-label">At target %</span><span class="confirm-val">Charger stops, you're notified</span></div>
+      <div class="confirm-row"><span class="confirm-label">Grace period</span><span class="confirm-val" id="s-grace-detail"></span></div>
+      <div class="confirm-row"><span class="confirm-label">If overdue</span><span class="confirm-val" id="s-overdue-detail"></span></div>
+    </div>
+    <div class="alert alert-ok">Confirmation sent. We'll notify you when charging completes.</div>
+    <button class="primary-btn" onclick="goHome()">Book another session</button>
+  </div>
+</div>
+
+<!-- ADMIN -->
+<div class="screen" id="screen-admin">
+  <div class="header">
+    <button class="back-btn" onclick="goTo('screen-home')">←</button>
+    <div class="header-logo">BookEV</div>
+    <div class="header-title">Admin Panel</div>
+    <div class="header-sub">Oakwood Residences</div>
+  </div>
+  <div class="body">
+    <div class="tab-bar">
+      <div class="tab active" onclick="setTab('flags')" id="tab-flags">Flags</div>
+      <div class="tab" onclick="setTab('usage')" id="tab-usage">Usage</div>
+      <div class="tab" onclick="setTab('settings')" id="tab-settings">Settings</div>
+    </div>
+    <div class="admin-panel active" id="panel-flags">
+      <div class="alert alert-info" style="margin-bottom:12px;font-size:13px">
+        Flags only trigger when another resident had a booking queued for that station. Low-demand overruns are logged but not flagged.
+      </div>
+      <div class="card">
+        <div class="section-label">Active flags — demand-triggered</div>
+        <div class="flag-row">
+          <div>
+            <div style="font-weight:500;font-size:13px">Unit 204 — Station A1</div>
+            <div style="font-size:12px;color:var(--color-text-secondary)">Today · 10:00 AM · 47 min overdue · next booking was queued</div>
+          </div>
+          <span class="badge badge-err">Flagged</span>
+        </div>
+        <div class="flag-row">
+          <div>
+            <div style="font-weight:500;font-size:13px">Unit 102 — Station B1</div>
+            <div style="font-size:12px;color:var(--color-text-secondary)">Yesterday · 2:00 PM · 31 min overdue · next booking was queued</div>
+          </div>
+          <span class="badge badge-warn">Resolved</span>
+        </div>
+      </div>
+      <div class="card">
+        <div class="section-label">No-demand overruns (logged only)</div>
+        <div class="flag-row">
+          <div>
+            <div style="font-weight:500;font-size:13px">Unit 301 — Station B2</div>
+            <div style="font-size:12px;color:var(--color-text-secondary)">Mon · 11:00 PM · 2 hrs overrun · no next booking — not flagged</div>
+          </div>
+          <span class="badge badge-ok">No flag</span>
+        </div>
+        <div class="flag-row">
+          <div>
+            <div style="font-weight:500;font-size:13px">Unit 203 — Station A2</div>
+            <div style="font-size:12px;color:var(--color-text-secondary)">Sat · 1:00 AM · 90 min overrun · no next booking — not flagged</div>
+          </div>
+          <span class="badge badge-ok">No flag</span>
+        </div>
+      </div>
+      <button class="primary-btn" style="margin-top:0" onclick="alert('In production: sends warning to flagged units only.')">Notify flagged residents</button>
+    </div>
+    <div class="admin-panel" id="panel-usage">
+      <div class="card">
+        <div class="section-label">Weekly hours used by unit (cap: 12 hrs)</div>
+        <div id="usage-list"></div>
+      </div>
+      <div class="card">
+        <div class="section-label">Station utilization today</div>
+        <div id="station-usage-list"></div>
+      </div>
+    </div>
+    <div class="admin-panel" id="panel-settings">
+      <div class="card">
+        <div class="section-label">Booking limits</div>
+        <div style="margin-bottom:14px">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+            <label style="margin:0">Max active bookings per unit</label>
+            <span style="font-size:14px;font-weight:500" id="max-book-out">2</span>
+          </div>
+          <input type="range" min="1" max="5" step="1" value="2" oninput="document.getElementById('max-book-out').textContent=this.value" style="width:100%">
+        </div>
+        <div>
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+            <label style="margin:0">Weekly hours cap per unit</label>
+            <span style="font-size:14px;font-weight:500" id="max-hrs-out">12 hrs</span>
+          </div>
+          <input type="range" min="2" max="24" step="1" value="12" oninput="document.getElementById('max-hrs-out').textContent=this.value+' hrs'" style="width:100%">
+        </div>
+      </div>
+      <div class="card">
+        <div class="section-label">Grace period</div>
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+          <label style="margin:0">Grace period after charge complete</label>
+          <span style="font-size:14px;font-weight:500" id="grace-out">30 min</span>
+        </div>
+        <input type="range" min="10" max="60" step="5" value="30" oninput="document.getElementById('grace-out').textContent=this.value+' min'" style="width:100%">
+        <p class="method-hint" style="margin-top:8px;margin-bottom:0">Grace period and flags only apply when the next slot on that station is booked.</p>
+      </div>
+      <div class="card">
+        <div class="section-label">Violation policy</div>
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+          <label style="margin:0">Flags before account suspension</label>
+          <span style="font-size:14px;font-weight:500" id="strikes-out">3</span>
+        </div>
+        <input type="range" min="1" max="5" step="1" value="3" oninput="document.getElementById('strikes-out').textContent=this.value" style="width:100%">
+        <p class="method-hint" style="margin-top:8px;margin-bottom:0">Only demand-triggered flags count toward this threshold.</p>
+      </div>
+      <button class="primary-btn" style="margin-top:0" onclick="alert('Settings saved!')">Save settings</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const RESIDENTS={
+  '101':{ phone:'5125550101', email:'res101@oakwood.com', hoursUsed:1,  activeBookings:0, flags:0 },
+  '102':{ phone:'5125550102', email:'res102@oakwood.com', hoursUsed:5,  activeBookings:1, flags:1 },
+  '103':{ phone:'5125550103', email:'res103@oakwood.com', hoursUsed:0,  activeBookings:0, flags:0 },
+  '201':{ phone:'5125550201', email:'res201@oakwood.com', hoursUsed:10, activeBookings:2, flags:0 },
+  '202':{ phone:'5125550202', email:'res202@oakwood.com', hoursUsed:2,  activeBookings:0, flags:0 },
+  '203':{ phone:'5125550203', email:'res203@oakwood.com', hoursUsed:4,  activeBookings:1, flags:0 },
+  '204':{ phone:'5125550204', email:'res204@oakwood.com', hoursUsed:9,  activeBookings:2, flags:3 },
+  '301':{ phone:'5125550301', email:'res301@oakwood.com', hoursUsed:0,  activeBookings:0, flags:0 },
+  '302':{ phone:'5125550302', email:'res302@oakwood.com', hoursUsed:7,  activeBookings:1, flags:0 },
+  '303':{ phone:'5125550303', email:'res303@oakwood.com', hoursUsed:12, activeBookings:2, flags:0 },
+};
+const MAX_BOOKINGS=2, WEEKLY_CAP=12;
+const STATIONS=[
+  { id:'A1', label:'Station A1', level:'Level 2 · 7.2 kW', status:'available' },
+  { id:'A2', label:'Station A2', level:'Level 2 · 7.2 kW', status:'grace' },
+  { id:'B1', label:'Station B1', level:'DC Fast · 50 kW',  status:'busy' },
+  { id:'B2', label:'Station B2', level:'DC Fast · 50 kW',  status:'available' },
+];
+const TAKEN_SLOTS ={ 'A1':['9:00 AM','11:00 AM'], 'B1':['10:00 AM','12:00 PM','2:00 PM'], 'A2':['8:00 AM'] };
+const GRACE_SLOTS ={ 'A2':['9:00 AM'] };
+const DEMAND_SLOTS={ 'A1':['9:00 AM','10:00 AM','11:00 AM','12:00 PM','1:00 PM'], 'B1':['10:00 AM','11:00 AM','12:00 PM','1:00 PM','2:00 PM','3:00 PM'] };
+
+let userType='resident', residentMethod='phone', guestMethod='phone';
+let selectedStation=null, selectedSlot=null, selectedDur=1, selectedDurLabel='1 hr';
+let chargeTarget=80, confirmedContact='', currentUnit='', slotHasDemand=false;
+
+function setType(t){ userType=t; ['resident','guest'].forEach(x=>document.getElementById('btn-'+x).className='flex-btn lg'+(t===x?' active':'')); document.getElementById('resident-fields').style.display=t==='resident'?'':'none'; document.getElementById('guest-fields').style.display=t==='guest'?'':'none'; hideErr('home-err'); }
+function setResidentMethod(m){ residentMethod=m; ['phone','email'].forEach(x=>document.getElementById('rbtn-'+x).className='flex-btn'+(m===x?' active':'')); document.getElementById('r-phone-field').style.display=m==='phone'?'':'none'; document.getElementById('r-email-field').style.display=m==='email'?'':'none'; }
+function setGuestMethod(m){ guestMethod=m; ['phone','email'].forEach(x=>document.getElementById('gbtn-'+x).className='flex-btn'+(m===x?' active':'')); document.getElementById('g-phone-field').style.display=m==='phone'?'':'none'; document.getElementById('g-email-field').style.display=m==='email'?'':'none'; }
+function formatPhone(input){ let v=input.value.replace(/\D/g,'').slice(0,10); if(v.length>6) v='('+v.slice(0,3)+') '+v.slice(3,6)+'-'+v.slice(6); else if(v.length>3) v='('+v.slice(0,3)+') '+v.slice(3); else if(v.length>0) v='('+v; input.value=v; }
+function getDigits(s){ return s.replace(/\D/g,''); }
+function showErr(id,msg){ const el=document.getElementById(id); el.textContent=msg; el.style.display=''; }
+function hideErr(id){ document.getElementById(id).style.display='none'; }
+function maskEmail(e){ const[u,d]=e.split('@'); return u.slice(0,2)+'***@'+d; }
+function maskPhone(p){ return '(***)***-'+p.slice(-4); }
+
+function validateIdentity(){
+  hideErr('home-err');
+  if(userType==='resident'){
+    const unit=document.getElementById('unit').value.trim();
+    if(!unit){ showErr('home-err','Please enter your unit number.'); return; }
+    const res=RESIDENTS[unit];
+    if(!res){ showErr('home-err','Unit '+unit+' not found.'); return; }
+    if(res.flags>=3){ showErr('home-err','Booking access for unit '+unit+' is suspended due to repeated violations. Please contact management.'); return; }
+    if(residentMethod==='phone'){ const ph=getDigits(document.getElementById('phone').value); if(ph.length!==10){ showErr('home-err','Please enter a valid 10-digit phone number.'); return; } if(res.phone!==ph){ showErr('home-err','Phone number does not match records for unit '+unit+'.'); return; } confirmedContact=maskPhone(ph); }
+    else { const em=document.getElementById('email').value.trim().toLowerCase(); if(!em.includes('@')){ showErr('home-err','Please enter a valid email address.'); return; } if(res.email!==em){ showErr('home-err','Email does not match records for unit '+unit+'.'); return; } confirmedContact=maskEmail(em); }
+    currentUnit=unit; document.getElementById('pick-sub').textContent='Unit '+unit+' · Resident'; loadQuota(unit); goTo('screen-pick');
+  } else {
+    const name=document.getElementById('guest-name').value.trim(), hostUnit=document.getElementById('host-unit').value.trim();
+    if(!name){ showErr('home-err','Please enter your name.'); return; }
+    if(!RESIDENTS[hostUnit]){ showErr('home-err','Host unit '+hostUnit+' not found.'); return; }
+    if(guestMethod==='phone'){ const p=getDigits(document.getElementById('guest-phone').value); if(p.length!==10){ showErr('home-err','Please enter a valid phone number.'); return; } confirmedContact=maskPhone(p); document.getElementById('otp-desc').textContent='A 4-digit code has been texted to the host at unit '+hostUnit+'. Ask them to share it.'; }
+    else { const e=document.getElementById('guest-email').value.trim(); if(!e.includes('@')){ showErr('home-err','Please enter a valid email.'); return; } confirmedContact=maskEmail(e); document.getElementById('otp-desc').textContent='A 4-digit code has been emailed to the host at unit '+hostUnit+'. Ask them to share it.'; }
+    document.getElementById('otp-header-sub').textContent='Host: unit '+hostUnit; document.getElementById('pick-sub').textContent=name+' · Guest of unit '+hostUnit; currentUnit='guest'; goTo('screen-otp');
+  }
+}
+function loadQuota(unit){ const res=RESIDENTS[unit], used=res.hoursUsed, remain=Math.max(0,WEEKLY_CAP-used), pct=Math.min(100,Math.round(used/WEEKLY_CAP*100)); document.getElementById('quota-label').textContent=used+' of '+WEEKLY_CAP+' hrs'; document.getElementById('quota-remain').textContent=remain+' hrs left'; const bar=document.getElementById('quota-bar'); bar.style.width=pct+'%'; bar.className='usage-bar'+(pct>=100?' full':pct>=75?' warn':''); const bb=document.getElementById('booking-badge'); bb.textContent=res.activeBookings+' of '+MAX_BOOKINGS+' max'; bb.className='badge '+(res.activeBookings>=MAX_BOOKINGS?'badge-err':res.activeBookings===MAX_BOOKINGS-1?'badge-warn':'badge-ok'); }
+function pinNext(el,i){ el.value=el.value.slice(-1); if(el.value&&i<3) document.getElementById('p'+(i+1)).focus(); hideErr('otp-err'); }
+function verifyOTP(){ const code=[0,1,2,3].map(i=>document.getElementById('p'+i).value).join(''); if(code.length<4){ showErr('otp-err','Please enter all 4 digits.'); return; } if(code!=='4729'){ showErr('otp-err','Incorrect code.'); return; } goTo('screen-pick'); }
+function buildStations(){ const grid=document.getElementById('station-grid'); grid.innerHTML=''; STATIONS.forEach(s=>{ const div=document.createElement('div'); div.className='station-card '+s.status; div.dataset.id=s.id; div.dataset.status=s.status; const color=s.status==='grace'?'var(--amber)':s.status==='busy'?'var(--gray-mid)':'var(--green)'; const txt=s.status==='grace'?'⏱ Grace period':s.status==='busy'?'● Occupied':'● Available'; div.innerHTML='<div class="station-icon">⚡</div><div class="station-name">'+s.label+'</div><div class="station-status" style="color:'+color+'">'+s.level+'</div><div class="station-status" style="color:'+color+'">'+txt+'</div>'; if(s.status==='available') div.onclick=()=>selectStation(s.id); grid.appendChild(div); }); }
+function selectStation(id){ selectedStation=id; selectedSlot=null; slotHasDemand=false; document.querySelectorAll('.station-card').forEach(c=>{ if(c.dataset.status==='available') c.className='station-card '+(c.dataset.id===id?'selected':'available'); }); document.getElementById('slot-card').style.display=''; document.getElementById('charge-card').style.display='none'; document.getElementById('dur-card').style.display='none'; buildSlots(id); const fp=Math.round(40+Math.random()*35); document.getElementById('current-pct').textContent=fp+'%'; document.getElementById('current-bar').style.width=fp+'%'; const ds=DEMAND_SLOTS[id]||[], hd=ds.length>=4, pill=document.getElementById('demand-pill-slot'); pill.textContent=hd?'High demand':'Low demand'; pill.className='demand-pill '+(hd?'demand-high':'demand-low'); }
+function buildSlots(stId){ const scroll=document.getElementById('slot-scroll'); scroll.innerHTML=''; const hours=['8:00 AM','9:00 AM','10:00 AM','11:00 AM','12:00 PM','1:00 PM','2:00 PM','3:00 PM','4:00 PM','5:00 PM','6:00 PM','7:00 PM','8:00 PM']; const taken=TAKEN_SLOTS[stId]||[], grace=GRACE_SLOTS[stId]||[]; hours.forEach(h=>{ const div=document.createElement('div'); if(grace.includes(h)){ div.className='time-slot grace-slot'; div.textContent=h+' (grace)'; } else if(taken.includes(h)){ div.className='time-slot taken'; div.textContent=h; } else { div.className='time-slot'+(selectedSlot===h?' selected':''); div.textContent=h; div.onclick=()=>selectSlot(h,stId); } scroll.appendChild(div); }); }
+function selectSlot(slot,stId){ selectedSlot=slot; document.querySelectorAll('.time-slot:not(.taken):not(.grace-slot)').forEach(el=>{ el.className='time-slot'+(el.textContent===slot?' selected':''); }); const ds=DEMAND_SLOTS[stId||selectedStation]||[]; slotHasDemand=ds.includes(slot); document.getElementById('charge-card').style.display=''; document.getElementById('dur-card').style.display=''; const msg=slotHasDemand?'The next slot on this station is booked. You\'ll have 30 min after your charge target is reached to unplug. Staying beyond that will be flagged.':'No bookings follow your slot on this station right now. You won\'t be flagged if you take a bit longer — but please unplug when you\'re done.'; const el=document.getElementById('grace-info-msg'); el.textContent=msg; el.className='alert '+(slotHasDemand?'alert-warn':'alert-ok'); el.style.marginBottom='0'; el.style.fontSize='12px'; hideErr('pick-err'); }
+function updateTarget(v){ chargeTarget=parseInt(v); document.getElementById('target-out').textContent=v+'%'; }
+function setDur(hrs,label){ selectedDur=hrs; selectedDurLabel=label; ['d1','d2','d4','d8'].forEach(id=>document.getElementById(id).className='flex-btn'); document.getElementById('d'+hrs).className='flex-btn active'; }
+function updateSlots(){ if(selectedStation) buildSlots(selectedStation); selectedSlot=null; slotHasDemand=false; document.getElementById('charge-card').style.display='none'; document.getElementById('dur-card').style.display='none'; }
+function goConfirm(){ if(!selectedStation){ showErr('pick-err','Please select a station.'); return; } if(!selectedSlot){ showErr('pick-err','Please select a start time.'); return; } if(!document.getElementById('date-pick').value){ showErr('pick-err','Please select a date.'); return; } if(currentUnit!=='guest'){ const res=RESIDENTS[currentUnit]; if(res.activeBookings>=MAX_BOOKINGS){ showErr('pick-err','You\'ve reached your limit of '+MAX_BOOKINGS+' active bookings. Cancel an existing one first.'); return; } if(res.hoursUsed>=WEEKLY_CAP){ showErr('pick-err','You\'ve reached your '+WEEKLY_CAP+'-hour weekly cap. Your limit resets next Monday.'); return; } } hideErr('pick-err'); const dateStr=new Date(document.getElementById('date-pick').value+'T12:00:00').toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'}), stName=STATIONS.find(s=>s.id===selectedStation).label; document.getElementById('c-station').textContent=stName; document.getElementById('c-date').textContent=dateStr; document.getElementById('c-time').textContent=selectedSlot; document.getElementById('c-target').textContent=chargeTarget+'% (via vehicle sync)'; document.getElementById('c-dur').textContent=selectedDurLabel+' fallback cap'; document.getElementById('c-grace').textContent=slotHasDemand?'30 min — next slot is booked':'No strict limit — no bookings follow'; const wb=document.getElementById('confirm-warn-block'); wb.innerHTML=slotHasDemand?'<div class="alert alert-warn">The slot after yours is booked. You\'ll have 30 minutes to unplug after your charge target is reached. Failing to do so will be flagged and reported to management.</div>':'<div class="alert alert-ok">No one is booked after you on this station, so there\'s no strict move-by time. We\'ll still remind you to unplug when done.</div>'; goTo('screen-confirm'); }
+function confirmBooking(){ const btn=document.getElementById('confirm-btn'); btn.disabled=true; btn.innerHTML='<span class="spinner"></span> Confirming…'; setTimeout(()=>{ document.getElementById('success-msg').textContent=document.getElementById('pick-sub').textContent+' · '+document.getElementById('c-date').textContent+' at '+selectedSlot; document.getElementById('s-grace-detail').textContent=slotHasDemand?'30 min to unplug after charge complete':'No time pressure — station is free after you'; document.getElementById('s-overdue-detail').textContent=slotHasDemand?'Flagged & admin notified':'Logged only, no flag issued'; document.getElementById('s-overdue-detail').style.color=slotHasDemand?'var(--red)':'var(--color-text-primary)'; btn.disabled=false; btn.innerHTML='Confirm Booking'; goTo('screen-success'); },1400); }
+function setTab(t){ ['flags','usage','settings'].forEach(x=>{ document.getElementById('tab-'+x).className='tab'+(t===x?' active':''); document.getElementById('panel-'+x).className='admin-panel'+(t===x?' active':''); }); if(t==='usage') buildUsage(); }
+function buildUsage(){ const ul=document.getElementById('usage-list'); ul.innerHTML=''; Object.entries(RESIDENTS).forEach(([unit,r])=>{ const pct=Math.min(100,Math.round(r.hoursUsed/WEEKLY_CAP*100)); ul.innerHTML+='<div style="margin-bottom:10px"><div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:3px"><span style="color:var(--color-text-secondary)">Unit '+unit+'</span><span style="font-weight:500">'+r.hoursUsed+'/'+WEEKLY_CAP+' hrs</span></div><div class="usage-bar-wrap"><div class="usage-bar'+(pct>=100?' full':pct>=75?' warn':'')+'" style="width:'+pct+'%"></div></div></div>'; }); const sl=document.getElementById('station-usage-list'); sl.innerHTML=''; [{name:'Station A1',pct:72},{name:'Station A2',pct:45},{name:'Station B1',pct:91},{name:'Station B2',pct:30}].forEach(s=>{ sl.innerHTML+='<div style="margin-bottom:10px"><div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:3px"><span style="color:var(--color-text-secondary)">'+s.name+'</span><span style="font-weight:500">'+s.pct+'%</span></div><div class="usage-bar-wrap"><div class="usage-bar'+(s.pct>=90?' full':s.pct>=70?' warn':'')+'" style="width:'+s.pct+'%"></div></div></div>'; }); }
+function goTo(id){ document.querySelectorAll('.screen').forEach(s=>s.className='screen'); document.getElementById(id).className='screen active'; window.scrollTo(0,0); }
+function goHome(){ selectedStation=null; selectedSlot=null; selectedDur=1; selectedDurLabel='1 hr'; chargeTarget=80; confirmedContact=''; currentUnit=''; slotHasDemand=false; ['unit','phone','email','guest-name','host-unit','guest-phone','guest-email'].forEach(id=>{ const el=document.getElementById(id); if(el) el.value=''; }); [0,1,2,3].forEach(i=>document.getElementById('p'+i).value=''); setType('resident'); setResidentMethod('phone'); setGuestMethod('phone'); goTo('screen-home'); }
+const obs=new MutationObserver(()=>{ if(document.getElementById('screen-pick').classList.contains('active')){ const t=new Date(),y=t.getFullYear(),m=String(t.getMonth()+1).padStart(2,'0'),d=String(t.getDate()).padStart(2,'0'); document.getElementById('date-pick').value=y+'-'+m+'-'+d; document.getElementById('date-pick').min=y+'-'+m+'-'+d; buildStations(); ['slot-card','charge-card','dur-card'].forEach(id=>document.getElementById(id).style.display='none'); hideErr('pick-err'); } });
+obs.observe(document.getElementById('screen-pick'),{attributes:true,attributeFilter:['class']});
+</script>
+</body>
+</html>
