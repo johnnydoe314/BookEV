@@ -43,8 +43,8 @@ input:focus, select:focus { outline: 2px solid var(--green); border-color: trans
 .slot-grid::-webkit-scrollbar { width: 3px; }
 .slot-grid::-webkit-scrollbar-thumb { background: var(--color-border-secondary); border-radius: 2px; }
 .time-slot { padding: 8px 4px; border-radius: 8px; border: 1.5px solid var(--color-border-tertiary); background: var(--color-background-primary); font-size: 12px; cursor: pointer; transition: all 0.12s; text-align: center; color: var(--color-text-primary); }
-.time-slot.taken { background: var(--color-background-secondary); color: var(--color-text-secondary); cursor: not-allowed; text-decoration: line-through; }
-.time-slot.grace-slot { background: var(--amber-light); color: var(--amber-dark); cursor: not-allowed; border-color: var(--amber); font-size: 11px; }
+.time-slot.taken { background: var(--red-light); color: var(--red-dark); cursor: not-allowed; text-decoration: line-through; border-color: #f09595; }
+.time-slot.grace-slot { background: var(--amber-light); color: var(--amber-dark); cursor: not-allowed; border-color: var(--amber); }
 .time-slot.selected { border-color: var(--green); background: var(--green-light); color: var(--green-dark); font-weight: 500; }
 .time-slot:not(.taken):not(.selected):not(.grace-slot):hover { border-color: var(--green); }
 .charge-bar-wrap { background: var(--color-background-secondary); border-radius: 8px; height: 10px; margin: 8px 0 4px; overflow: hidden; }
@@ -102,10 +102,20 @@ input:focus, select:focus { outline: 2px solid var(--green); border-color: trans
 .stat-card { background: var(--color-background-secondary); border-radius: 8px; padding: 12px; text-align: center; }
 .stat-num { font-size: 24px; font-weight: 500; }
 .stat-label { font-size: 11px; color: var(--color-text-secondary); margin-top: 2px; }
-.station-timeline { margin-bottom: 8px; }
-.timeline-label { font-size: 12px; font-weight: 500; margin-bottom: 4px; display: flex; justify-content: space-between; align-items: center; }
-.timeline-bar-wrap { background: var(--color-background-secondary); border-radius: 6px; height: 20px; overflow: hidden; position: relative; }
-.timeline-segment { position: absolute; height: 100%; border-radius: 4px; display: flex; align-items: center; justify-content: center; font-size: 10px; color: white; overflow: hidden; white-space: nowrap; }
+
+/* Timeline styles */
+.timeline-wrap { overflow-x: auto; padding-bottom: 4px; }
+.timeline-wrap::-webkit-scrollbar { height: 3px; }
+.timeline-wrap::-webkit-scrollbar-thumb { background: var(--color-border-secondary); border-radius: 2px; }
+.timeline-inner { min-width: 520px; }
+.tl-hour-labels { display: flex; margin-bottom: 4px; margin-left: 52px; }
+.tl-hour-label { flex: 1; font-size: 9px; color: var(--color-text-secondary); text-align: left; }
+.tl-row { display: flex; align-items: center; margin-bottom: 6px; }
+.tl-station-name { width: 48px; font-size: 11px; color: var(--color-text-secondary); flex-shrink: 0; padding-right: 4px; }
+.tl-bar-wrap { flex: 1; background: var(--color-background-secondary); border-radius: 4px; height: 22px; position: relative; overflow: hidden; }
+.tl-segment { position: absolute; height: 100%; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 500; color: white; overflow: hidden; white-space: nowrap; border-radius: 3px; }
+.tl-now-line { position: absolute; width: 2px; height: 100%; background: var(--red); opacity: 0.8; top: 0; border-radius: 1px; }
+.tl-time-tooltip { position: absolute; bottom: 100%; font-size: 9px; background: var(--red); color: white; padding: 1px 4px; border-radius: 3px; transform: translateX(-50%); white-space: nowrap; margin-bottom: 2px; }
 </style>
 </head>
 <body>
@@ -232,8 +242,9 @@ input:focus, select:focus { outline: 2px solid var(--green); border-color: trans
       </div>
       <div class="slot-grid" id="slot-grid"></div>
       <div class="legend">
-        <span><span class="legend-dot" style="background:var(--amber)"></span>Grace buffer</span>
-        <span><span class="legend-dot" style="background:var(--color-background-secondary)"></span>Taken</span>
+        <span><span class="legend-dot" style="background:var(--red-light);border:1px solid #f09595"></span>Unavailable</span>
+        <span><span class="legend-dot" style="background:var(--amber-light);border:1px solid var(--amber)"></span>Grace buffer</span>
+        <span><span class="legend-dot" style="background:var(--green-light);border:1px solid var(--green)"></span>Selected</span>
       </div>
     </div>
     <div class="card" id="charge-card" style="display:none">
@@ -347,11 +358,17 @@ input:focus, select:focus { outline: 2px solid var(--green); border-color: trans
         <div id="dash-station-status"></div>
       </div>
       <div class="card">
-        <div class="section-label">Today's timeline</div>
-        <div id="dash-timeline"></div>
-        <div class="legend" style="margin-top:8px">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+          <div class="section-label" style="margin:0">Today's timeline</div>
+          <span style="font-size:11px;color:var(--color-text-secondary)">scroll →</span>
+        </div>
+        <div class="timeline-wrap">
+          <div class="timeline-inner" id="dash-timeline"></div>
+        </div>
+        <div class="legend" style="margin-top:10px">
           <span><span class="legend-dot" style="background:#378ADD"></span>Booked</span>
           <span><span class="legend-dot" style="background:var(--amber)"></span>Grace</span>
+          <span><span class="legend-dot" style="background:var(--red);opacity:0.8"></span>Now</span>
         </div>
       </div>
     </div>
@@ -460,39 +477,10 @@ let userType='resident', residentMethod='phone', guestMethod='phone';
 let selectedStation=null, selectedSlot=null, selectedDur=1, selectedDurLabel='1 hr';
 let chargeTarget=80, currentUnit='', slotHasDemand=false;
 
-function getBookedHours(stId, dateVal){
-  const result=new Set();
-  bookings.filter(b=>b.station===stId&&b.date===dateVal).forEach(b=>{
-    const idx=ALL_HOURS.indexOf(b.slot);
-    for(let i=0;i<b.dur&&idx+i<24;i++) result.add(ALL_HOURS[idx+i]);
-  });
-  return result;
-}
-function getGraceHours(stId, dateVal){
-  const result=new Set();
-  bookings.filter(b=>b.station===stId&&b.date===dateVal).forEach(b=>{
-    const idx=ALL_HOURS.indexOf(b.slot);
-    const endIdx=idx+b.dur;
-    if(endIdx<24) result.add(ALL_HOURS[endIdx]);
-  });
-  return result;
-}
-function getStationStatus(stId, dateVal){
-  const now=new Date(), todayVal=toDateVal(now);
-  if(dateVal!==todayVal) return 'available';
-  const curHr=now.getHours(), curSlot=ALL_HOURS[curHr];
-  const booked=getBookedHours(stId,dateVal);
-  if(booked.has(curSlot)) return 'busy';
-  const grace=getGraceHours(stId,dateVal);
-  if(grace.has(curSlot)) return 'grace';
-  return 'available';
-}
-function slotIsFollowed(stId, dateVal, slot){
-  const idx=ALL_HOURS.indexOf(slot);
-  if(idx<0||idx+selectedDur>=24) return false;
-  const nextSlot=ALL_HOURS[idx+selectedDur];
-  return bookings.some(b=>b.station===stId&&b.date===dateVal&&b.slot===nextSlot);
-}
+function getBookedHours(stId,dateVal){ const r=new Set(); bookings.filter(b=>b.station===stId&&b.date===dateVal).forEach(b=>{ const idx=ALL_HOURS.indexOf(b.slot); for(let i=0;i<b.dur&&idx+i<24;i++) r.add(ALL_HOURS[idx+i]); }); return r; }
+function getGraceHours(stId,dateVal){ const r=new Set(); bookings.filter(b=>b.station===stId&&b.date===dateVal).forEach(b=>{ const idx=ALL_HOURS.indexOf(b.slot), end=idx+b.dur; if(end<24) r.add(ALL_HOURS[end]); }); return r; }
+function getStationStatus(stId,dateVal){ const now=new Date(), todayVal=toDateVal(now); if(dateVal!==todayVal) return 'available'; const curSlot=ALL_HOURS[now.getHours()]; const booked=getBookedHours(stId,dateVal); if(booked.has(curSlot)) return 'busy'; if(getGraceHours(stId,dateVal).has(curSlot)) return 'grace'; return 'available'; }
+function slotIsFollowed(stId,dateVal,slot){ const idx=ALL_HOURS.indexOf(slot); if(idx<0||idx+selectedDur>=24) return false; return bookings.some(b=>b.station===stId&&b.date===dateVal&&b.slot===ALL_HOURS[idx+selectedDur]); }
 function toDateVal(d){ return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); }
 
 function setType(t){ userType=t; ['resident','guest'].forEach(x=>document.getElementById('btn-'+x).className='flex-btn lg'+(t===x?' active':'')); document.getElementById('resident-fields').style.display=t==='resident'?'':'none'; document.getElementById('guest-fields').style.display=t==='guest'?'':'none'; hideErr('home-err'); }
@@ -598,7 +586,7 @@ function goConfirm(){
   hideErr('pick-err');
   const dateStr=new Date(dateVal+'T12:00:00').toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'});
   const stName=STATION_DEFS.find(s=>s.id===selectedStation).label;
-  const idx=ALL_HOURS.indexOf(selectedSlot), endSlot=idx+selectedDur<24?ALL_HOURS[idx+selectedDur]:'midnight';
+  const idx=ALL_HOURS.indexOf(selectedSlot), endSlot=idx+selectedDur<24?ALL_HOURS[idx+selectedDur]:'12:00 AM';
   document.getElementById('c-station').textContent=stName;
   document.getElementById('c-date').textContent=dateStr;
   document.getElementById('c-time').textContent=selectedSlot+' → '+endSlot;
@@ -615,7 +603,7 @@ function confirmBooking(){
     const dateVal=document.getElementById('date-pick').value;
     bookings.push({ station:selectedStation, date:dateVal, slot:selectedSlot, dur:selectedDur, durLabel:selectedDurLabel, unit:currentUnit, target:chargeTarget, status:'confirmed', ts:Date.now() });
     if(currentUnit!=='guest'){ RESIDENTS[currentUnit].activeBookings++; RESIDENTS[currentUnit].hoursUsed+=selectedDur; }
-    const idx=ALL_HOURS.indexOf(selectedSlot), endSlot=idx+selectedDur<24?ALL_HOURS[idx+selectedDur]:'midnight';
+    const idx=ALL_HOURS.indexOf(selectedSlot), endSlot=idx+selectedDur<24?ALL_HOURS[idx+selectedDur]:'12:00 AM';
     document.getElementById('success-msg').textContent=document.getElementById('pick-sub').textContent+' · '+STATION_DEFS.find(s=>s.id===selectedStation).label+' · '+selectedSlot;
     document.getElementById('s-grace-detail').textContent=slotHasDemand?'30 min to unplug after charge complete':'No time pressure — station free after you';
     document.getElementById('s-overdue-detail').textContent=slotHasDemand?'Flagged & admin notified':'Logged only, no flag issued';
@@ -639,6 +627,7 @@ function buildDashboard(){
   document.getElementById('dash-today').textContent=todayBookings.length;
   document.getElementById('dash-avail').textContent=STATION_DEFS.filter(s=>getStationStatus(s.id,todayVal)==='available').length;
   document.getElementById('dash-total').textContent=bookings.length;
+
   const ss=document.getElementById('dash-station-status'); ss.innerHTML='';
   STATION_DEFS.forEach(s=>{
     const status=getStationStatus(s.id,todayVal);
@@ -646,28 +635,56 @@ function buildDashboard(){
     const label=status==='grace'?'Grace period':status==='busy'?'In use':'Available';
     ss.innerHTML+='<div style="display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:0.5px solid var(--color-border-tertiary)"><span style="font-size:13px;font-weight:500">'+s.label+'</span><span style="font-size:12px;color:'+color+';font-weight:500">● '+label+'</span></div>';
   });
+
   const tl=document.getElementById('dash-timeline'); tl.innerHTML='';
+
+  // Hour labels — show every 3 hours
+  const labelRow=document.createElement('div'); labelRow.className='tl-hour-labels';
+  for(let i=0;i<24;i++){
+    const lbl=document.createElement('div'); lbl.className='tl-hour-label';
+    if(i%3===0){
+      const ap=i<12?'AM':'PM', hr2=i===0?12:i>12?i-12:i;
+      lbl.textContent=hr2+(i%12===0?ap:'');
+    }
+    labelRow.appendChild(lbl);
+  }
+  tl.appendChild(labelRow);
+
+  const nowPct=(h+m/60)/24*100;
+
   STATION_DEFS.forEach(s=>{
-    const row=document.createElement('div'); row.className='station-timeline';
-    row.innerHTML='<div class="timeline-label"><span>'+s.label+'</span></div>';
-    const wrap=document.createElement('div'); wrap.className='timeline-bar-wrap';
-    const booked=bookings.filter(b=>b.station===s.id&&b.date===todayVal);
-    booked.forEach(b=>{
-      const startIdx=ALL_HOURS.indexOf(b.slot), pctStart=Math.round(startIdx/24*100), pctW=Math.round(b.dur/24*100);
-      const seg=document.createElement('div'); seg.className='timeline-segment';
-      seg.style.cssText='left:'+pctStart+'%;width:'+pctW+'%;background:#378ADD;';
-      const lbl=b.unit==='guest'?'Guest':'U'+b.unit; seg.textContent=lbl;
+    const row=document.createElement('div'); row.className='tl-row';
+    const nameEl=document.createElement('div'); nameEl.className='tl-station-name'; nameEl.textContent=s.id;
+    const wrap=document.createElement('div'); wrap.className='tl-bar-wrap';
+
+    const stBookings=bookings.filter(b=>b.station===s.id&&b.date===todayVal);
+    stBookings.forEach(b=>{
+      const startIdx=ALL_HOURS.indexOf(b.slot);
+      const startPct=(startIdx/24*100).toFixed(2), widthPct=(b.dur/24*100).toFixed(2);
+      const seg=document.createElement('div'); seg.className='tl-segment';
+      seg.style.cssText='left:'+startPct+'%;width:'+widthPct+'%;background:#378ADD;';
+      const lbl=b.unit==='guest'?'Guest':'U'+b.unit;
+      const startLabel=ALL_HOURS[startIdx], endLabel=startIdx+b.dur<24?ALL_HOURS[startIdx+b.dur]:'12AM';
+      seg.title=lbl+' · '+startLabel+' → '+endLabel;
+      seg.textContent=lbl;
       wrap.appendChild(seg);
+
       if(startIdx+b.dur<24){
-        const gseg=document.createElement('div'); gseg.className='timeline-segment';
-        gseg.style.cssText='left:'+Math.round((startIdx+b.dur)/24*100)+'%;width:'+Math.round(0.5/24*100)+'%;background:var(--amber);';
+        const gStart=((startIdx+b.dur)/24*100).toFixed(2);
+        const gseg=document.createElement('div'); gseg.className='tl-segment';
+        gseg.style.cssText='left:'+gStart+'%;width:'+(0.5/24*100).toFixed(2)+'%;background:'+( 'var(--amber)')+';';
         wrap.appendChild(gseg);
       }
     });
-    const nowLine=document.createElement('div');
-    nowLine.style.cssText='position:absolute;left:'+Math.round(h/24*100)+'%;width:2px;height:100%;background:var(--red);opacity:0.7;';
-    wrap.appendChild(nowLine);
-    row.appendChild(wrap);
+
+    const nowLine=document.createElement('div'); nowLine.className='tl-now-line';
+    nowLine.style.left=nowPct.toFixed(2)+'%';
+    const nowTip=document.createElement('div'); nowTip.className='tl-time-tooltip';
+    nowTip.style.left=nowPct.toFixed(2)+'%';
+    nowTip.textContent=(hr)+':'+(m<10?'0':'')+m+' '+ampm;
+    wrap.appendChild(nowLine); wrap.appendChild(nowTip);
+
+    row.appendChild(nameEl); row.appendChild(wrap);
     tl.appendChild(row);
   });
 }
@@ -680,7 +697,7 @@ function buildBookingsList(){
   [...bookings].reverse().forEach(b=>{
     const stName=STATION_DEFS.find(s=>s.id===b.station).label;
     const dateStr=new Date(b.date+'T12:00:00').toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'});
-    const idx=ALL_HOURS.indexOf(b.slot), endSlot=idx+b.dur<24?ALL_HOURS[idx+b.dur]:'midnight';
+    const idx=ALL_HOURS.indexOf(b.slot), endSlot=idx+b.dur<24?ALL_HOURS[idx+b.dur]:'12:00 AM';
     const unitLabel=b.unit==='guest'?'Guest':('Unit '+b.unit);
     list.innerHTML+='<div class="booking-row"><div class="booking-header"><span style="font-size:13px;font-weight:500">'+stName+' · '+unitLabel+'</span><span class="badge badge-active">Confirmed</span></div><div class="booking-meta">'+dateStr+' · '+b.slot+' → '+endSlot+' · '+b.durLabel+' · Target: '+b.target+'%</div></div>';
   });
@@ -707,8 +724,8 @@ setInterval(()=>{ if(document.getElementById('screen-admin').classList.contains(
 
 const obs=new MutationObserver(()=>{
   if(document.getElementById('screen-pick').classList.contains('active')){
-    const t=new Date(), y=t.getFullYear(), m=String(t.getMonth()+1).padStart(2,'0'), d=String(t.getDate()).padStart(2,'0');
-    const dp=document.getElementById('date-pick'); dp.value=y+'-'+m+'-'+d; dp.min=y+'-'+m+'-'+d;
+    const t=new Date(), y=t.getFullYear(), mo=String(t.getMonth()+1).padStart(2,'0'), d=String(t.getDate()).padStart(2,'0');
+    const dp=document.getElementById('date-pick'); dp.value=y+'-'+mo+'-'+d; dp.min=y+'-'+mo+'-'+d;
     buildStations();
   }
 });
