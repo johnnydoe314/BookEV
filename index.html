@@ -25,123 +25,133 @@ body { font-family: var(--font-sans, system-ui, sans-serif); background: transpa
 .card { background: var(--color-background-primary); border: 0.5px solid var(--color-border-tertiary); border-radius: 12px; padding: 14px 16px; margin-bottom: 12px; }
 .section-label { font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-text-secondary); margin-bottom: 10px; font-weight: 500; }
 label { font-size: 13px; color: var(--color-text-secondary); display: block; margin-bottom: 4px; }
-input[type=text], input[type=tel], input[type=email], input[type=date], input[type=number], select {
-  width: 100%; padding: 9px 12px; border-radius: 8px; border: 0.5px solid var(--color-border-secondary);
-  background: var(--color-background-secondary); color: var(--color-text-primary); font-size: 14px; margin-bottom: 12px;
-}
-input:focus, select:focus { outline: 2px solid var(--green); border-color: transparent; }
-.flex-btn { flex: 1; padding: 9px 4px; border-radius: 8px; border: 1.5px solid var(--color-border-secondary); background: var(--color-background-secondary); color: var(--color-text-secondary); font-size: 13px; cursor: pointer; text-align: center; font-family: inherit; transition: all 0.12s; }
-.flex-btn.active { border-color: var(--green); background: var(--green-light); color: var(--green-dark); font-weight: 500; }
-.flex-btn.lg { font-size: 14px; padding: 10px 4px; }
-.row-btns { display: flex; gap: 8px; margin-bottom: 12px; }
-.station-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 4px; }
-.station-card { border: 1.5px solid var(--color-border-tertiary); border-radius: 10px; padding: 12px 10px; cursor: pointer; text-align: center; transition: all 0.15s; background: var(--color-background-primary); }
-.station-card.available:hover { border-color: var(--green); background: var(--green-light); }
-.station-card.selected { border-color: var(--green); background: var(--green-light); }
-.station-card.busy { opacity: 0.5; cursor: not-allowed; background: var(--color-background-secondary); }
-.station-card.grace { border-color: var(--amber); background: var(--amber-light); cursor: not-allowed; }
-.station-icon { font-size: 20px; margin-bottom: 4px; }
-.station-name { font-size: 13px; font-weight: 500; }
-.station-status { font-size: 11px; margin-top: 2px; }
-.slot-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 5px; max-height: 230px; overflow-y: auto; padding-right: 2px; }
-.slot-grid::-webkit-scrollbar { width: 3px; }
-.slot-grid::-webkit-scrollbar-thumb { background: var(--color-border-secondary); border-radius: 2px; }
-.time-slot { padding: 7px 2px; border-radius: 8px; border: 1.5px solid var(--color-border-tertiary); background: var(--color-background-primary); font-size: 11px; cursor: pointer; transition: all 0.12s; text-align: center; color: var(--color-text-primary); }
-.time-slot.taken { background: var(--red-light); color: var(--red-dark); cursor: not-allowed; text-decoration: line-through; border-color: #f09595; }
-.time-slot.past { background: var(--color-background-secondary); color: var(--color-text-secondary); cursor: not-allowed; opacity: 0.5; }
-.time-slot.grace-slot { background: var(--amber-light); color: var(--amber-dark); cursor: not-allowed; border-color: var(--amber); }
-.time-slot.selected { border-color: var(--green); background: var(--green-light); color: var(--green-dark); font-weight: 500; }
-.time-slot:not(.taken):not(.selected):not(.grace-slot):not(.past):hover { border-color: var(--green); }
-.charge-bar-wrap { background: var(--color-background-secondary); border-radius: 8px; height: 10px; margin: 8px 0 4px; overflow: hidden; }
-.charge-bar { height: 100%; border-radius: 8px; }
-.charge-labels { display: flex; justify-content: space-between; font-size: 11px; color: var(--color-text-secondary); margin-bottom: 10px; }
-.primary-btn { width: 100%; padding: 13px; border-radius: 10px; background: var(--green); color: white; border: none; font-size: 15px; font-weight: 500; cursor: pointer; margin-top: 8px; font-family: inherit; transition: opacity 0.15s; }
-.primary-btn:disabled { opacity: 0.4; cursor: not-allowed; }
-.primary-btn:not(:disabled):hover { opacity: 0.88; }
-.secondary-btn { width: 100%; padding: 11px; border-radius: 10px; background: transparent; color: var(--green); border: 1.5px solid var(--green); font-size: 14px; cursor: pointer; margin-top: 8px; font-family: inherit; }
-.secondary-btn:hover { background: var(--green-light); }
-.alert { padding: 10px 12px; border-radius: 8px; font-size: 13px; margin-bottom: 12px; line-height: 1.5; }
-.alert-err { background: var(--red-light); color: var(--red-dark); border: 0.5px solid #f09595; }
-.alert-ok { background: var(--teal-light); color: var(--teal-dark); border: 0.5px solid #5DCAA5; }
-.alert-warn { background: var(--amber-light); color: var(--amber-dark); border: 0.5px solid #FAC775; }
-.alert-info { background: var(--blue-light); color: var(--blue-dark); border: 0.5px solid #85B7EB; }
-.confirm-row { display: flex; justify-content: space-between; padding: 7px 0; border-bottom: 0.5px solid var(--color-border-tertiary); font-size: 14px; }
-.confirm-row:last-child { border-bottom: none; }
-.confirm-label { color: var(--color-text-secondary); }
-.confirm-val { font-weight: 500; text-align: right; max-width: 58%; }
-.success-circle { width: 64px; height: 64px; border-radius: 50%; background: var(--green-light); display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; font-size: 28px; }
-.text-center { text-align: center; }
-.pin-inputs { display: flex; gap: 10px; justify-content: center; margin: 20px 0; }
-.pin-input {
-  width: 56px; height: 64px; border-radius: 12px; text-align: center;
-  font-size: 28px; font-weight: 500;
-  border: 2px solid var(--color-border-secondary);
-  background: var(--color-background-secondary);
-  color: var(--color-text-primary);
-  transition: border-color 0.15s, box-shadow 0.15s;
-}
-.pin-input:focus { outline: none; border-color: var(--green); box-shadow: 0 0 0 3px rgba(99,153,34,0.18); }
-.pin-input.filled { border-color: var(--green); background: var(--green-light); color: var(--green-dark); }
-.spinner { display: inline-block; width: 18px; height: 18px; border: 2px solid rgba(255,255,255,0.4); border-top-color: white; border-radius: 50%; animation: spin 0.7s linear infinite; vertical-align: middle; }
-@keyframes spin { to { transform: rotate(360deg); } }
-.legend { display: flex; gap: 8px; flex-wrap: wrap; font-size: 11px; color: var(--color-text-secondary); margin-top: 8px; }
-.legend-dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; margin-right: 3px; }
-.usage-bar-wrap { flex: 1; background: var(--color-background-secondary); border-radius: 6px; height: 8px; overflow: hidden; }
-.usage-bar { height: 100%; border-radius: 6px; background: var(--green); }
-.usage-bar.warn { background: var(--amber); }
-.usage-bar.full { background: var(--red); }
-.badge { display: inline-block; padding: 2px 8px; border-radius: 20px; font-size: 11px; font-weight: 500; }
-.badge-ok { background: var(--green-light); color: var(--green-dark); }
-.badge-err { background: var(--red-light); color: var(--red-dark); }
-.badge-warn { background: var(--amber-light); color: var(--amber-dark); }
-.badge-blue { background: var(--blue-light); color: var(--blue-dark); }
-.badge-gray { background: var(--color-background-secondary); color: var(--color-text-secondary); }
-.tab-bar { display: flex; border-bottom: 0.5px solid var(--color-border-tertiary); margin-bottom: 16px; overflow-x: auto; }
-.tab-bar::-webkit-scrollbar { display: none; }
-.tab { flex: 0 0 auto; padding: 10px 12px; font-size: 13px; color: var(--color-text-secondary); cursor: pointer; border-bottom: 2px solid transparent; margin-bottom: -1px; white-space: nowrap; }
-.tab.active { color: var(--green-dark); border-bottom-color: var(--green); font-weight: 500; }
-.admin-panel { display: none; }
-.admin-panel.active { display: block; }
-.method-hint { font-size: 12px; color: var(--color-text-secondary); margin: -8px 0 12px; }
-.demand-pill { display: inline-flex; align-items: center; gap: 4px; padding: 3px 8px; border-radius: 20px; font-size: 11px; font-weight: 500; }
-.demand-high { background: var(--amber-light); color: var(--amber-dark); }
-.demand-low { background: var(--green-light); color: var(--green-dark); }
-.booking-card { background: var(--color-background-primary); border: 0.5px solid var(--color-border-tertiary); border-radius: 10px; padding: 12px 14px; margin-bottom: 10px; }
-.booking-card-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 4px; }
-.booking-card-actions { display: flex; gap: 8px; margin-top: 10px; }
-.bca-btn { flex: 1; padding: 7px; border-radius: 8px; font-size: 12px; cursor: pointer; font-family: inherit; text-align: center; border: 1.5px solid; }
-.bca-edit { border-color: var(--green); color: var(--green-dark); background: transparent; }
-.bca-edit:hover { background: var(--green-light); }
-.bca-cancel { border-color: var(--red); color: var(--red-dark); background: transparent; }
-.bca-cancel:hover { background: var(--red-light); }
-.stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 12px; }
-.stat-card { background: var(--color-background-secondary); border-radius: 8px; padding: 12px; text-align: center; }
-.stat-num { font-size: 22px; font-weight: 500; }
-.stat-label { font-size: 11px; color: var(--color-text-secondary); margin-top: 2px; }
-.day-bar-wrap { display: flex; align-items: flex-end; gap: 4px; height: 60px; margin: 8px 0 4px; }
-.day-bar-col { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 2px; }
-.day-bar { width: 100%; border-radius: 3px 3px 0 0; min-height: 2px; }
-.day-bar-label { font-size: 9px; color: var(--color-text-secondary); }
-.day-bar-val { font-size: 9px; font-weight: 500; }
-.modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.45); display: flex; align-items: center; justify-content: center; z-index: 100; padding: 24px; }
-.modal-box { background: var(--color-background-primary); border-radius: 14px; padding: 24px 20px; width: 100%; max-width: 340px; }
-.modal-title { font-size: 17px; font-weight: 500; margin-bottom: 8px; }
-.modal-body { font-size: 14px; color: var(--color-text-secondary); margin-bottom: 20px; line-height: 1.6; }
-.modal-actions { display: flex; gap: 10px; }
-.modal-actions button { flex: 1; padding: 11px; border-radius: 10px; font-size: 14px; font-weight: 500; cursor: pointer; font-family: inherit; }
-.modal-confirm { background: var(--red); color: white; border: none; }
-.modal-cancel { background: transparent; border: 1.5px solid var(--color-border-secondary); color: var(--color-text-primary); }
-.timeline-outer { overflow-x: scroll; padding-bottom: 8px; cursor: grab; }
-.timeline-outer::-webkit-scrollbar { height: 6px; }
-.timeline-outer::-webkit-scrollbar-track { background: var(--color-background-secondary); border-radius: 3px; }
-.timeline-outer::-webkit-scrollbar-thumb { background: var(--color-border-secondary); border-radius: 3px; }
-.timeline-outer::-webkit-scrollbar-thumb:hover { background: var(--gray-mid); }
-.unit-row { padding: 10px 0; border-bottom: 0.5px solid var(--color-border-tertiary); }
-.unit-row:last-child { border-bottom: none; }
-.unit-row-header { display: flex; justify-content: space-between; align-items: center; cursor: pointer; }
-.unit-row-body { padding-top: 10px; display: none; }
-.unit-row-body.open { display: block; }
-.version-badge { display: inline-block; background: rgba(255,255,255,0.18); color: white; font-size: 10px; padding: 2px 8px; border-radius: 10px; margin-left: 8px; vertical-align: middle; font-weight: 500; letter-spacing: 0.05em; }
+input[type=text],input[type=tel],input[type=email],input[type=date],input[type=number],select { width:100%; padding:9px 12px; border-radius:8px; border:0.5px solid var(--color-border-secondary); background:var(--color-background-secondary); color:var(--color-text-primary); font-size:14px; margin-bottom:12px; }
+input:focus,select:focus { outline:2px solid var(--green); border-color:transparent; }
+.flex-btn { flex:1; padding:9px 4px; border-radius:8px; border:1.5px solid var(--color-border-secondary); background:var(--color-background-secondary); color:var(--color-text-secondary); font-size:13px; cursor:pointer; text-align:center; font-family:inherit; transition:all 0.12s; }
+.flex-btn.active { border-color:var(--green); background:var(--green-light); color:var(--green-dark); font-weight:500; }
+.flex-btn.lg { font-size:14px; padding:10px 4px; }
+.row-btns { display:flex; gap:8px; margin-bottom:12px; }
+.station-grid { display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:4px; }
+.station-card { border:1.5px solid var(--color-border-tertiary); border-radius:10px; padding:12px 10px; cursor:pointer; text-align:center; transition:all 0.15s; background:var(--color-background-primary); }
+.station-card.available:hover { border-color:var(--green); background:var(--green-light); }
+.station-card.selected { border-color:var(--green); background:var(--green-light); }
+.station-card.busy { opacity:0.5; cursor:not-allowed; background:var(--color-background-secondary); }
+.station-card.grace { border-color:var(--amber); background:var(--amber-light); cursor:not-allowed; }
+.station-icon { font-size:20px; margin-bottom:4px; }
+.station-name { font-size:13px; font-weight:500; }
+.station-status { font-size:11px; margin-top:2px; }
+.slot-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:5px; max-height:230px; overflow-y:auto; padding-right:2px; }
+.slot-grid::-webkit-scrollbar { width:3px; }
+.slot-grid::-webkit-scrollbar-thumb { background:var(--color-border-secondary); border-radius:2px; }
+.time-slot { padding:7px 2px; border-radius:8px; border:1.5px solid var(--color-border-tertiary); background:var(--color-background-primary); font-size:11px; cursor:pointer; transition:all 0.12s; text-align:center; color:var(--color-text-primary); }
+.time-slot.taken { background:var(--red-light); color:var(--red-dark); cursor:not-allowed; text-decoration:line-through; border-color:#f09595; }
+.time-slot.past { background:var(--color-background-secondary); color:var(--color-text-secondary); cursor:not-allowed; opacity:0.5; }
+.time-slot.grace-slot { background:var(--amber-light); color:var(--amber-dark); cursor:not-allowed; border-color:var(--amber); }
+.time-slot.selected { border-color:var(--green); background:var(--green-light); color:var(--green-dark); font-weight:500; }
+.time-slot:not(.taken):not(.selected):not(.grace-slot):not(.past):hover { border-color:var(--green); }
+.charge-bar-wrap { background:var(--color-background-secondary); border-radius:8px; height:10px; margin:8px 0 4px; overflow:hidden; }
+.charge-bar { height:100%; border-radius:8px; }
+.charge-labels { display:flex; justify-content:space-between; font-size:11px; color:var(--color-text-secondary); margin-bottom:10px; }
+.primary-btn { width:100%; padding:13px; border-radius:10px; background:var(--green); color:white; border:none; font-size:15px; font-weight:500; cursor:pointer; margin-top:8px; font-family:inherit; transition:opacity 0.15s; }
+.primary-btn:disabled { opacity:0.4; cursor:not-allowed; }
+.primary-btn:not(:disabled):hover { opacity:0.88; }
+.secondary-btn { width:100%; padding:11px; border-radius:10px; background:transparent; color:var(--green); border:1.5px solid var(--green); font-size:14px; cursor:pointer; margin-top:8px; font-family:inherit; }
+.secondary-btn:hover { background:var(--green-light); }
+.danger-btn { width:100%; padding:11px; border-radius:10px; background:transparent; color:var(--red); border:1.5px solid var(--red); font-size:14px; cursor:pointer; margin-top:8px; font-family:inherit; }
+.danger-btn:hover { background:var(--red-light); }
+.alert { padding:10px 12px; border-radius:8px; font-size:13px; margin-bottom:12px; line-height:1.5; }
+.alert-err { background:var(--red-light); color:var(--red-dark); border:0.5px solid #f09595; }
+.alert-ok { background:var(--teal-light); color:var(--teal-dark); border:0.5px solid #5DCAA5; }
+.alert-warn { background:var(--amber-light); color:var(--amber-dark); border:0.5px solid #FAC775; }
+.alert-info { background:var(--blue-light); color:var(--blue-dark); border:0.5px solid #85B7EB; }
+.confirm-row { display:flex; justify-content:space-between; padding:7px 0; border-bottom:0.5px solid var(--color-border-tertiary); font-size:14px; }
+.confirm-row:last-child { border-bottom:none; }
+.confirm-label { color:var(--color-text-secondary); }
+.confirm-val { font-weight:500; text-align:right; max-width:58%; }
+.success-circle { width:64px; height:64px; border-radius:50%; background:var(--green-light); display:flex; align-items:center; justify-content:center; margin:0 auto 16px; font-size:28px; }
+.text-center { text-align:center; }
+.pin-inputs { display:flex; gap:10px; justify-content:center; margin:20px 0; }
+.pin-input { width:56px; height:64px; border-radius:12px; text-align:center; font-size:28px; font-weight:500; border:2px solid var(--color-border-secondary); background:var(--color-background-secondary); color:var(--color-text-primary); transition:border-color 0.15s, box-shadow 0.15s; }
+.pin-input:focus { outline:none; border-color:var(--green); box-shadow:0 0 0 3px rgba(99,153,34,0.22); }
+.pin-input.filled { border-color:var(--green); box-shadow:0 0 0 2px rgba(99,153,34,0.15); background:var(--green-light); color:var(--green-dark); }
+.spinner { display:inline-block; width:18px; height:18px; border:2px solid rgba(255,255,255,0.4); border-top-color:white; border-radius:50%; animation:spin 0.7s linear infinite; vertical-align:middle; }
+@keyframes spin { to { transform:rotate(360deg); } }
+.legend { display:flex; gap:8px; flex-wrap:wrap; font-size:11px; color:var(--color-text-secondary); margin-top:8px; }
+.legend-dot { width:8px; height:8px; border-radius:50%; display:inline-block; margin-right:3px; }
+.usage-bar-wrap { flex:1; background:var(--color-background-secondary); border-radius:6px; height:8px; overflow:hidden; }
+.usage-bar { height:100%; border-radius:6px; background:var(--green); }
+.usage-bar.warn { background:var(--amber); }
+.usage-bar.full { background:var(--red); }
+.badge { display:inline-block; padding:2px 8px; border-radius:20px; font-size:11px; font-weight:500; }
+.badge-ok { background:var(--green-light); color:var(--green-dark); }
+.badge-err { background:var(--red-light); color:var(--red-dark); }
+.badge-warn { background:var(--amber-light); color:var(--amber-dark); }
+.badge-blue { background:var(--blue-light); color:var(--blue-dark); }
+.badge-gray { background:var(--color-background-secondary); color:var(--color-text-secondary); }
+.tab-bar { display:flex; border-bottom:0.5px solid var(--color-border-tertiary); margin-bottom:16px; overflow-x:auto; }
+.tab-bar::-webkit-scrollbar { display:none; }
+.tab { flex:0 0 auto; padding:10px 12px; font-size:13px; color:var(--color-text-secondary); cursor:pointer; border-bottom:2px solid transparent; margin-bottom:-1px; white-space:nowrap; }
+.tab.active { color:var(--green-dark); border-bottom-color:var(--green); font-weight:500; }
+.admin-panel { display:none; }
+.admin-panel.active { display:block; }
+.method-hint { font-size:12px; color:var(--color-text-secondary); margin:-8px 0 12px; }
+.demand-pill { display:inline-flex; align-items:center; gap:4px; padding:3px 8px; border-radius:20px; font-size:11px; font-weight:500; }
+.demand-high { background:var(--amber-light); color:var(--amber-dark); }
+.demand-low { background:var(--green-light); color:var(--green-dark); }
+.booking-card { background:var(--color-background-primary); border:0.5px solid var(--color-border-tertiary); border-radius:10px; padding:12px 14px; margin-bottom:10px; }
+.booking-card-header { display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:4px; }
+.booking-card-actions { display:flex; gap:8px; margin-top:10px; }
+.bca-btn { flex:1; padding:7px; border-radius:8px; font-size:12px; cursor:pointer; font-family:inherit; text-align:center; border:1.5px solid; }
+.bca-edit { border-color:var(--green); color:var(--green-dark); background:transparent; }
+.bca-edit:hover { background:var(--green-light); }
+.bca-cancel { border-color:var(--red); color:var(--red-dark); background:transparent; }
+.bca-cancel:hover { background:var(--red-light); }
+.stat-grid { display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:12px; }
+.stat-card { background:var(--color-background-secondary); border-radius:8px; padding:12px; text-align:center; }
+.stat-num { font-size:22px; font-weight:500; }
+.stat-label { font-size:11px; color:var(--color-text-secondary); margin-top:2px; }
+.day-bar-wrap { display:flex; align-items:flex-end; gap:4px; height:60px; margin:8px 0 4px; }
+.day-bar-col { flex:1; display:flex; flex-direction:column; align-items:center; gap:2px; }
+.day-bar { width:100%; border-radius:3px 3px 0 0; min-height:2px; }
+.day-bar-label { font-size:9px; color:var(--color-text-secondary); }
+.day-bar-val { font-size:9px; font-weight:500; }
+.modal-overlay { position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.45); display:flex; align-items:center; justify-content:center; z-index:100; padding:24px; }
+.modal-box { background:var(--color-background-primary); border-radius:14px; padding:24px 20px; width:100%; max-width:340px; max-height:80vh; overflow-y:auto; }
+.modal-title { font-size:17px; font-weight:500; margin-bottom:8px; }
+.modal-body { font-size:14px; color:var(--color-text-secondary); margin-bottom:16px; line-height:1.6; }
+.modal-actions { display:flex; gap:10px; }
+.modal-actions button { flex:1; padding:11px; border-radius:10px; font-size:14px; font-weight:500; cursor:pointer; font-family:inherit; }
+.modal-confirm { background:var(--green); color:white; border:none; }
+.modal-danger { background:var(--red); color:white; border:none; }
+.modal-cancel { background:transparent; border:1.5px solid var(--color-border-secondary); color:var(--color-text-primary); }
+.timeline-outer { overflow-x:scroll; padding-bottom:8px; }
+.timeline-outer::-webkit-scrollbar { height:6px; }
+.timeline-outer::-webkit-scrollbar-track { background:var(--color-background-secondary); border-radius:3px; }
+.timeline-outer::-webkit-scrollbar-thumb { background:var(--color-border-secondary); border-radius:3px; }
+.timeline-outer::-webkit-scrollbar-thumb:hover { background:var(--gray-mid); }
+.unit-row { padding:10px 0; border-bottom:0.5px solid var(--color-border-tertiary); }
+.unit-row:last-child { border-bottom:none; }
+.unit-row-header { display:flex; justify-content:space-between; align-items:center; cursor:pointer; }
+.unit-row-body { padding-top:10px; display:none; }
+.unit-row-body.open { display:block; }
+.version-badge { display:inline-block; background:rgba(255,255,255,0.18); color:white; font-size:10px; padding:2px 8px; border-radius:10px; margin-left:8px; vertical-align:middle; font-weight:500; letter-spacing:0.05em; }
+.ver-entry { padding:12px 0; border-bottom:0.5px solid var(--color-border-tertiary); }
+.ver-entry:last-child { border-bottom:none; }
+.ver-num { font-size:13px; font-weight:500; margin-bottom:2px; }
+.ver-date { font-size:11px; color:var(--color-text-secondary); margin-bottom:6px; }
+.ver-changes { list-style:none; padding:0; }
+.ver-changes li { font-size:12px; color:var(--color-text-secondary); padding:2px 0 2px 12px; position:relative; }
+.ver-changes li::before { content:'·'; position:absolute; left:0; color:var(--green); font-weight:500; }
+.unit-mgmt-row { display:flex; justify-content:space-between; align-items:center; padding:8px 0; border-bottom:0.5px solid var(--color-border-tertiary); }
+.unit-mgmt-row:last-child { border-bottom:none; }
+.unit-mgmt-btns { display:flex; gap:6px; }
+.um-btn { padding:4px 10px; border-radius:6px; font-size:11px; cursor:pointer; font-family:inherit; border:1.5px solid; }
+.um-edit { border-color:var(--green); color:var(--green-dark); background:transparent; }
+.um-del { border-color:var(--red); color:var(--red-dark); background:transparent; }
+.csv-drop { border:2px dashed var(--color-border-secondary); border-radius:10px; padding:20px; text-align:center; cursor:pointer; transition:all 0.15s; margin-bottom:12px; }
+.csv-drop:hover, .csv-drop.over { border-color:var(--green); background:var(--green-light); }
+.csv-drop p { font-size:13px; color:var(--color-text-secondary); margin-bottom:4px; }
+.csv-drop small { font-size:11px; color:var(--color-text-secondary); }
 </style>
 </head>
 <body>
@@ -201,15 +211,15 @@ input:focus, select:focus { outline: 2px solid var(--green); border-color: trans
   <div class="body">
     <div class="card">
       <p style="font-size:14px;color:var(--color-text-secondary);margin-bottom:4px;" id="otp-desc"></p>
-      <div class="section-label" style="margin-top:12px">Enter 4-digit confirmation code</div>
-      <div class="pin-inputs" id="pin-inputs">
+      <div class="section-label" style="margin-top:14px">Enter 4-digit confirmation code</div>
+      <div class="pin-inputs">
         <input class="pin-input" maxlength="1" type="tel" id="p0" oninput="pinNext(this,0)" onfocus="this.select()">
         <input class="pin-input" maxlength="1" type="tel" id="p1" oninput="pinNext(this,1)" onfocus="this.select()">
         <input class="pin-input" maxlength="1" type="tel" id="p2" oninput="pinNext(this,2)" onfocus="this.select()">
         <input class="pin-input" maxlength="1" type="tel" id="p3" oninput="pinNext(this,3)" onfocus="this.select()">
       </div>
       <div id="otp-err" class="alert alert-err" style="display:none"></div>
-      <div style="text-align:center;margin-top:8px">
+      <div style="text-align:center;margin-top:4px">
         <span style="font-size:13px;color:var(--color-text-secondary)">Demo code: </span>
         <span style="font-size:15px;font-weight:500;letter-spacing:0.15em;color:var(--green-dark);background:var(--green-light);padding:4px 12px;border-radius:8px;">4729</span>
       </div>
@@ -225,7 +235,7 @@ input:focus, select:focus { outline: 2px solid var(--green); border-color: trans
     <button class="back-btn" onclick="goHome()">←</button>
     <div class="header-logo">BookEV</div>
     <div class="header-title" id="rdash-title">My Dashboard</div>
-    <div class="header-sub" id="rdash-sub">John Do Estates</div>
+    <div class="header-sub">John Do Estates</div>
   </div>
   <div class="body">
     <div class="card">
@@ -240,7 +250,7 @@ input:focus, select:focus { outline: 2px solid var(--green); border-color: trans
       </div>
       <div class="section-label" style="margin-top:4px">Hours per day</div>
       <div class="day-bar-wrap" id="rdash-day-bars"></div>
-      <div style="display:flex;justify-content:space-between;font-size:9px;color:var(--color-text-secondary);margin-bottom:4px" id="rdash-day-labels"></div>
+      <div style="display:flex;justify-content:space-between;font-size:9px;color:var(--color-text-secondary);" id="rdash-day-labels"></div>
     </div>
     <div class="card">
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
@@ -256,16 +266,13 @@ input:focus, select:focus { outline: 2px solid var(--green); border-color: trans
 <!-- PICK -->
 <div class="screen" id="screen-pick">
   <div class="header">
-    <button class="back-btn" id="pick-back-btn" onclick="goTo('screen-rdash')">←</button>
+    <button class="back-btn" onclick="goTo('screen-rdash')">←</button>
     <div class="header-logo">BookEV</div>
     <div class="header-title">Book a Station</div>
     <div class="header-sub" id="pick-sub"></div>
   </div>
   <div class="body">
-    <div class="card">
-      <div class="section-label">Date</div>
-      <input type="date" id="date-pick" onchange="buildStations()">
-    </div>
+    <div class="card"><div class="section-label">Date</div><input type="date" id="date-pick" onchange="buildStations()"></div>
     <div class="card">
       <div class="section-label">Charging station</div>
       <div class="station-grid" id="station-grid"></div>
@@ -346,7 +353,7 @@ input:focus, select:focus { outline: 2px solid var(--green); border-color: trans
   <div class="header">
     <div class="header-logo">BookEV</div>
     <div class="header-title" id="success-headline-h">You're all set!</div>
-    <div class="header-sub">Booking confirmed</div>
+    <div class="header-sub">John Do Estates</div>
   </div>
   <div class="body">
     <div class="card text-center" style="padding:24px 16px">
@@ -370,7 +377,7 @@ input:focus, select:focus { outline: 2px solid var(--green); border-color: trans
 <div class="screen" id="screen-admin">
   <div class="header">
     <button class="back-btn" onclick="goTo('screen-home')">←</button>
-    <div class="header-logo">BookEV <span class="version-badge">v9.0</span></div>
+    <div class="header-logo">BookEV <span class="version-badge">v10.0</span></div>
     <div class="header-title">Admin Panel</div>
     <div class="header-sub">John Do Estates</div>
   </div>
@@ -378,11 +385,14 @@ input:focus, select:focus { outline: 2px solid var(--green); border-color: trans
     <div class="tab-bar">
       <div class="tab active" onclick="setTab('dashboard')" id="tab-dashboard">Dashboard</div>
       <div class="tab" onclick="setTab('bookings')" id="tab-bookings">Bookings</div>
+      <div class="tab" onclick="setTab('units')" id="tab-units">Units</div>
       <div class="tab" onclick="setTab('flags')" id="tab-flags">Flags</div>
       <div class="tab" onclick="setTab('usage')" id="tab-usage">Usage</div>
       <div class="tab" onclick="setTab('settings')" id="tab-settings">Settings</div>
+      <div class="tab" onclick="setTab('versions')" id="tab-versions">Versions</div>
     </div>
 
+    <!-- DASHBOARD -->
     <div class="admin-panel active" id="panel-dashboard">
       <div style="font-size:28px;font-weight:500;text-align:center;padding:16px 0 4px" id="admin-clock">--:-- --</div>
       <div style="font-size:13px;color:var(--color-text-secondary);text-align:center;margin-bottom:16px" id="admin-date-label">Loading...</div>
@@ -401,9 +411,7 @@ input:focus, select:focus { outline: 2px solid var(--green); border-color: trans
           <div class="section-label" style="margin:0">Timeline</div>
           <input type="date" id="admin-date-pick" onchange="buildDashboard()" style="margin:0;width:auto;font-size:12px;padding:5px 8px">
         </div>
-        <div class="timeline-outer" id="timeline-outer">
-          <div id="dash-timeline"></div>
-        </div>
+        <div class="timeline-outer" id="timeline-outer"><div id="dash-timeline"></div></div>
         <div class="legend" style="margin-top:10px">
           <span><span class="legend-dot" style="background:rgba(0,0,0,0.05)"></span>Past</span>
           <span><span class="legend-dot" style="background:var(--blue)"></span>Booked</span>
@@ -413,6 +421,7 @@ input:focus, select:focus { outline: 2px solid var(--green); border-color: trans
       </div>
     </div>
 
+    <!-- BOOKINGS -->
     <div class="admin-panel" id="panel-bookings">
       <div class="card">
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
@@ -423,6 +432,32 @@ input:focus, select:focus { outline: 2px solid var(--green); border-color: trans
       </div>
     </div>
 
+    <!-- UNITS -->
+    <div class="admin-panel" id="panel-units">
+      <div class="card">
+        <div class="section-label">Import units via CSV</div>
+        <p style="font-size:12px;color:var(--color-text-secondary);margin-bottom:10px">CSV format: <code style="font-size:11px;background:var(--color-background-secondary);padding:1px 5px;border-radius:4px">unit,phone,email</code> — one row per unit. Header row optional.</p>
+        <div class="csv-drop" id="csv-drop" onclick="document.getElementById('csv-file').click()" ondragover="csvDragOver(event)" ondragleave="csvDragLeave(event)" ondrop="csvDrop(event)">
+          <p>Click or drag a CSV file here</p>
+          <small>unit, phone, email columns</small>
+        </div>
+        <input type="file" id="csv-file" accept=".csv,text/csv" style="display:none" onchange="csvFileSelected(this)">
+        <div id="csv-preview" style="display:none">
+          <div class="alert alert-ok" id="csv-result-msg"></div>
+          <button class="primary-btn" style="margin-top:0" id="csv-import-btn" onclick="csvConfirmImport()">Import units</button>
+          <button class="secondary-btn" onclick="csvCancel()">Cancel</button>
+        </div>
+      </div>
+      <div class="card">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+          <div class="section-label" style="margin:0">Unit roster</div>
+          <button onclick="openAddUnit()" style="padding:5px 12px;border-radius:8px;border:1.5px solid var(--green);color:var(--green-dark);background:transparent;font-size:12px;cursor:pointer;font-family:inherit;">+ Add unit</button>
+        </div>
+        <div id="unit-roster"></div>
+      </div>
+    </div>
+
+    <!-- FLAGS -->
     <div class="admin-panel" id="panel-flags">
       <div class="alert alert-info" style="margin-bottom:12px;font-size:13px">Flags only trigger when another resident had a booking queued. Low-demand overruns are logged but not flagged.</div>
       <div class="card"><div class="section-label">Active flags</div><p style="font-size:13px;color:var(--color-text-secondary);padding:8px 0">No active flags.</p></div>
@@ -430,25 +465,25 @@ input:focus, select:focus { outline: 2px solid var(--green); border-color: trans
       <button class="primary-btn" style="margin-top:0" onclick="alert('No flagged residents to notify.')">Notify flagged residents</button>
     </div>
 
+    <!-- USAGE -->
     <div class="admin-panel" id="panel-usage">
       <div class="card"><div class="section-label">7-day hours used by unit</div><div id="usage-list"></div></div>
       <div class="card"><div class="section-label">Station bookings this session</div><div id="station-usage-list"></div></div>
     </div>
 
+    <!-- SETTINGS -->
     <div class="admin-panel" id="panel-settings">
       <div class="card">
         <div class="section-label">Default booking limits</div>
-        <div style="margin-bottom:4px">
-          <label>Weekly hours cap (rolling 7 days)</label>
-          <input type="number" id="default-cap-input" min="1" max="168" placeholder="12" value="12" oninput="onDefaultCapChange()" style="margin-bottom:4px">
-          <p style="font-size:12px;color:var(--color-text-secondary);margin-bottom:12px">Recommended value: 12 hours</p>
-        </div>
+        <label>Weekly hours cap (rolling 7 days)</label>
+        <input type="number" id="default-cap-input" min="1" max="168" placeholder="12" value="12" oninput="onDefaultCapChange()" style="margin-bottom:4px">
+        <p style="font-size:12px;color:var(--color-text-secondary);margin-bottom:4px">Recommended value: 12 hours</p>
       </div>
       <div class="card">
         <div class="section-label">Grace period</div>
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px"><label style="margin:0">Grace period after charge complete</label><span style="font-size:14px;font-weight:500" id="grace-out">30 min</span></div>
         <input type="range" min="10" max="60" step="5" value="30" oninput="document.getElementById('grace-out').textContent=this.value+' min'" style="width:100%">
-        <p class="method-hint" style="margin-top:8px;margin-bottom:0">Only applies when the next slot is booked.</p>
+        <p class="method-hint" style="margin-top:8px;margin-bottom:0">Only applies when next slot is booked.</p>
       </div>
       <div class="card">
         <div class="section-label">Violation policy</div>
@@ -457,19 +492,29 @@ input:focus, select:focus { outline: 2px solid var(--green); border-color: trans
       </div>
       <div class="card">
         <div class="section-label">Per-unit overrides</div>
-        <p style="font-size:12px;color:var(--color-text-secondary);margin-bottom:12px">Override the default cap for specific units. Changing the default cap will update all units set to "use default".</p>
+        <p style="font-size:12px;color:var(--color-text-secondary);margin-bottom:12px">Override the default cap for specific units.</p>
         <div id="unit-overrides"></div>
       </div>
       <button class="primary-btn" style="margin-top:0" onclick="saveSettings()">Save settings</button>
     </div>
+
+    <!-- VERSIONS -->
+    <div class="admin-panel" id="panel-versions">
+      <div class="card">
+        <div class="section-label">Version history</div>
+        <div id="version-history-list"></div>
+      </div>
+    </div>
   </div>
 </div>
 
+<!-- MODAL -->
 <div class="modal-overlay" id="modal" style="display:none">
   <div class="modal-box">
     <div class="modal-title" id="modal-title">Confirm</div>
-    <div class="modal-body" id="modal-body"></div>
-    <div class="modal-actions">
+    <div class="modal-body" id="modal-body" style="display:none"></div>
+    <div id="modal-content"></div>
+    <div class="modal-actions" id="modal-actions" style="margin-top:16px">
       <button class="modal-cancel" id="modal-cancel-btn" onclick="closeModal()">Cancel</button>
       <button class="modal-confirm" id="modal-confirm-btn">Confirm</button>
     </div>
@@ -477,110 +522,81 @@ input:focus, select:focus { outline: 2px solid var(--green); border-color: trans
 </div>
 
 <script>
-const APP_VERSION = 'v9.0';
+const APP_VERSION = 'v10.0';
 const PROPERTY_NAME = 'John Do Estates';
-
-const RESIDENTS = {
-  '101': { phone:'5125550101', email:'res101@bookev.com', flags:0 },
-  '202': { phone:'5125550202', email:'res202@bookev.com', flags:0 },
-  '303': { phone:'5125550303', email:'res303@bookev.com', flags:0 },
-};
-
-let defaultCap = 12;
-const unitOverrides = { '101': { useDefault: true }, '202': { useDefault: true }, '303': { useDefault: true } };
-
 const STATION_DEFS = [
-  { id:'A1', label:'Station A1', level:'Level 2 · 7.2 kW' },
-  { id:'A2', label:'Station A2', level:'Level 2 · 7.2 kW' },
-  { id:'B1', label:'Station B1', level:'DC Fast · 50 kW' },
-  { id:'B2', label:'Station B2', level:'DC Fast · 50 kW' },
+  {id:'A1',label:'Station A1',level:'Level 2 · 7.2 kW'},
+  {id:'A2',label:'Station A2',level:'Level 2 · 7.2 kW'},
+  {id:'B1',label:'Station B1',level:'DC Fast · 50 kW'},
+  {id:'B2',label:'Station B2',level:'DC Fast · 50 kW'},
+];
+const ALL_SLOTS = [];
+for(let h=0;h<24;h++) for(let half=0;half<2;half++){const ap=h<12?'AM':'PM',hr=h===0?12:h>12?h-12:h; ALL_SLOTS.push(hr+':'+(half===0?'00':'30')+' '+ap);}
+
+const VERSION_HISTORY = [
+  { ver:'v10.0', date:'Apr 22, 2026', changes:['Guest OTP inputs have green outline on all cells while entering code','localStorage persistence — data survives page refreshes','Admin: CSV import tool for bulk unit upload','Admin: Manual add / edit / delete units with phone & email','Admin: Version history tab with full changelog','Unit and booking data persists across sessions'] },
+  { ver:'v9.0', date:'Apr 22, 2026', changes:['Resident dashboard with 7-day rolling usage and per-day bar chart','Active booking management — edit and cancel from dashboard','Guest bookings accumulate against host unit cap','Guest and host unit can both edit/cancel guest bookings','Admin default cap changed to free-form integer input','Per-unit cap auto-unchecks "use default" when changed','Default cap change syncs all units using default','Timeline scrollbar always visible','Admin date picker works for past and future days','30-minute time slot intervals','Charge target minimum set to current charge level','Property renamed to John Do Estates','App version badge in admin header'] },
+  { ver:'v8.0', date:'Apr 22, 2026', changes:['Resident dashboard screen after login','Book / edit / cancel bookings from dashboard','Rolling 7-day hours cap (not count-based)','Cap exceeded shows popup modal instead of hard block','Per-unit settings override in admin','Guest bookings linked to host unit'] },
+  { ver:'v7.0', date:'Apr 22, 2026', changes:['Past time slots grayed out and non-selectable','Admin timeline shows all 24 hours with gridlines','Alternating column shading on timeline','Past portion of day shaded on timeline','Now line auto-scrolls timeline to current time'] },
+  { ver:'v6.0', date:'Apr 22, 2026', changes:['Unavailable slots now show red background fill in addition to strikethrough','Admin timeline time labels on all hours','Red "now" line with current time tooltip','Timeline scrollable with scroll hint'] },
+  { ver:'v5.0', date:'Apr 22, 2026', changes:['Admin dashboard timeline view','Live clock and date display','Station status now panel','Bookings tab in admin','24-hour time slot coverage','Bookings stored in live array (real-time conflict checking)'] },
+  { ver:'v4.0', date:'Apr 22, 2026', changes:['Demand-aware grace period — only triggered when next slot is booked','Demand-aware flagging — low-demand overruns logged only, not flagged','Demand pill on time slot picker','Weekly hours cap increased to 12','Admin: separated demand-triggered flags from no-demand overruns'] },
+  { ver:'v3.0', date:'Apr 22, 2026', changes:['Charge target selector with vehicle sync simulation','Max charging duration fallback cap (1, 2, 4, Overnight)','30-minute grace period after charge complete','Flag + admin alert for grace period violations','Resident weekly hours quota bar','Station utilization in admin'] },
+  { ver:'v2.0', date:'Apr 22, 2026', changes:['Phone OR email verification for residents','Guest verification with phone or email contact method','OTP confirmation code for guest access','Host unit lookup for guest flow','Confirmation screen shows masked contact info'] },
+  { ver:'v1.0', date:'Apr 22, 2026', changes:['Initial BookEV app','Resident login with unit + phone','Guest flow with host unit confirmation','Station picker with available/busy/grace states','Time slot selection with taken/grace slot indicators','Booking confirmation screen','Admin panel with Flags, Usage, and Settings tabs','Per-unit booking limits and weekly hours cap'] },
 ];
 
-const ALL_SLOTS = [];
-for (let h = 0; h < 24; h++) {
-  for (let half = 0; half < 2; half++) {
-    const ap = h < 12 ? 'AM' : 'PM', hr = h === 0 ? 12 : h > 12 ? h - 12 : h;
-    ALL_SLOTS.push(hr + ':' + (half === 0 ? '00' : '30') + ' ' + ap);
-  }
+function loadData() {
+  try {
+    const r = localStorage.getItem('bookev_residents');
+    const b = localStorage.getItem('bookev_bookings');
+    const ov = localStorage.getItem('bookev_overrides');
+    const dc = localStorage.getItem('bookev_default_cap');
+    if (r) residents = JSON.parse(r);
+    if (b) bookings = JSON.parse(b);
+    if (ov) Object.assign(unitOverrides, JSON.parse(ov));
+    if (dc) { defaultCap = parseInt(dc); const el=document.getElementById('default-cap-input'); if(el) el.value=defaultCap; }
+  } catch(e) {}
+}
+function saveData() {
+  try {
+    localStorage.setItem('bookev_residents', JSON.stringify(residents));
+    localStorage.setItem('bookev_bookings', JSON.stringify(bookings));
+    localStorage.setItem('bookev_overrides', JSON.stringify(unitOverrides));
+    localStorage.setItem('bookev_default_cap', String(defaultCap));
+  } catch(e) {}
 }
 
+let residents = {
+  '101': {phone:'5125550101', email:'res101@bookev.com', flags:0},
+  '202': {phone:'5125550202', email:'res202@bookev.com', flags:0},
+  '303': {phone:'5125550303', email:'res303@bookev.com', flags:0},
+};
 let bookings = [];
-let userType = 'resident', residentMethod = 'phone', guestMethod = 'phone';
-let selectedStation = null, selectedSlot = null, selectedDur = 1, selectedDurLabel = '1 hr';
-let chargeTarget = 80, currentCharge = 64, currentUnit = '', currentGuestName = '', currentHostUnit = '';
-let slotHasDemand = false, editingBookingId = null;
+let defaultCap = 12;
+let unitOverrides = {};
+let csvPending = [];
 
-function getUnitCap(unit) {
-  const ov = unitOverrides[unit];
-  if (!ov || ov.useDefault) return defaultCap;
-  return ov.cap != null ? ov.cap : defaultCap;
-}
+let userType='resident', residentMethod='phone', guestMethod='phone';
+let selectedStation=null, selectedSlot=null, selectedDur=1, selectedDurLabel='1 hr';
+let chargeTarget=80, currentCharge=64, currentUnit='', currentGuestName='', currentHostUnit='';
+let slotHasDemand=false, editingBookingId=null;
 
-function toDateVal(d) { return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0'); }
+loadData();
+
+function getUnitCap(u) { const ov=unitOverrides[u]; if(!ov||ov.useDefault) return defaultCap; return ov.cap!=null?ov.cap:defaultCap; }
+function toDateVal(d) { return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); }
 function todayVal() { return toDateVal(new Date()); }
-
-function slotToMinutes(slot) {
-  const p = slot.match(/(\d+):(\d+) (AM|PM)/); if (!p) return 0;
-  let h = parseInt(p[1]), m = parseInt(p[2]);
-  if (p[3]==='PM' && h!==12) h += 12;
-  if (p[3]==='AM' && h===12) h = 0;
-  return h * 60 + m;
-}
-
-function rolling7Hours(unit) {
-  const cutoff = new Date(Date.now() - 7*24*60*60*1000);
-  return bookings.filter(b => b.hostUnit === unit && b.status !== 'cancelled' && new Date(b.date+'T12:00:00') >= cutoff).reduce((s,b) => s + b.dur, 0);
-}
-
-function rolling7ByDay(unit) {
-  const days = [], labels = [];
-  for (let i = 6; i >= 0; i--) {
-    const d = new Date(); d.setDate(d.getDate() - i);
-    const dv = toDateVal(d);
-    const hrs = bookings.filter(b => b.hostUnit === unit && b.date === dv && b.status !== 'cancelled').reduce((s,b) => s + b.dur, 0);
-    days.push(hrs); labels.push(['Su','Mo','Tu','We','Th','Fr','Sa'][d.getDay()]);
-  }
-  return { days, labels };
-}
-
-function getBookedSlots(stId, dv) {
-  const r = new Set();
-  bookings.filter(b => b.station === stId && b.date === dv && b.status !== 'cancelled').forEach(b => {
-    const si = ALL_SLOTS.indexOf(b.slot), steps = b.dur * 2;
-    for (let j = 0; j < steps && si+j < ALL_SLOTS.length; j++) r.add(ALL_SLOTS[si+j]);
-  });
-  return r;
-}
-
-function getGraceSlots(stId, dv) {
-  const r = new Set();
-  bookings.filter(b => b.station === stId && b.date === dv && b.status !== 'cancelled').forEach(b => {
-    const end = ALL_SLOTS.indexOf(b.slot) + b.dur*2;
-    if (end < ALL_SLOTS.length) r.add(ALL_SLOTS[end]);
-  });
-  return r;
-}
-
-function getStationStatus(stId, dv) {
-  const now = new Date(), td = todayVal();
-  if (dv !== td) return 'available';
-  const ci = now.getHours()*2 + (now.getMinutes()>=30?1:0), cs = ALL_SLOTS[ci];
-  if (getBookedSlots(stId, dv).has(cs)) return 'busy';
-  if (getGraceSlots(stId, dv).has(cs)) return 'grace';
-  return 'available';
-}
-
-function slotIsFollowed(stId, dv, slot) {
-  const si = ALL_SLOTS.indexOf(slot), steps = selectedDur * 2;
-  if (si < 0 || si+steps >= ALL_SLOTS.length) return false;
-  return bookings.some(b => b.station===stId && b.date===dv && b.slot===ALL_SLOTS[si+steps] && b.status!=='cancelled');
-}
-
-function isPastSlot(idx, dv) {
-  if (dv !== todayVal()) return false;
-  const now = new Date(), ci = now.getHours()*2 + (now.getMinutes()>=30?1:0);
-  return idx <= ci;
-}
+function slotToMinutes(s) { const p=s.match(/(\d+):(\d+) (AM|PM)/); if(!p) return 0; let h=parseInt(p[1]),m=parseInt(p[2]); if(p[3]==='PM'&&h!==12) h+=12; if(p[3]==='AM'&&h===12) h=0; return h*60+m; }
+function rolling7Hours(u) { const cut=new Date(Date.now()-7*24*60*60*1000); return bookings.filter(b=>b.hostUnit===u&&b.status!=='cancelled'&&new Date(b.date+'T12:00:00')>=cut).reduce((s,b)=>s+b.dur,0); }
+function rolling7ByDay(u) { const days=[],labels=[]; for(let i=6;i>=0;i--){const d=new Date(); d.setDate(d.getDate()-i); const dv=toDateVal(d); days.push(bookings.filter(b=>b.hostUnit===u&&b.date===dv&&b.status!=='cancelled').reduce((s,b)=>s+b.dur,0)); labels.push(['Su','Mo','Tu','We','Th','Fr','Sa'][d.getDay()]);} return {days,labels}; }
+function getBookedSlots(sId,dv) { const r=new Set(); bookings.filter(b=>b.station===sId&&b.date===dv&&b.status!=='cancelled').forEach(b=>{const si=ALL_SLOTS.indexOf(b.slot),steps=b.dur*2; for(let j=0;j<steps&&si+j<ALL_SLOTS.length;j++) r.add(ALL_SLOTS[si+j]);}); return r; }
+function getGraceSlots(sId,dv) { const r=new Set(); bookings.filter(b=>b.station===sId&&b.date===dv&&b.status!=='cancelled').forEach(b=>{const e=ALL_SLOTS.indexOf(b.slot)+b.dur*2; if(e<ALL_SLOTS.length) r.add(ALL_SLOTS[e]);}); return r; }
+function getStationStatus(sId,dv) { const now=new Date(),td=todayVal(); if(dv!==td) return 'available'; const ci=now.getHours()*2+(now.getMinutes()>=30?1:0),cs=ALL_SLOTS[ci]; if(getBookedSlots(sId,dv).has(cs)) return 'busy'; if(getGraceSlots(sId,dv).has(cs)) return 'grace'; return 'available'; }
+function slotIsFollowed(sId,dv,slot) { const si=ALL_SLOTS.indexOf(slot),steps=selectedDur*2; if(si<0||si+steps>=ALL_SLOTS.length) return false; return bookings.some(b=>b.station===sId&&b.date===dv&&b.slot===ALL_SLOTS[si+steps]&&b.status!=='cancelled'); }
+function isPastSlot(idx,dv) { if(dv!==todayVal()) return false; const now=new Date(),ci=now.getHours()*2+(now.getMinutes()>=30?1:0); return idx<=ci; }
+function isGuestSession() { return currentUnit.startsWith('guest:'); }
+function getHostUnit() { return isGuestSession()?currentUnit.split(':')[1]:currentUnit; }
 
 function setType(t) { userType=t; ['resident','guest'].forEach(x=>document.getElementById('btn-'+x).className='flex-btn lg'+(t===x?' active':'')); document.getElementById('resident-fields').style.display=t==='resident'?'':'none'; document.getElementById('guest-fields').style.display=t==='guest'?'':'none'; hideErr('home-err'); }
 function setResidentMethod(m) { residentMethod=m; ['phone','email'].forEach(x=>document.getElementById('rbtn-'+x).className='flex-btn'+(m===x?' active':'')); document.getElementById('r-phone-field').style.display=m==='phone'?'':'none'; document.getElementById('r-email-field').style.display=m==='email'?'':'none'; }
@@ -592,295 +608,375 @@ function hideErr(id) { document.getElementById(id).style.display='none'; }
 
 function validateIdentity() {
   hideErr('home-err');
-  if (userType === 'resident') {
-    const unit = document.getElementById('unit').value.trim();
-    if (!unit) { showErr('home-err','Please enter your unit number.'); return; }
-    const res = RESIDENTS[unit];
-    if (!res) { showErr('home-err','Unit '+unit+' not found.'); return; }
-    if (res.flags >= 3) { showErr('home-err','Booking access for unit '+unit+' is suspended.'); return; }
-    if (residentMethod==='phone') { const ph=getDigits(document.getElementById('phone').value); if(ph.length!==10){showErr('home-err','Enter a valid 10-digit phone number.');return;} if(res.phone!==ph){showErr('home-err','Phone number does not match records for unit '+unit+'.');return;} }
-    else { const em=document.getElementById('email').value.trim().toLowerCase(); if(!em.includes('@')){showErr('home-err','Enter a valid email address.');return;} if(res.email!==em){showErr('home-err','Email does not match records for unit '+unit+'.');return;} }
-    currentUnit = unit; currentGuestName = ''; currentHostUnit = unit;
-    document.getElementById('rdash-title').textContent = 'Unit '+unit+' Dashboard';
-    document.getElementById('rdash-sub').textContent = PROPERTY_NAME;
-    document.getElementById('pick-sub').textContent = 'Unit '+unit+' · Resident';
+  if(userType==='resident') {
+    const unit=document.getElementById('unit').value.trim();
+    if(!unit){showErr('home-err','Please enter your unit number.');return;}
+    const res=residents[unit];
+    if(!res){showErr('home-err','Unit '+unit+' not found.');return;}
+    if(res.flags>=3){showErr('home-err','Booking access for unit '+unit+' is suspended.');return;}
+    if(residentMethod==='phone'){const ph=getDigits(document.getElementById('phone').value); if(ph.length!==10){showErr('home-err','Enter a valid 10-digit phone number.');return;} if(res.phone!==ph){showErr('home-err','Phone number does not match records for unit '+unit+'.');return;}}
+    else{const em=document.getElementById('email').value.trim().toLowerCase(); if(!em.includes('@')){showErr('home-err','Enter a valid email address.');return;} if(res.email!==em){showErr('home-err','Email does not match records for unit '+unit+'.');return;}}
+    currentUnit=unit; currentHostUnit=unit; currentGuestName='';
+    document.getElementById('rdash-title').textContent='Unit '+unit+' Dashboard';
+    document.getElementById('pick-sub').textContent='Unit '+unit+' · Resident';
     buildResidentDash(); goTo('screen-rdash');
   } else {
-    const name = document.getElementById('guest-name').value.trim();
-    const hostUnit = document.getElementById('host-unit').value.trim();
-    if (!name) { showErr('home-err','Please enter your name.'); return; }
-    if (!RESIDENTS[hostUnit]) { showErr('home-err','Host unit '+hostUnit+' not found.'); return; }
-    if (guestMethod==='phone') { const p=getDigits(document.getElementById('guest-phone').value); if(p.length!==10){showErr('home-err','Enter a valid phone number.');return;} document.getElementById('otp-desc').textContent='A 4-digit code has been texted to the host at unit '+hostUnit+'.'; }
-    else { const e=document.getElementById('guest-email').value.trim(); if(!e.includes('@')){showErr('home-err','Enter a valid email.');return;} document.getElementById('otp-desc').textContent='A 4-digit code has been emailed to the host at unit '+hostUnit+'.'; }
-    currentGuestName = name; currentHostUnit = hostUnit;
-    document.getElementById('otp-header-sub').textContent = 'Guest of unit '+hostUnit;
+    const name=document.getElementById('guest-name').value.trim(), hostUnit=document.getElementById('host-unit').value.trim();
+    if(!name){showErr('home-err','Please enter your name.');return;}
+    if(!residents[hostUnit]){showErr('home-err','Host unit '+hostUnit+' not found.');return;}
+    if(guestMethod==='phone'){const p=getDigits(document.getElementById('guest-phone').value); if(p.length!==10){showErr('home-err','Enter a valid phone number.');return;} document.getElementById('otp-desc').textContent='A 4-digit code has been texted to the host at unit '+hostUnit+'.';}
+    else{const e=document.getElementById('guest-email').value.trim(); if(!e.includes('@')){showErr('home-err','Enter a valid email.');return;} document.getElementById('otp-desc').textContent='A 4-digit code has been emailed to the host at unit '+hostUnit+'.';}
+    currentGuestName=name; currentHostUnit=hostUnit;
+    document.getElementById('otp-header-sub').textContent='Guest of unit '+hostUnit;
     goTo('screen-otp');
   }
 }
 
+function pinNext(el,i) {
+  el.value=el.value.slice(-1);
+  el.className=el.value?'pin-input filled':'pin-input';
+  if(el.value&&i<3) document.getElementById('p'+(i+1)).focus();
+  hideErr('otp-err');
+  // green outline on all empty cells while typing
+  [0,1,2,3].forEach(j=>{
+    const p=document.getElementById('p'+j);
+    if(!p.value) p.style.borderColor='var(--green)';
+  });
+}
+
 function verifyOTP() {
-  const code = [0,1,2,3].map(i=>document.getElementById('p'+i).value).join('');
-  if (code.length < 4) { showErr('otp-err','Enter all 4 digits.'); return; }
-  if (code !== '4729') { showErr('otp-err','Incorrect code. Please try again.'); return; }
-  currentUnit = 'guest:' + currentHostUnit;
-  document.getElementById('rdash-title').textContent = currentGuestName + ' (Guest of ' + currentHostUnit + ')';
-  document.getElementById('rdash-sub').textContent = PROPERTY_NAME;
-  document.getElementById('pick-sub').textContent = currentGuestName + ' · Guest of unit ' + currentHostUnit;
+  const code=[0,1,2,3].map(i=>document.getElementById('p'+i).value).join('');
+  if(code.length<4){showErr('otp-err','Enter all 4 digits.');return;}
+  if(code!=='4729'){showErr('otp-err','Incorrect code. Please try again.');return;}
+  currentUnit='guest:'+currentHostUnit;
+  document.getElementById('rdash-title').textContent=currentGuestName+' (Guest of '+currentHostUnit+')';
+  document.getElementById('pick-sub').textContent=currentGuestName+' · Guest of unit '+currentHostUnit;
   buildResidentDash(); goTo('screen-rdash');
 }
 
-function pinNext(el, i) {
-  el.value = el.value.slice(-1);
-  el.className = el.value ? 'pin-input filled' : 'pin-input';
-  if (el.value && i < 3) document.getElementById('p'+(i+1)).focus();
-  hideErr('otp-err');
-}
-
-function isGuestSession() { return currentUnit.startsWith('guest:'); }
-function getHostUnit() { return isGuestSession() ? currentUnit.split(':')[1] : currentUnit; }
-
-function startNewBooking() {
-  editingBookingId = null;
-  selectedStation = null; selectedSlot = null;
-  goTo('screen-pick');
-}
+function startNewBooking() { editingBookingId=null; selectedStation=null; selectedSlot=null; goTo('screen-pick'); }
 
 function buildResidentDash() {
-  const hostUnit = getHostUnit();
-  const cap = getUnitCap(hostUnit);
-  const used = rolling7Hours(hostUnit), remain = Math.max(0, cap-used), pct = Math.min(100, Math.round(used/cap*100));
-  document.getElementById('rdash-hrs-label').textContent = used + ' of ' + cap + ' hrs';
-  document.getElementById('rdash-hrs-remain').textContent = remain + ' hrs left';
-  const bar = document.getElementById('rdash-hrs-bar');
-  bar.style.width = pct + '%'; bar.className = 'usage-bar' + (pct>=100?' full':pct>=75?' warn':'');
-
-  const {days, labels} = rolling7ByDay(hostUnit);
-  const barsEl = document.getElementById('rdash-day-bars'); barsEl.innerHTML = '';
-  days.forEach((d,i) => {
-    const col = document.createElement('div'); col.className = 'day-bar-col';
-    const barH = Math.round((d/cap)*60);
-    const b2 = document.createElement('div'); b2.className = 'day-bar';
-    b2.style.cssText = 'height:'+Math.max(barH,2)+'px;background:'+(d>=cap*0.75?'var(--amber)':'var(--green)')+';width:100%;';
-    const val = document.createElement('div'); val.className = 'day-bar-val'; val.textContent = d>0?d+'h':'';
-    const lbl = document.createElement('div'); lbl.className = 'day-bar-label'; lbl.textContent = labels[i];
-    col.appendChild(val); col.appendChild(b2); col.appendChild(lbl);
-    barsEl.appendChild(col);
-  });
-
-  const allMyBookings = bookings.filter(b => b.hostUnit === hostUnit && b.status !== 'cancelled')
-    .sort((a,b) => a.date.localeCompare(b.date) || slotToMinutes(a.slot) - slotToMinutes(b.slot));
-
-  document.getElementById('rdash-booking-count').textContent = allMyBookings.length;
-  const listEl = document.getElementById('rdash-bookings-list');
-  if (!allMyBookings.length) { listEl.innerHTML = '<p style="font-size:13px;color:var(--color-text-secondary);padding:4px 0">No bookings.</p>'; return; }
-  listEl.innerHTML = '';
-  allMyBookings.forEach(b => {
-    const stName = STATION_DEFS.find(s=>s.id===b.station).label;
-    const dateStr = new Date(b.date+'T12:00:00').toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'});
-    const si = ALL_SLOTS.indexOf(b.slot), endSlot = si+b.dur*2 < ALL_SLOTS.length ? ALL_SLOTS[si+b.dur*2] : '12:00 AM';
-    const isGuest = b.isGuest;
-    const whoLabel = isGuest ? (b.guestName + ' (guest)') : 'You';
-    const canEditFromDash = !isGuestSession() || b.unit === currentUnit;
-    const div = document.createElement('div'); div.className = 'booking-card';
-    div.innerHTML = '<div class="booking-card-header"><div><div style="font-size:13px;font-weight:500">'+stName+'</div><div style="font-size:12px;color:var(--color-text-secondary);margin-top:2px">'+dateStr+' · '+b.slot+' → '+endSlot+'</div><div style="font-size:12px;color:var(--color-text-secondary)">'+b.durLabel+' · Target: '+b.target+'% · '+whoLabel+'</div></div><span class="badge '+(isGuest?'badge-gray':'badge-blue')+'">'+(isGuest?'Guest':'Resident')+'</span></div>'+(canEditFromDash?'<div class="booking-card-actions"><button class="bca-btn bca-edit" onclick="editBooking(\''+b.id+'\')">Edit</button><button class="bca-btn bca-cancel" onclick="promptCancelBooking(\''+b.id+'\')">Cancel</button></div>':'');
+  const hostUnit=getHostUnit(), cap=getUnitCap(hostUnit);
+  const used=rolling7Hours(hostUnit), remain=Math.max(0,cap-used), pct=Math.min(100,Math.round(used/cap*100));
+  document.getElementById('rdash-hrs-label').textContent=used+' of '+cap+' hrs';
+  document.getElementById('rdash-hrs-remain').textContent=remain+' hrs left';
+  const bar=document.getElementById('rdash-hrs-bar'); bar.style.width=pct+'%'; bar.className='usage-bar'+(pct>=100?' full':pct>=75?' warn':'');
+  const {days,labels}=rolling7ByDay(hostUnit);
+  const barsEl=document.getElementById('rdash-day-bars'); barsEl.innerHTML='';
+  days.forEach((d,i)=>{ const col=document.createElement('div'); col.className='day-bar-col'; const bH=Math.round((d/cap)*60); const b2=document.createElement('div'); b2.className='day-bar'; b2.style.cssText='height:'+Math.max(bH,2)+'px;background:'+(d>=cap*0.75?'var(--amber)':'var(--green)')+';width:100%;'; const val=document.createElement('div'); val.className='day-bar-val'; val.textContent=d>0?d+'h':''; const lbl=document.createElement('div'); lbl.className='day-bar-label'; lbl.textContent=labels[i]; col.appendChild(val); col.appendChild(b2); col.appendChild(lbl); barsEl.appendChild(col); });
+  const myBkgs=bookings.filter(b=>b.hostUnit===hostUnit&&b.status!=='cancelled').sort((a,b)=>a.date.localeCompare(b.date)||slotToMinutes(a.slot)-slotToMinutes(b.slot));
+  document.getElementById('rdash-booking-count').textContent=myBkgs.length;
+  const listEl=document.getElementById('rdash-bookings-list');
+  if(!myBkgs.length){listEl.innerHTML='<p style="font-size:13px;color:var(--color-text-secondary);padding:4px 0">No bookings.</p>';return;}
+  listEl.innerHTML='';
+  myBkgs.forEach(b=>{
+    const stName=STATION_DEFS.find(s=>s.id===b.station).label;
+    const dateStr=new Date(b.date+'T12:00:00').toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'});
+    const si=ALL_SLOTS.indexOf(b.slot), endSlot=si+b.dur*2<ALL_SLOTS.length?ALL_SLOTS[si+b.dur*2]:'12:00 AM';
+    const whoLabel=b.isGuest?b.guestName+' (guest)':'You';
+    const canEdit=!isGuestSession()||b.unit===currentUnit;
+    const div=document.createElement('div'); div.className='booking-card';
+    div.innerHTML='<div class="booking-card-header"><div><div style="font-size:13px;font-weight:500">'+stName+'</div><div style="font-size:12px;color:var(--color-text-secondary);margin-top:2px">'+dateStr+' · '+b.slot+' → '+endSlot+'</div><div style="font-size:12px;color:var(--color-text-secondary)">'+b.durLabel+' · Target: '+b.target+'% · '+whoLabel+'</div></div><span class="badge '+(b.isGuest?'badge-gray':'badge-blue')+'">'+(b.isGuest?'Guest':'Resident')+'</span></div>'+(canEdit?'<div class="booking-card-actions"><button class="bca-btn bca-edit" onclick="editBooking(\''+b.id+'\')">Edit</button><button class="bca-btn bca-cancel" onclick="promptCancelBooking(\''+b.id+'\')">Cancel</button></div>':'');
     listEl.appendChild(div);
   });
 }
 
 function editBooking(id) {
-  const b = bookings.find(x => x.id === id);
-  if (!b) return;
-  editingBookingId = id;
-  selectedStation = b.station; selectedSlot = b.slot; selectedDur = b.dur; selectedDurLabel = b.durLabel; chargeTarget = b.target;
-  ['d1','d2','d4','d8'].forEach(x => document.getElementById(x).className = 'flex-btn');
-  document.getElementById('d'+b.dur).className = 'flex-btn active';
-  document.getElementById('date-pick').value = b.date;
-  document.getElementById('target-slider').value = b.target;
-  document.getElementById('target-out').textContent = b.target + '%';
-  buildStations();
-  document.getElementById('slot-card').style.display = '';
-  document.getElementById('charge-card').style.display = '';
-  document.getElementById('dur-card').style.display = '';
-  buildSlots(b.station);
+  const b=bookings.find(x=>x.id===id); if(!b) return;
+  editingBookingId=id; selectedStation=b.station; selectedSlot=b.slot; selectedDur=b.dur; selectedDurLabel=b.durLabel; chargeTarget=b.target;
+  ['d1','d2','d4','d8'].forEach(x=>document.getElementById(x).className='flex-btn');
+  document.getElementById('d'+b.dur).className='flex-btn active';
+  document.getElementById('date-pick').value=b.date;
+  document.getElementById('target-slider').value=b.target;
+  document.getElementById('target-out').textContent=b.target+'%';
+  buildStations(); document.getElementById('slot-card').style.display=''; document.getElementById('charge-card').style.display=''; document.getElementById('dur-card').style.display=''; buildSlots(b.station);
   goTo('screen-pick');
 }
 
 function promptCancelBooking(id) {
-  const b = bookings.find(x => x.id === id);
-  if (!b) return;
-  const stName = STATION_DEFS.find(s=>s.id===b.station).label;
-  const dateStr = new Date(b.date+'T12:00:00').toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'});
-  showModal('Cancel booking?', 'Cancel your booking for '+stName+' on '+dateStr+' at '+b.slot+'? This cannot be undone.', () => {
-    b.status = 'cancelled'; buildResidentDash(); closeModal();
-  }, 'Cancel booking', 'var(--red)');
+  const b=bookings.find(x=>x.id===id); if(!b) return;
+  const stName=STATION_DEFS.find(s=>s.id===b.station).label;
+  const dateStr=new Date(b.date+'T12:00:00').toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'});
+  showModal('Cancel booking?','Cancel booking for '+stName+' on '+dateStr+' at '+b.slot+'? This cannot be undone.',()=>{ b.status='cancelled'; saveData(); buildResidentDash(); closeModal(); },'Cancel booking','danger');
 }
 
 function buildStations() {
-  const grid = document.getElementById('station-grid'); grid.innerHTML = '';
-  const dv = document.getElementById('date-pick').value;
-  if (!editingBookingId) { selectedSlot = null; slotHasDemand = false; }
-  ['slot-card','charge-card','dur-card'].forEach(id => document.getElementById(id).style.display = 'none');
-  STATION_DEFS.forEach(s => {
-    const status = dv ? getStationStatus(s.id, dv) : 'available';
-    const div = document.createElement('div');
-    div.className = 'station-card ' + (selectedStation===s.id?'selected':status);
-    div.dataset.id = s.id; div.dataset.status = status;
-    const color = status==='grace'?'var(--amber)':status==='busy'?'var(--gray-mid)':'var(--green)';
-    const txt = status==='grace'?'⏱ Grace period':status==='busy'?'● Occupied':'● Available';
-    div.innerHTML = '<div class="station-icon">⚡</div><div class="station-name">'+s.label+'</div><div class="station-status" style="color:'+color+'">'+s.level+'</div><div class="station-status" style="color:'+color+'">'+txt+'</div>';
-    if (status==='available'||selectedStation===s.id) div.onclick = () => selectStation(s.id);
+  const grid=document.getElementById('station-grid'); grid.innerHTML='';
+  const dv=document.getElementById('date-pick').value;
+  if(!editingBookingId){selectedSlot=null; slotHasDemand=false;}
+  ['slot-card','charge-card','dur-card'].forEach(id=>document.getElementById(id).style.display='none');
+  STATION_DEFS.forEach(s=>{
+    const status=dv?getStationStatus(s.id,dv):'available';
+    const div=document.createElement('div'); div.className='station-card '+(selectedStation===s.id?'selected':status); div.dataset.id=s.id; div.dataset.status=status;
+    const color=status==='grace'?'var(--amber)':status==='busy'?'var(--gray-mid)':'var(--green)', txt=status==='grace'?'⏱ Grace period':status==='busy'?'● Occupied':'● Available';
+    div.innerHTML='<div class="station-icon">⚡</div><div class="station-name">'+s.label+'</div><div class="station-status" style="color:'+color+'">'+s.level+'</div><div class="station-status" style="color:'+color+'">'+txt+'</div>';
+    if(status==='available'||selectedStation===s.id) div.onclick=()=>selectStation(s.id);
     grid.appendChild(div);
   });
 }
 
 function selectStation(id) {
-  selectedStation = id; selectedSlot = null; slotHasDemand = false;
-  document.querySelectorAll('.station-card').forEach(c => { c.className = 'station-card '+(c.dataset.id===id?'selected':(c.dataset.status||'available')); });
-  document.getElementById('slot-card').style.display = '';
-  document.getElementById('charge-card').style.display = 'none';
-  document.getElementById('dur-card').style.display = 'none';
+  selectedStation=id; selectedSlot=null; slotHasDemand=false;
+  document.querySelectorAll('.station-card').forEach(c=>{c.className='station-card '+(c.dataset.id===id?'selected':(c.dataset.status||'available'));});
+  document.getElementById('slot-card').style.display=''; document.getElementById('charge-card').style.display='none'; document.getElementById('dur-card').style.display='none';
   buildSlots(id);
-  currentCharge = Math.round(40+Math.random()*35);
-  document.getElementById('current-pct').textContent = currentCharge + '%';
-  document.getElementById('current-bar').style.width = currentCharge + '%';
-  const minTarget = Math.ceil(currentCharge/5)*5;
-  document.getElementById('target-slider').min = minTarget;
-  document.getElementById('target-slider').value = Math.max(minTarget, 80);
-  document.getElementById('target-min-label').textContent = minTarget + '%';
-  chargeTarget = Math.max(minTarget, 80);
-  document.getElementById('target-out').textContent = chargeTarget + '%';
-  const dv = document.getElementById('date-pick').value;
-  const tc = getBookedSlots(id, dv).size;
-  const pill = document.getElementById('demand-pill-slot');
-  pill.textContent = tc>=8?'High demand':'Low demand'; pill.className = 'demand-pill '+(tc>=8?'demand-high':'demand-low');
+  currentCharge=Math.round(40+Math.random()*35);
+  document.getElementById('current-pct').textContent=currentCharge+'%'; document.getElementById('current-bar').style.width=currentCharge+'%';
+  const minT=Math.ceil(currentCharge/5)*5;
+  document.getElementById('target-slider').min=minT; document.getElementById('target-slider').value=Math.max(minT,80); document.getElementById('target-min-label').textContent=minT+'%';
+  chargeTarget=Math.max(minT,80); document.getElementById('target-out').textContent=chargeTarget+'%';
+  const dv=document.getElementById('date-pick').value, tc=getBookedSlots(id,dv).size;
+  const pill=document.getElementById('demand-pill-slot'); pill.textContent=tc>=8?'High demand':'Low demand'; pill.className='demand-pill '+(tc>=8?'demand-high':'demand-low');
 }
 
 function buildSlots(stId) {
-  const grid = document.getElementById('slot-grid'); grid.innerHTML = '';
-  const dv = document.getElementById('date-pick').value;
-  const taken = getBookedSlots(stId, dv), grace = getGraceSlots(stId, dv);
-  const editB = editingBookingId ? bookings.find(b=>b.id===editingBookingId) : null;
-  ALL_SLOTS.forEach((h, idx) => {
-    const div = document.createElement('div');
-    const past = isPastSlot(idx, dv), isTaken = taken.has(h), isGrace = grace.has(h);
-    const isMyEditSlot = editB && editB.slot === h;
-    if (past && !isTaken && !isGrace) { div.className='time-slot past'; div.textContent=h; }
-    else if (isGrace && !isMyEditSlot) { div.className='time-slot grace-slot'; div.textContent=h; }
-    else if (isTaken && !isMyEditSlot) { div.className='time-slot taken'; div.textContent=h; }
-    else { div.className='time-slot'+(selectedSlot===h?' selected':''); div.textContent=h; div.onclick=()=>selectSlot(h,stId); }
+  const grid=document.getElementById('slot-grid'); grid.innerHTML='';
+  const dv=document.getElementById('date-pick').value, taken=getBookedSlots(stId,dv), grace=getGraceSlots(stId,dv);
+  const editB=editingBookingId?bookings.find(b=>b.id===editingBookingId):null;
+  ALL_SLOTS.forEach((h,idx)=>{
+    const div=document.createElement('div'), past=isPastSlot(idx,dv), isTaken=taken.has(h), isGrace=grace.has(h), isMyEdit=editB&&editB.slot===h;
+    if(past&&!isTaken&&!isGrace){div.className='time-slot past'; div.textContent=h;}
+    else if(isGrace&&!isMyEdit){div.className='time-slot grace-slot'; div.textContent=h;}
+    else if(isTaken&&!isMyEdit){div.className='time-slot taken'; div.textContent=h;}
+    else{div.className='time-slot'+(selectedSlot===h?' selected':''); div.textContent=h; div.onclick=()=>selectSlot(h,stId);}
     grid.appendChild(div);
   });
 }
 
-function selectSlot(slot, stId) {
-  selectedSlot = slot;
-  document.querySelectorAll('.time-slot:not(.taken):not(.grace-slot):not(.past)').forEach(el => { el.className='time-slot'+(el.textContent===slot?' selected':''); });
-  const dv = document.getElementById('date-pick').value;
-  slotHasDemand = slotIsFollowed(stId||selectedStation, dv, slot);
-  document.getElementById('charge-card').style.display = '';
-  document.getElementById('dur-card').style.display = '';
-  const msg = slotHasDemand ? 'The next slot is booked. You\'ll have 30 min to unplug after your charge target is reached.' : 'No bookings follow your slot. You won\'t be flagged if you take a bit longer — but please unplug when done.';
-  const el = document.getElementById('grace-info-msg'); el.textContent=msg; el.className='alert '+(slotHasDemand?'alert-warn':'alert-ok'); el.style.marginBottom='0'; el.style.fontSize='12px';
+function selectSlot(slot,stId) {
+  selectedSlot=slot;
+  document.querySelectorAll('.time-slot:not(.taken):not(.grace-slot):not(.past)').forEach(el=>{el.className='time-slot'+(el.textContent===slot?' selected':'');});
+  const dv=document.getElementById('date-pick').value; slotHasDemand=slotIsFollowed(stId||selectedStation,dv,slot);
+  document.getElementById('charge-card').style.display=''; document.getElementById('dur-card').style.display='';
+  const msg=slotHasDemand?'The next slot is booked. You\'ll have 30 min to unplug after your charge target is reached.':'No bookings follow your slot. You won\'t be flagged if you take a bit longer — but please unplug when done.';
+  const el=document.getElementById('grace-info-msg'); el.textContent=msg; el.className='alert '+(slotHasDemand?'alert-warn':'alert-ok'); el.style.marginBottom='0'; el.style.fontSize='12px';
   hideErr('pick-err');
 }
-
 function updateTarget(v) { chargeTarget=parseInt(v); document.getElementById('target-out').textContent=v+'%'; }
-
-function setDur(hrs, label) {
+function setDur(hrs,label) {
   selectedDur=hrs; selectedDurLabel=label;
-  ['d1','d2','d4','d8'].forEach(id=>document.getElementById(id).className='flex-btn');
-  document.getElementById('d'+hrs).className='flex-btn active';
-  if (selectedSlot && selectedStation) { const dv=document.getElementById('date-pick').value; slotHasDemand=slotIsFollowed(selectedStation,dv,selectedSlot); buildSlots(selectedStation); document.querySelectorAll('.time-slot:not(.taken):not(.grace-slot):not(.past)').forEach(el=>{if(el.textContent===selectedSlot) el.className='time-slot selected';}); }
+  ['d1','d2','d4','d8'].forEach(id=>document.getElementById(id).className='flex-btn'); document.getElementById('d'+hrs).className='flex-btn active';
+  if(selectedSlot&&selectedStation){const dv=document.getElementById('date-pick').value; slotHasDemand=slotIsFollowed(selectedStation,dv,selectedSlot); buildSlots(selectedStation); document.querySelectorAll('.time-slot:not(.taken):not(.grace-slot):not(.past)').forEach(el=>{if(el.textContent===selectedSlot) el.className='time-slot selected';});}
 }
 
 function goConfirm() {
-  if (!selectedStation) { showErr('pick-err','Please select a station.'); return; }
-  if (!selectedSlot) { showErr('pick-err','Please select a start time.'); return; }
-  const dv = document.getElementById('date-pick').value;
-  if (!dv) { showErr('pick-err','Please select a date.'); return; }
+  if(!selectedStation){showErr('pick-err','Please select a station.');return;}
+  if(!selectedSlot){showErr('pick-err','Please select a start time.');return;}
+  const dv=document.getElementById('date-pick').value; if(!dv){showErr('pick-err','Please select a date.');return;}
   hideErr('pick-err');
-  const hostUnit = getHostUnit();
-  const cap = getUnitCap(hostUnit);
-  const existHrs = rolling7Hours(hostUnit);
-  const editHrs = editingBookingId ? (bookings.find(b=>b.id===editingBookingId)?.dur||0) : 0;
-  const projected = existHrs - editHrs + selectedDur;
-  if (projected > cap) {
-    showModal('Weekly cap reached', 'This booking would bring your rolling 7-day total to '+projected+' hrs, exceeding the '+cap+'-hr cap. Choose a shorter duration or cancel an existing booking.', null, 'OK', 'var(--green)', true);
-    return;
-  }
-  const dateStr = new Date(dv+'T12:00:00').toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'});
-  const stName = STATION_DEFS.find(s=>s.id===selectedStation).label;
-  const si = ALL_SLOTS.indexOf(selectedSlot), endSlot = si+selectedDur*2<ALL_SLOTS.length?ALL_SLOTS[si+selectedDur*2]:'12:00 AM';
-  document.getElementById('c-station').textContent=stName;
-  document.getElementById('c-date').textContent=dateStr;
-  document.getElementById('c-time').textContent=selectedSlot+' → '+endSlot;
-  document.getElementById('c-target').textContent=chargeTarget+'% (via vehicle sync)';
-  document.getElementById('c-dur').textContent=selectedDurLabel+' fallback cap';
-  document.getElementById('c-grace').textContent=slotHasDemand?'30 min — next slot is booked':'No strict limit — no bookings follow';
-  document.getElementById('confirm-warn-block').innerHTML=slotHasDemand?'<div class="alert alert-warn">The slot after yours is booked. You\'ll have 30 min to unplug after your charge target is reached.</div>':'<div class="alert alert-ok">No one is booked after you — no strict move-by time.</div>';
+  const hostUnit=getHostUnit(), cap=getUnitCap(hostUnit), existHrs=rolling7Hours(hostUnit);
+  const editHrs=editingBookingId?(bookings.find(b=>b.id===editingBookingId)?.dur||0):0;
+  const projected=existHrs-editHrs+selectedDur;
+  if(projected>cap){showModal('Weekly cap reached','This booking would bring your rolling 7-day total to '+projected+' hrs, exceeding the '+cap+'-hr cap. Choose a shorter duration or cancel an existing booking.',null,'OK','confirm',true);return;}
+  const dateStr=new Date(dv+'T12:00:00').toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'});
+  const stName=STATION_DEFS.find(s=>s.id===selectedStation).label;
+  const si=ALL_SLOTS.indexOf(selectedSlot), endSlot=si+selectedDur*2<ALL_SLOTS.length?ALL_SLOTS[si+selectedDur*2]:'12:00 AM';
+  document.getElementById('c-station').textContent=stName; document.getElementById('c-date').textContent=dateStr; document.getElementById('c-time').textContent=selectedSlot+' → '+endSlot; document.getElementById('c-target').textContent=chargeTarget+'% (via vehicle sync)'; document.getElementById('c-dur').textContent=selectedDurLabel+' fallback cap'; document.getElementById('c-grace').textContent=slotHasDemand?'30 min — next slot is booked':'No strict limit — no bookings follow';
+  document.getElementById('confirm-warn-block').innerHTML=slotHasDemand?'<div class="alert alert-warn">The slot after yours is booked. You\'ll have 30 min to unplug.</div>':'<div class="alert alert-ok">No one is booked after you — no strict move-by time.</div>';
   goTo('screen-confirm');
 }
 
 function confirmBooking() {
-  const btn = document.getElementById('confirm-btn'); btn.disabled=true; btn.innerHTML='<span class="spinner"></span> Confirming…';
-  setTimeout(() => {
-    const dv = document.getElementById('date-pick').value;
-    const hostUnit = getHostUnit();
-    const isGuest = isGuestSession();
-    if (editingBookingId) {
-      const b = bookings.find(x=>x.id===editingBookingId);
-      if (b) { b.station=selectedStation; b.date=dv; b.slot=selectedSlot; b.dur=selectedDur; b.durLabel=selectedDurLabel; b.target=chargeTarget; }
-      editingBookingId = null;
-      document.getElementById('success-headline').textContent='Booking Updated';
-      document.getElementById('success-headline-h').textContent='Booking Updated';
-      document.getElementById('success-alert-msg').textContent='Your booking has been updated.';
-    } else {
-      bookings.push({ id:'b'+Date.now(), station:selectedStation, date:dv, slot:selectedSlot, dur:selectedDur, durLabel:selectedDurLabel, unit:currentUnit, hostUnit:hostUnit, isGuest:isGuest, guestName:isGuest?currentGuestName:'', target:chargeTarget, status:'confirmed', ts:Date.now() });
-      document.getElementById('success-headline').textContent='Booking Confirmed';
-      document.getElementById('success-headline-h').textContent='You\'re all set!';
-      document.getElementById('success-alert-msg').textContent='Confirmation sent. We\'ll notify you when charging completes.';
-    }
+  const btn=document.getElementById('confirm-btn'); btn.disabled=true; btn.innerHTML='<span class="spinner"></span> Confirming…';
+  setTimeout(()=>{
+    const dv=document.getElementById('date-pick').value, hostUnit=getHostUnit(), isGuest=isGuestSession();
+    if(editingBookingId){const b=bookings.find(x=>x.id===editingBookingId); if(b){b.station=selectedStation;b.date=dv;b.slot=selectedSlot;b.dur=selectedDur;b.durLabel=selectedDurLabel;b.target=chargeTarget;} editingBookingId=null; document.getElementById('success-headline').textContent='Booking Updated'; document.getElementById('success-headline-h').textContent='Booking Updated'; document.getElementById('success-alert-msg').textContent='Your booking has been updated.';}
+    else{bookings.push({id:'b'+Date.now(),station:selectedStation,date:dv,slot:selectedSlot,dur:selectedDur,durLabel:selectedDurLabel,unit:currentUnit,hostUnit:hostUnit,isGuest:isGuest,guestName:isGuest?currentGuestName:'',target:chargeTarget,status:'confirmed',ts:Date.now()}); document.getElementById('success-headline').textContent='Booking Confirmed'; document.getElementById('success-headline-h').textContent='You\'re all set!'; document.getElementById('success-alert-msg').textContent='Confirmation sent. We\'ll notify you when charging completes.';}
+    saveData();
     const si=ALL_SLOTS.indexOf(selectedSlot), endSlot=si+selectedDur*2<ALL_SLOTS.length?ALL_SLOTS[si+selectedDur*2]:'12:00 AM';
     document.getElementById('success-msg').textContent=STATION_DEFS.find(s=>s.id===selectedStation).label+' · '+selectedSlot+' → '+endSlot;
     document.getElementById('s-grace-detail').textContent=slotHasDemand?'30 min to unplug after charge complete':'No time pressure — station free after you';
     document.getElementById('s-overdue-detail').textContent=slotHasDemand?'Flagged & admin notified':'Logged only, no flag issued';
     document.getElementById('s-overdue-detail').style.color=slotHasDemand?'var(--red)':'var(--color-text-primary)';
-    btn.disabled=false; btn.innerHTML='Confirm Booking';
-    goTo('screen-success');
-  }, 1400);
+    btn.disabled=false; btn.innerHTML='Confirm Booking'; goTo('screen-success');
+  },1400);
 }
 
-const CELL_W = 36;
+// CSV
+function csvDragOver(e){e.preventDefault();document.getElementById('csv-drop').classList.add('over');}
+function csvDragLeave(){document.getElementById('csv-drop').classList.remove('over');}
+function csvDrop(e){e.preventDefault();csvDragLeave();const f=e.dataTransfer.files[0]; if(f) readCSV(f);}
+function csvFileSelected(inp){if(inp.files[0]) readCSV(inp.files[0]); inp.value='';}
+function readCSV(file){
+  const r=new FileReader(); r.onload=e=>{
+    const lines=e.target.result.split('\n').map(l=>l.trim()).filter(l=>l);
+    csvPending=[];
+    lines.forEach(line=>{
+      const p=line.split(',').map(x=>x.trim());
+      if(p.length>=1&&p[0]&&!p[0].toLowerCase().startsWith('unit')){
+        csvPending.push({unit:p[0],phone:getDigits(p[1]||''),email:(p[2]||'').toLowerCase()});
+      }
+    });
+    if(!csvPending.length){document.getElementById('csv-result-msg').textContent='No valid rows found in CSV.'; document.getElementById('csv-result-msg').className='alert alert-err'; document.getElementById('csv-preview').style.display=''; document.getElementById('csv-import-btn').style.display='none'; return;}
+    document.getElementById('csv-result-msg').textContent='Found '+csvPending.length+' unit'+(csvPending.length!==1?'s':'')+' ready to import. Existing units will be updated, new ones added.';
+    document.getElementById('csv-result-msg').className='alert alert-ok';
+    document.getElementById('csv-import-btn').style.display='';
+    document.getElementById('csv-preview').style.display='';
+  }; r.readAsText(file);
+}
+function csvConfirmImport(){
+  csvPending.forEach(r=>{
+    if(!residents[r.unit]) residents[r.unit]={flags:0};
+    if(r.phone) residents[r.unit].phone=r.phone;
+    if(r.email) residents[r.unit].email=r.email;
+    if(!unitOverrides[r.unit]) unitOverrides[r.unit]={useDefault:true};
+  });
+  saveData(); csvPending=[]; document.getElementById('csv-preview').style.display='none'; buildUnitRoster();
+  alert(csvPending.length||'Units'+' imported successfully.');
+}
+function csvCancel(){csvPending=[];document.getElementById('csv-preview').style.display='none';}
 
-function buildDashboard() {
-  const now = new Date();
-  const h=now.getHours(), m=now.getMinutes(), ap=h<12?'AM':'PM', hr=h===0?12:h>12?h-12:h;
-  document.getElementById('admin-clock').textContent = hr+':'+(m<10?'0':'')+m+' '+ap;
-  document.getElementById('admin-date-label').textContent = now.toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric',year:'numeric'});
-  const dp = document.getElementById('admin-date-pick');
-  if (!dp.value) dp.value = todayVal();
-  const vd = dp.value, isTodayView = vd === todayVal();
-  const vbk = bookings.filter(b=>b.date===vd&&b.status!=='cancelled');
-  const ci = h*2+(m>=30?1:0), cs = ALL_SLOTS[ci];
-  let activeNow = 0;
-  if (isTodayView) STATION_DEFS.forEach(s=>{ if(getBookedSlots(s.id,vd).has(cs)) activeNow++; });
+// Unit management
+function buildUnitRoster(){
+  const el=document.getElementById('unit-roster'); el.innerHTML='';
+  const units=Object.keys(residents).sort();
+  if(!units.length){el.innerHTML='<p style="font-size:13px;color:var(--color-text-secondary)">No units yet. Add one or import a CSV.</p>';return;}
+  units.forEach(unit=>{
+    const res=residents[unit];
+    const row=document.createElement('div'); row.className='unit-mgmt-row';
+    row.innerHTML='<div><div style="font-size:13px;font-weight:500">Unit '+unit+'</div><div style="font-size:11px;color:var(--color-text-secondary)">'+(res.phone?'('+res.phone.slice(0,3)+') '+res.phone.slice(3,6)+'-'+res.phone.slice(6):'-')+' · '+(res.email||'-')+'</div></div><div class="unit-mgmt-btns"><button class="um-btn um-edit" onclick="openEditUnit(\''+unit+'\')">Edit</button><button class="um-btn um-del" onclick="promptDeleteUnit(\''+unit+'\')">Delete</button></div>';
+    el.appendChild(row);
+  });
+}
+
+function openAddUnit(){
+  showUnitForm('Add unit','','','',false);
+}
+function openEditUnit(unit){
+  const res=residents[unit]||{};
+  showUnitForm('Edit unit '+unit, unit, res.phone||'', res.email||'', true);
+}
+function showUnitForm(title, unit, phone, email, isEdit){
+  document.getElementById('modal-title').textContent=title;
+  document.getElementById('modal-body').style.display='none';
+  document.getElementById('modal-content').innerHTML=`
+    <div style="margin-bottom:10px">
+      <label style="font-size:13px;color:var(--color-text-secondary);display:block;margin-bottom:4px">Unit number</label>
+      <input type="text" id="mu-unit" value="${unit}" ${isEdit?'readonly style="opacity:0.6"':''} placeholder="e.g. 101" maxlength="6" style="width:100%;padding:9px 12px;border-radius:8px;border:0.5px solid var(--color-border-secondary);background:var(--color-background-secondary);color:var(--color-text-primary);font-size:14px;margin-bottom:0">
+    </div>
+    <div style="margin-bottom:10px">
+      <label style="font-size:13px;color:var(--color-text-secondary);display:block;margin-bottom:4px">Phone number</label>
+      <input type="tel" id="mu-phone" value="${phone?'('+phone.slice(0,3)+') '+phone.slice(3,6)+'-'+phone.slice(6):''}" placeholder="(512) 555-0100" maxlength="14" oninput="formatPhone(this)" style="width:100%;padding:9px 12px;border-radius:8px;border:0.5px solid var(--color-border-secondary);background:var(--color-background-secondary);color:var(--color-text-primary);font-size:14px;margin-bottom:0">
+    </div>
+    <div style="margin-bottom:4px">
+      <label style="font-size:13px;color:var(--color-text-secondary);display:block;margin-bottom:4px">Email address</label>
+      <input type="email" id="mu-email" value="${email}" placeholder="res@bookev.com" style="width:100%;padding:9px 12px;border-radius:8px;border:0.5px solid var(--color-border-secondary);background:var(--color-background-secondary);color:var(--color-text-primary);font-size:14px;margin-bottom:0">
+    </div>
+    <div id="mu-err" style="display:none;color:var(--red-dark);font-size:12px;margin-top:6px"></div>
+  `;
+  document.getElementById('modal-actions').style.display='flex';
+  document.getElementById('modal-cancel-btn').style.display='';
+  const confirmBtn=document.getElementById('modal-confirm-btn');
+  confirmBtn.textContent=isEdit?'Save changes':'Add unit';
+  confirmBtn.className='modal-confirm';
+  confirmBtn.onclick=()=>saveUnitForm(isEdit);
+  document.getElementById('modal').style.display='flex';
+}
+function saveUnitForm(isEdit){
+  const unit=document.getElementById('mu-unit').value.trim();
+  const phone=getDigits(document.getElementById('mu-phone').value);
+  const email=document.getElementById('mu-email').value.trim().toLowerCase();
+  const errEl=document.getElementById('mu-err');
+  if(!unit){errEl.textContent='Unit number is required.';errEl.style.display='';return;}
+  if(phone&&phone.length!==10){errEl.textContent='Phone must be 10 digits if provided.';errEl.style.display='';return;}
+  if(email&&!email.includes('@')){errEl.textContent='Enter a valid email address.';errEl.style.display='';return;}
+  if(!isEdit&&residents[unit]){errEl.textContent='Unit '+unit+' already exists.';errEl.style.display='';return;}
+  if(!residents[unit]) residents[unit]={flags:0};
+  if(phone) residents[unit].phone=phone;
+  if(email) residents[unit].email=email;
+  if(!unitOverrides[unit]) unitOverrides[unit]={useDefault:true};
+  saveData(); buildUnitRoster(); closeModal();
+}
+function promptDeleteUnit(unit){
+  document.getElementById('modal-title').textContent='Delete unit '+unit+'?';
+  document.getElementById('modal-body').textContent='This will remove unit '+unit+' and all its data. Existing bookings will be kept for records. This cannot be undone.';
+  document.getElementById('modal-body').style.display='';
+  document.getElementById('modal-content').innerHTML='';
+  document.getElementById('modal-actions').style.display='flex';
+  document.getElementById('modal-cancel-btn').style.display='';
+  const btn=document.getElementById('modal-confirm-btn');
+  btn.textContent='Delete unit'; btn.className='modal-danger';
+  btn.onclick=()=>{delete residents[unit]; delete unitOverrides[unit]; saveData(); buildUnitRoster(); closeModal();};
+  document.getElementById('modal').style.display='flex';
+}
+
+// Settings
+function onDefaultCapChange(){
+  const val=parseInt(document.getElementById('default-cap-input').value);
+  if(!val||val<1) return;
+  defaultCap=val;
+  Object.keys(unitOverrides).forEach(u=>{if(unitOverrides[u].useDefault) unitOverrides[u].cap=null;});
+  buildUnitOverrides(); saveData();
+}
+function buildUnitOverrides(){
+  const el=document.getElementById('unit-overrides'); el.innerHTML='';
+  const units=Object.keys(residents).sort();
+  if(!units.length){el.innerHTML='<p style="font-size:13px;color:var(--color-text-secondary)">No units configured yet.</p>';return;}
+  units.forEach(unit=>{
+    const ov=unitOverrides[unit]||(unitOverrides[unit]={useDefault:true});
+    const eff=ov.useDefault?defaultCap:(ov.cap!=null?ov.cap:defaultCap);
+    const sum=ov.useDefault?'Default ('+defaultCap+'h)':'Override: '+eff+'h';
+    const div=document.createElement('div'); div.className='unit-row';
+    div.innerHTML=`<div class="unit-row-header" onclick="toggleUnitRow('${unit}')"><span style="font-size:13px;font-weight:500">Unit ${unit}</span><span style="font-size:12px;color:var(--color-text-secondary)" id="ov-summary-${unit}">${sum}</span></div>
+    <div class="unit-row-body" id="ov-body-${unit}">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px"><label style="margin:0;font-size:13px">Weekly hours cap</label><span style="font-size:13px;font-weight:500" id="ov-cap-out-${unit}">${eff} hrs</span></div>
+      <input type="number" min="1" max="168" value="${eff}" id="ov-cap-input-${unit}" oninput="updateUnitCap('${unit}',this.value)" style="margin-bottom:8px">
+      <label style="display:flex;align-items:center;gap:8px;font-size:13px;cursor:pointer;margin-bottom:0">
+        <input type="checkbox" id="ov-default-${unit}" ${ov.useDefault?'checked':''} onchange="toggleUnitDefault('${unit}',this.checked)" style="width:auto;margin:0;padding:0;"> Use default (${defaultCap} hrs)
+      </label>
+    </div>`;
+    el.appendChild(div);
+  });
+}
+function toggleUnitRow(u){const b=document.getElementById('ov-body-'+u); b.className=b.className.includes('open')?'unit-row-body':'unit-row-body open';}
+function updateUnitCap(u,val){
+  const n=parseInt(val); if(!n||n<1) return;
+  if(!unitOverrides[u]) unitOverrides[u]={};
+  unitOverrides[u].cap=n; unitOverrides[u].useDefault=false;
+  document.getElementById('ov-cap-out-'+u).textContent=n+' hrs';
+  document.getElementById('ov-summary-'+u).textContent='Override: '+n+'h';
+  const cb=document.getElementById('ov-default-'+u); if(cb) cb.checked=false;
+}
+function toggleUnitDefault(u,checked){
+  if(!unitOverrides[u]) unitOverrides[u]={};
+  unitOverrides[u].useDefault=checked;
+  if(checked){unitOverrides[u].cap=null; const inp=document.getElementById('ov-cap-input-'+u); if(inp) inp.value=defaultCap; document.getElementById('ov-cap-out-'+u).textContent=defaultCap+' hrs'; document.getElementById('ov-summary-'+u).textContent='Default ('+defaultCap+'h)';}
+}
+function saveSettings(){saveData();alert('Settings saved!');}
+
+// Version history
+function buildVersionHistory(){
+  const el=document.getElementById('version-history-list'); el.innerHTML='';
+  VERSION_HISTORY.forEach(v=>{
+    const div=document.createElement('div'); div.className='ver-entry';
+    const badge=v.ver===APP_VERSION?'<span class="badge badge-ok" style="margin-left:6px;font-size:10px">Current</span>':'';
+    div.innerHTML='<div class="ver-num">'+v.ver+badge+'</div><div class="ver-date">'+v.date+'</div><ul class="ver-changes">'+v.changes.map(c=>'<li>'+c+'</li>').join('')+'</ul>';
+    el.appendChild(div);
+  });
+}
+
+// Dashboard
+const CELL_W=36;
+function buildDashboard(){
+  const now=new Date(), h=now.getHours(), m=now.getMinutes(), ap=h<12?'AM':'PM', hr=h===0?12:h>12?h-12:h;
+  document.getElementById('admin-clock').textContent=hr+':'+(m<10?'0':'')+m+' '+ap;
+  document.getElementById('admin-date-label').textContent=now.toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric',year:'numeric'});
+  const dp=document.getElementById('admin-date-pick'); if(!dp.value) dp.value=todayVal();
+  const vd=dp.value, isTodayView=vd===todayVal();
+  const vbk=bookings.filter(b=>b.date===vd&&b.status!=='cancelled');
+  const ci=h*2+(m>=30?1:0),cs=ALL_SLOTS[ci]; let activeNow=0;
+  if(isTodayView) STATION_DEFS.forEach(s=>{if(getBookedSlots(s.id,vd).has(cs)) activeNow++;});
   document.getElementById('dash-active').textContent=activeNow;
   document.getElementById('dash-today').textContent=vbk.length;
   document.getElementById('dash-avail').textContent=STATION_DEFS.filter(s=>getStationStatus(s.id,vd)==='available').length;
   document.getElementById('dash-total').textContent=bookings.filter(b=>b.status!=='cancelled').length;
   const ss=document.getElementById('dash-station-status'); ss.innerHTML='';
-  STATION_DEFS.forEach(s=>{
-    const status=getStationStatus(s.id,vd), color=status==='grace'?'var(--amber)':status==='busy'?'var(--red)':'var(--green)', label=status==='grace'?'Grace period':status==='busy'?'In use':'Available';
-    ss.innerHTML+='<div style="display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:0.5px solid var(--color-border-tertiary)"><span style="font-size:13px;font-weight:500">'+s.label+'</span><span style="font-size:12px;color:'+color+';font-weight:500">● '+label+'</span></div>';
-  });
+  STATION_DEFS.forEach(s=>{const status=getStationStatus(s.id,vd),color=status==='grace'?'var(--amber)':status==='busy'?'var(--red)':'var(--green)',label=status==='grace'?'Grace period':status==='busy'?'In use':'Available'; ss.innerHTML+='<div style="display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:0.5px solid var(--color-border-tertiary)"><span style="font-size:13px;font-weight:500">'+s.label+'</span><span style="font-size:12px;color:'+color+';font-weight:500">● '+label+'</span></div>';});
   const tl=document.getElementById('dash-timeline'); tl.innerHTML='';
   const totalW=CELL_W*48;
   const labelRow=document.createElement('div'); labelRow.style.cssText='display:flex;margin-left:44px;width:'+totalW+'px;';
-  for(let i=0;i<48;i++){
-    const lbl=document.createElement('div'); lbl.style.cssText='flex:0 0 '+CELL_W+'px;font-size:9px;color:var(--color-text-secondary);border-left:0.5px solid var(--color-border-tertiary);padding:0 0 3px 2px;overflow:hidden;';
-    if(i%2===0){ const hh=Math.floor(i/2),aap=hh<12?'AM':'PM',hhr=hh===0?12:hh>12?hh-12:hh; lbl.textContent=hhr+(hh===0||hh===12?aap:''); }
-    labelRow.appendChild(lbl);
-  }
+  for(let i=0;i<48;i++){const lbl=document.createElement('div'); lbl.style.cssText='flex:0 0 '+CELL_W+'px;font-size:9px;color:var(--color-text-secondary);border-left:0.5px solid var(--color-border-tertiary);padding:0 0 3px 2px;overflow:hidden;'; if(i%2===0){const hh=Math.floor(i/2),aap=hh<12?'AM':'PM',hhr=hh===0?12:hh>12?hh-12:hh; lbl.textContent=hhr+(hh===0||hh===12?aap:'');} labelRow.appendChild(lbl);}
   tl.appendChild(labelRow);
   const nowPx=isTodayView?(h*60+m)/30*CELL_W:-1;
   STATION_DEFS.forEach(s=>{
@@ -890,25 +986,22 @@ function buildDashboard() {
     for(let i=0;i<48;i++){const cell=document.createElement('div'); cell.style.cssText='flex:0 0 '+CELL_W+'px;height:100%;border-left:0.5px solid var(--color-border-tertiary);'+(Math.floor(i/2)%2===1?'background:rgba(0,0,0,0.012)':''); wrap.appendChild(cell);}
     if(isTodayView&&nowPx>0){const pov=document.createElement('div'); pov.style.cssText='position:absolute;top:0;bottom:0;left:0;width:'+nowPx+'px;background:rgba(0,0,0,0.05);z-index:1;pointer-events:none;'; wrap.appendChild(pov);}
     bookings.filter(b=>b.station===s.id&&b.date===vd&&b.status!=='cancelled').forEach(b=>{
-      const si=ALL_SLOTS.indexOf(b.slot), steps=b.dur*2;
+      const si=ALL_SLOTS.indexOf(b.slot),steps=b.dur*2;
       const seg=document.createElement('div'); seg.style.cssText='position:absolute;top:3px;bottom:3px;left:'+(si*CELL_W+1)+'px;width:'+(steps*CELL_W-2)+'px;background:var(--blue);border-radius:3px;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:500;color:white;overflow:hidden;white-space:nowrap;z-index:3;';
       const endLabel=si+steps<ALL_SLOTS.length?ALL_SLOTS[si+steps]:'12AM';
-      const unitLabel = b.isGuest ? 'U'+b.hostUnit+'-Guest' : 'U'+b.hostUnit;
+      const unitLabel=b.isGuest?'U'+b.hostUnit+'-G':'U'+b.hostUnit;
       seg.textContent=b.slot+' – '+endLabel+' · '+unitLabel; seg.title=unitLabel+' · '+b.slot+' → '+endLabel;
       wrap.appendChild(seg);
-      if(si+steps<ALL_SLOTS.length){const gs=document.createElement('div'); gs.style.cssText='position:absolute;top:3px;bottom:3px;left:'+((si+steps)*CELL_W+1)+'px;width:'+(CELL_W-2)+'px;background:var(--amber);border-radius:3px;z-index:3;opacity:0.8;'; gs.title='Grace period'; wrap.appendChild(gs);}
+      if(si+steps<ALL_SLOTS.length){const gs=document.createElement('div'); gs.style.cssText='position:absolute;top:3px;bottom:3px;left:'+((si+steps)*CELL_W+1)+'px;width:'+(CELL_W-2)+'px;background:var(--amber);border-radius:3px;z-index:3;opacity:0.8;'; wrap.appendChild(gs);}
     });
-    if(isTodayView&&nowPx>=0){
-      const nl=document.createElement('div'); nl.style.cssText='position:absolute;top:0;bottom:0;left:'+nowPx+'px;width:2px;background:var(--red);z-index:10;pointer-events:none;'; wrap.appendChild(nl);
-      const ntl=document.createElement('div'); ntl.style.cssText='position:absolute;top:-16px;left:'+nowPx+'px;transform:translateX(-50%);font-size:9px;background:var(--red);color:white;padding:1px 4px;border-radius:3px;white-space:nowrap;z-index:11;'; ntl.textContent=hr+':'+(m<10?'0':'')+m+' '+ap; wrap.appendChild(ntl);
-    }
+    if(isTodayView&&nowPx>=0){const nl=document.createElement('div'); nl.style.cssText='position:absolute;top:0;bottom:0;left:'+nowPx+'px;width:2px;background:var(--red);z-index:10;pointer-events:none;'; wrap.appendChild(nl); const ntl=document.createElement('div'); ntl.style.cssText='position:absolute;top:-16px;left:'+nowPx+'px;transform:translateX(-50%);font-size:9px;background:var(--red);color:white;padding:1px 4px;border-radius:3px;white-space:nowrap;z-index:11;'; ntl.textContent=hr+':'+(m<10?'0':'')+m+' '+ap; wrap.appendChild(ntl);}
     row.appendChild(nameEl); row.appendChild(wrap); tl.appendChild(row);
   });
-  setTimeout(()=>{ const o=document.getElementById('timeline-outer'); if(o&&isTodayView) o.scrollLeft=Math.max(0,nowPx-o.clientWidth/2); else if(o) o.scrollLeft=0; }, 50);
+  setTimeout(()=>{const o=document.getElementById('timeline-outer'); if(o&&isTodayView) o.scrollLeft=Math.max(0,nowPx-o.clientWidth/2); else if(o) o.scrollLeft=0;},50);
 }
 
-function buildBookingsList() {
-  const list=document.getElementById('bookings-list'), count=document.getElementById('bookings-count');
+function buildBookingsList(){
+  const list=document.getElementById('bookings-list'),count=document.getElementById('bookings-count');
   const active=bookings.filter(b=>b.status!=='cancelled');
   count.textContent=active.length+' total';
   if(!active.length){list.innerHTML='<p style="font-size:13px;color:var(--color-text-secondary);padding:8px 0">No bookings yet.</p>';return;}
@@ -916,112 +1009,70 @@ function buildBookingsList() {
   [...active].reverse().forEach(b=>{
     const stName=STATION_DEFS.find(s=>s.id===b.station).label;
     const dateStr=new Date(b.date+'T12:00:00').toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'});
-    const si=ALL_SLOTS.indexOf(b.slot), endSlot=si+b.dur*2<ALL_SLOTS.length?ALL_SLOTS[si+b.dur*2]:'12:00 AM';
-    const unitLabel = b.isGuest ? 'Unit '+b.hostUnit+' – Guest ('+b.guestName+')' : 'Unit '+b.hostUnit;
+    const si=ALL_SLOTS.indexOf(b.slot),endSlot=si+b.dur*2<ALL_SLOTS.length?ALL_SLOTS[si+b.dur*2]:'12:00 AM';
+    const unitLabel=b.isGuest?'Unit '+b.hostUnit+' – Guest ('+b.guestName+')':'Unit '+b.hostUnit;
     list.innerHTML+='<div style="padding:10px 0;border-bottom:0.5px solid var(--color-border-tertiary)"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:2px"><span style="font-size:13px;font-weight:500">'+stName+' · '+unitLabel+'</span><span class="badge badge-blue">Confirmed</span></div><div style="font-size:12px;color:var(--color-text-secondary)">'+dateStr+' · '+b.slot+' → '+endSlot+' · '+b.durLabel+' · Target: '+b.target+'%</div></div>';
   });
 }
 
-function onDefaultCapChange() {
-  const val = parseInt(document.getElementById('default-cap-input').value);
-  if (!val || val < 1) return;
-  defaultCap = val;
-  Object.keys(unitOverrides).forEach(unit => { if (unitOverrides[unit].useDefault) unitOverrides[unit].cap = null; });
-  buildUnitOverrides();
+function buildUsage(){
+  const ul=document.getElementById('usage-list'); ul.innerHTML='';
+  const units=Object.keys(residents).sort();
+  if(!units.length){ul.innerHTML='<p style="font-size:13px;color:var(--color-text-secondary)">No units configured.</p>';return;}
+  units.forEach(u=>{const cap=getUnitCap(u),used=rolling7Hours(u),pct=Math.min(100,Math.round(used/cap*100)); ul.innerHTML+='<div style="margin-bottom:10px"><div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:3px"><span style="color:var(--color-text-secondary)">Unit '+u+'</span><span style="font-weight:500">'+used+'/'+cap+' hrs</span></div><div class="usage-bar-wrap"><div class="usage-bar'+(pct>=100?' full':pct>=75?' warn':'')+'" style="width:'+Math.max(pct,1)+'%"></div></div></div>';});
+  const sl=document.getElementById('station-usage-list'); sl.innerHTML='';
+  STATION_DEFS.forEach(s=>{const count=bookings.filter(b=>b.station===s.id&&b.status!=='cancelled').length,pct=Math.min(100,Math.round(count/10*100)); sl.innerHTML+='<div style="margin-bottom:10px"><div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:3px"><span style="color:var(--color-text-secondary)">'+s.label+'</span><span style="font-weight:500">'+count+' booking'+(count!==1?'s':'')+'</span></div><div class="usage-bar-wrap"><div class="usage-bar'+(pct>=90?' full':pct>=70?' warn':'')+'" style="width:'+Math.max(pct,1)+'%"></div></div></div>';});
 }
 
-function buildUnitOverrides() {
-  const el = document.getElementById('unit-overrides'); el.innerHTML = '';
-  Object.keys(RESIDENTS).forEach(unit => {
-    const ov = unitOverrides[unit] || { useDefault: true };
-    if (!unitOverrides[unit]) unitOverrides[unit] = ov;
-    const effectiveCap = ov.useDefault ? defaultCap : (ov.cap != null ? ov.cap : defaultCap);
-    const summaryText = ov.useDefault ? 'Default ('+defaultCap+'h)' : 'Override: '+effectiveCap+'h';
-    const div = document.createElement('div'); div.className = 'unit-row';
-    div.innerHTML = `<div class="unit-row-header" onclick="toggleUnitRow('${unit}')"><span style="font-size:13px;font-weight:500">Unit ${unit}</span><span style="font-size:12px;color:var(--color-text-secondary)" id="ov-summary-${unit}">${summaryText}</span></div>
-    <div class="unit-row-body" id="ov-body-${unit}">
-      <div style="margin-top:4px">
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px"><label style="margin:0;font-size:13px">Weekly hours cap</label><span style="font-size:13px;font-weight:500" id="ov-cap-out-${unit}">${effectiveCap} hrs</span></div>
-        <input type="number" min="1" max="168" value="${effectiveCap}" id="ov-cap-input-${unit}" oninput="updateUnitCap('${unit}', this.value)" style="margin-bottom:8px">
-        <label style="display:flex;align-items:center;gap:8px;font-size:13px;cursor:pointer;margin-bottom:0">
-          <input type="checkbox" id="ov-default-${unit}" ${ov.useDefault?'checked':''} onchange="toggleUnitDefault('${unit}',this.checked)" style="width:auto;margin:0;padding:0;">
-          Use default settings (${defaultCap} hrs)
-        </label>
-      </div>
-    </div>`;
-    el.appendChild(div);
-  });
-}
-
-function toggleUnitRow(unit) { const b=document.getElementById('ov-body-'+unit); b.className=b.className.includes('open')?'unit-row-body':'unit-row-body open'; }
-
-function updateUnitCap(unit, val) {
-  const n = parseInt(val); if (!n || n < 1) return;
-  if (!unitOverrides[unit]) unitOverrides[unit] = {};
-  unitOverrides[unit].cap = n;
-  unitOverrides[unit].useDefault = false;
-  document.getElementById('ov-cap-out-'+unit).textContent = n + ' hrs';
-  document.getElementById('ov-summary-'+unit).textContent = 'Override: '+n+'h';
-  const cb = document.getElementById('ov-default-'+unit);
-  if (cb) cb.checked = false;
-}
-
-function toggleUnitDefault(unit, checked) {
-  if (!unitOverrides[unit]) unitOverrides[unit] = {};
-  unitOverrides[unit].useDefault = checked;
-  if (checked) {
-    unitOverrides[unit].cap = null;
-    const inp = document.getElementById('ov-cap-input-'+unit);
-    if (inp) inp.value = defaultCap;
-    document.getElementById('ov-cap-out-'+unit).textContent = defaultCap + ' hrs';
-    document.getElementById('ov-summary-'+unit).textContent = 'Default ('+defaultCap+'h)';
-  }
-}
-
-function saveSettings() { alert('Settings saved!'); }
-
-function setTab(t) {
-  ['dashboard','bookings','flags','usage','settings'].forEach(x=>{ document.getElementById('tab-'+x).className='tab'+(t===x?' active':''); document.getElementById('panel-'+x).className='admin-panel'+(t===x?' active':''); });
+function setTab(t){
+  ['dashboard','bookings','units','flags','usage','settings','versions'].forEach(x=>{document.getElementById('tab-'+x).className='tab'+(t===x?' active':''); document.getElementById('panel-'+x).className='admin-panel'+(t===x?' active':'');});
   if(t==='dashboard') buildDashboard();
   if(t==='bookings') buildBookingsList();
+  if(t==='units') buildUnitRoster();
   if(t==='usage') buildUsage();
   if(t==='settings') buildUnitOverrides();
+  if(t==='versions') buildVersionHistory();
 }
 
-function buildUsage() {
-  const ul=document.getElementById('usage-list'); ul.innerHTML='';
-  Object.keys(RESIDENTS).forEach(unit=>{ const cap=getUnitCap(unit), used=rolling7Hours(unit), pct=Math.min(100,Math.round(used/cap*100)); ul.innerHTML+='<div style="margin-bottom:10px"><div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:3px"><span style="color:var(--color-text-secondary)">Unit '+unit+'</span><span style="font-weight:500">'+used+'/'+cap+' hrs</span></div><div class="usage-bar-wrap"><div class="usage-bar'+(pct>=100?' full':pct>=75?' warn':'')+'" style="width:'+Math.max(pct,1)+'%"></div></div></div>'; });
-  const sl=document.getElementById('station-usage-list'); sl.innerHTML='';
-  STATION_DEFS.forEach(s=>{ const count=bookings.filter(b=>b.station===s.id&&b.status!=='cancelled').length; const pct=Math.min(100,Math.round(count/10*100)); sl.innerHTML+='<div style="margin-bottom:10px"><div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:3px"><span style="color:var(--color-text-secondary)">'+s.label+'</span><span style="font-weight:500">'+count+' booking'+(count!==1?'s':'')+'</span></div><div class="usage-bar-wrap"><div class="usage-bar'+(pct>=90?' full':pct>=70?' warn':'')+'" style="width:'+Math.max(pct,1)+'%"></div></div></div>'; });
-}
-
-function showModal(title, body, onConfirm, confirmLabel, confirmColor, singleBtn) {
+function showModal(title, body, onConfirm, confirmLabel, confirmStyle, singleBtn){
   document.getElementById('modal-title').textContent=title;
   document.getElementById('modal-body').textContent=body;
-  const btn=document.getElementById('modal-confirm-btn'); btn.textContent=confirmLabel||'Confirm'; btn.style.background=confirmColor||'var(--red)'; btn.onclick=onConfirm||closeModal;
+  document.getElementById('modal-body').style.display='';
+  document.getElementById('modal-content').innerHTML='';
+  const btn=document.getElementById('modal-confirm-btn');
+  btn.textContent=confirmLabel||'Confirm';
+  btn.className=confirmStyle==='danger'?'modal-danger':'modal-confirm';
+  btn.onclick=onConfirm||closeModal;
   document.getElementById('modal-cancel-btn').style.display=singleBtn?'none':'';
+  document.getElementById('modal-actions').style.display='flex';
   document.getElementById('modal').style.display='flex';
 }
-function closeModal() { document.getElementById('modal').style.display='none'; }
+function closeModal(){document.getElementById('modal').style.display='none';}
 
-function goTo(id) { document.querySelectorAll('.screen').forEach(s=>s.className='screen'); document.getElementById(id).className='screen active'; window.scrollTo(0,0); if(id==='screen-admin'){const dp=document.getElementById('admin-date-pick'); if(!dp.value) dp.value=todayVal(); buildDashboard();} }
-
-function goHome() {
-  selectedStation=null; selectedSlot=null; selectedDur=1; selectedDurLabel='1 hr'; chargeTarget=80; currentUnit=''; currentGuestName=''; currentHostUnit=''; slotHasDemand=false; editingBookingId=null;
-  ['unit','phone','email','guest-name','host-unit','guest-phone','guest-email'].forEach(id=>{const el=document.getElementById(id); if(el) el.value='';});
-  [0,1,2,3].forEach(i=>{const el=document.getElementById('p'+i); if(el){el.value='';el.className='pin-input';}});
-  setType('resident'); setResidentMethod('phone'); setGuestMethod('phone'); goTo('screen-home');
+function goTo(id){document.querySelectorAll('.screen').forEach(s=>s.className='screen'); document.getElementById(id).className='screen active'; window.scrollTo(0,0); if(id==='screen-admin'){const dp=document.getElementById('admin-date-pick'); if(!dp.value) dp.value=todayVal(); buildDashboard();}}
+function goHome(){
+  selectedStation=null;selectedSlot=null;selectedDur=1;selectedDurLabel='1 hr';chargeTarget=80;currentUnit='';currentGuestName='';currentHostUnit='';slotHasDemand=false;editingBookingId=null;
+  ['unit','phone','email','guest-name','host-unit','guest-phone','guest-email'].forEach(id=>{const el=document.getElementById(id);if(el) el.value='';});
+  [0,1,2,3].forEach(i=>{const el=document.getElementById('p'+i);if(el){el.value='';el.className='pin-input';el.style.borderColor='';}});
+  setType('resident');setResidentMethod('phone');setGuestMethod('phone');goTo('screen-home');
 }
 
-setInterval(()=>{ if(document.getElementById('screen-admin').classList.contains('active')&&document.getElementById('panel-dashboard').classList.contains('active')) buildDashboard(); }, 30000);
+// On OTP screen, green outline all empty cells from the start
+document.addEventListener('focusin', e=>{
+  if(e.target&&e.target.classList.contains('pin-input')){
+    [0,1,2,3].forEach(j=>{const p=document.getElementById('p'+j); if(p&&!p.value) p.style.borderColor='var(--green)';});
+  }
+});
 
-const obs = new MutationObserver(() => {
-  if (document.getElementById('screen-pick').classList.contains('active')) {
-    const t=new Date(), y=t.getFullYear(), mo=String(t.getMonth()+1).padStart(2,'0'), d=String(t.getDate()).padStart(2,'0');
+setInterval(()=>{if(document.getElementById('screen-admin').classList.contains('active')&&document.getElementById('panel-dashboard').classList.contains('active')) buildDashboard();},30000);
+
+const obs=new MutationObserver(()=>{
+  if(document.getElementById('screen-pick').classList.contains('active')){
+    const t=new Date(),y=t.getFullYear(),mo=String(t.getMonth()+1).padStart(2,'0'),d=String(t.getDate()).padStart(2,'0');
     const dp=document.getElementById('date-pick');
-    if (!editingBookingId) dp.value=y+'-'+mo+'-'+d;
+    if(!editingBookingId) dp.value=y+'-'+mo+'-'+d;
     dp.min=y+'-'+mo+'-'+d;
-    if (!editingBookingId) buildStations();
+    if(!editingBookingId) buildStations();
   }
 });
 obs.observe(document.getElementById('screen-pick'),{attributes:true,attributeFilter:['class']});
